@@ -1,4 +1,11 @@
-# Pull Request Template
+---
+name: Pull Request
+about: Create a pull request with any changes you have made to the codebase
+title: "[PR] HP-"
+labels: enhancement
+assignees: k5924
+
+---
 
 ## Description
 
