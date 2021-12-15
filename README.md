@@ -1,16 +1,25 @@
-# monerate
+# Monerate
 
-A new Flutter project.
+Monerate is a mobile budget tracking application which allows users to manage all of their finances in one location
 
-## Getting Started
+## Introduction
 
-This project is a starting point for a Flutter application.
+This application works by using the Flutter UI framework in Dart to create the mobile application. We then use Firebase as our database. We will also use Adobe XD to design all of the pages we will make for the application.
 
-A few resources to get you started if this is your first Flutter project:
+## Planned Features
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- list all planned features here
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Download
+
+- place download button here
+
+## Languages and Tools
+
+<p align="center"> <a href="https://dart.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/dartlang/dartlang-icon.svg" alt="dart" width="40" height="40"/> </a> <a href="https://firebase.google.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase" width="40" height="40"/> </a> <a href="https://flutter.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" alt="flutter" width="40" height="40"/> </a> <a href="https://www.adobe.com/products/xd.html" target="_blank" rel="noreferrer"> <img src="https://cdn.worldvectorlogo.com/logos/adobe-xd.svg" alt="xd" width="40" height="40"/> </a> </p>
+
+## License
+
+- place license here when exists
+
+
