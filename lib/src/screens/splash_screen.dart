@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 
 class SplashScreen extends StatefulWidget {
+  static const String kID = 'splash_screen';
+
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
@@ -21,13 +23,9 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(
         seconds: 2,
       ),
-      () => Navigator.pushReplacement(
+      () => Navigator.pushReplacementNamed(
         context,
-        MaterialPageRoute(
-          builder: (context) => const MyHomePage(
-            title: "Flutter Demo",
-          ),
-        ),
+        MyHomePage.kID,
       ),
     );
   }

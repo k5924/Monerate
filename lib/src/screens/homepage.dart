@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
+  static const String kID = 'home_screen';
+
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning

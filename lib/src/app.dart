@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
 class MyApp extends StatelessWidget {
@@ -12,7 +11,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: kLightTheme,
       darkTheme: kDarkTheme,
-      home: const SplashScreen(),
+      initialRoute: kInitialRoute,
+      routes: kRoutes,
       debugShowCheckedModeBanner: false,
     );
   }
