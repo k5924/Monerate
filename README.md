@@ -2,6 +2,12 @@
 
 Monerate is a mobile budget tracking application which allows users to manage all of their finances in one location
 
+<div align="center">
+    <a href="https://pub.dev/packages/lint">
+        <img alt="Using Lint Style" src="https://img.shields.io/badge/style-lint-4BC0F5.svg">
+    </a>
+</div>
+
 ## Introduction
 
 This application works by using the Flutter UI framework in Dart to create the mobile application. We then use Firebase as our database. We will also use Adobe XD to design all of the pages we will make for the application.
