@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 
@@ -39,17 +40,23 @@ class _SplashScreenState extends State<SplashScreen> {
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(
+            children: [
+              const Icon(
                 Icons.account_balance,
                 size: 214,
               ),
-              Text(
-                'Monerate',
-                style: TextStyle(
-                  fontSize: 42,
-                  fontWeight: FontWeight.bold,
-                ),
+              AnimatedTextKit(
+                animatedTexts: [
+                  TypewriterAnimatedText(
+                    'Monerate',
+                    textStyle: const TextStyle(
+                      fontSize: 42,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    speed: const Duration(milliseconds: 220),
+                  ),
+                ],
+                isRepeatingAnimation: false,
               ),
             ],
           ),
