@@ -15,17 +15,17 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _navigateToHome();
+    _navigateToLoginScreen();
   }
 
-  Future<void> _navigateToHome() async {
+  Future<void> _navigateToLoginScreen() async {
     await Future.delayed(
       const Duration(
         seconds: 2,
       ),
       () => Navigator.pushReplacementNamed(
         context,
-        MyHomePage.kID,
+        LoginScreen.kID,
       ),
     );
   }
