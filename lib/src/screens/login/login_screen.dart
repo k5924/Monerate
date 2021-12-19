@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(25, 25, 25, 10),
+                  padding: const EdgeInsets.fromLTRB(25, 25, 25, 50),
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               return 'A Password is required to login';
                             }
                             if (!RegExp(r'^.{6,}$').hasMatch(password)) {
-                              return "Enter a valid password (Minimum 6 chars)";
+                              return "Enter a valid password (Minimum 6 chararacters)";
                             }
                           },
                           obscureText: true,
@@ -87,42 +87,49 @@ class _LoginScreenState extends State<LoginScreen> {
                             hintText: 'Password',
                           ),
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pushNamed(
+                            context,
+                            ConstructionPage.kID,
+                          ),
+                          child: const Text(
+                            "Forgot Password",
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.pushNamed(
+                                context,
+                                MyHomePage.kID,
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 40,
+                              vertical: 10,
+                            ),
+                          ),
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                              fontSize: 24,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.pushNamed(
-                    context,
-                    ConstructionPage.kID,
-                  ),
-                  child: const Text(
-                    "Forgot Password",
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 40,
-                      vertical: 10,
-                    ),
-                  ),
-                  child: const Text(
-                    "Login",
-                    style: TextStyle(
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 50,
                 ),
                 OutlinedButton(
                   onPressed: () => Navigator.pushNamed(
