@@ -12,5 +12,10 @@ void main() {
       final result = EmailValidator().validateEmail('abc.co.uk');
       expect(result, "Please enter a valid email");
     });
+
+    test('If email contains @ symbol, dont return an error', () {
+      final result = EmailValidator().validateEmail('k@lsbu.ac.uk');
+      expect(result, null);
+    });
   });
 }
