@@ -2,11 +2,16 @@
 
 Monerate is a mobile budget tracking application which allows users to manage all of their finances in one location
 
+
 <div align="center">
     <a href="https://pub.dev/packages/lint">
         <img alt="Using Lint Style" src="https://img.shields.io/badge/style-lint-4BC0F5.svg">
     </a>
+
+    
+[![Tests are](https://github.com/k5924/Monerate/actions/workflows/release-drafter.yml/badge.svg)](https://github.com/k5924/Monerate/actions/workflows/release-drafter.yml)
 </div>
+
 
 ## Introduction
 
