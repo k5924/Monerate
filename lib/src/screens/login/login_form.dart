@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
+import 'package:monerate/src/utilities/export.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class _LoginFormState extends State<LoginForm> {
             TextFormField(
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
-              validator: validateEmail,
+              validator: EmailValidator().validateEmail,
               onSaved: (value) {
                 emailController.text = value!;
               },
@@ -38,7 +39,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             TextFormField(
               controller: passwordController,
-              validator: validatePassword,
+              validator: PasswordValidator().validatePassword,
               obscureText: true,
               textInputAction: TextInputAction.done,
               onSaved: (password) {
