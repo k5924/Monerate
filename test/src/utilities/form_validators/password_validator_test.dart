@@ -12,5 +12,10 @@ void main() {
       final result = PasswordValidator().validatePassword('a');
       expect(result, "Enter a valid password (Minimum 6 chararacters)");
     });
+
+    test('Password more than six characters doesnt give an error', () {
+      final result = PasswordValidator().validatePassword('abcdef');
+      expect(result, null);
+    });
   });
 }
