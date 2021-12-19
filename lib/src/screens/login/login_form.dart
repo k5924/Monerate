@@ -25,18 +25,7 @@ class _LoginFormState extends State<LoginForm> {
             TextFormField(
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
-              validator: (email) {
-                if (email!.isEmpty) {
-                  return "Please enter your email";
-                }
-                if (!RegExp(
-                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                ).hasMatch(email)) {
-                  return "Please enter a valid email";
-                }
-
-                return null;
-              },
+              validator: validateEmail,
               onSaved: (value) {
                 emailController.text = value!;
               },
@@ -49,15 +38,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             TextFormField(
               controller: passwordController,
-              validator: (password) {
-                // RegExp regex = RegExp(r'^.{6,}$');
-                if (password!.isEmpty) {
-                  return 'A Password is required to login';
-                }
-                if (!RegExp(r'^.{6,}$').hasMatch(password)) {
-                  return "Enter a valid password (Minimum 6 chararacters)";
-                }
-              },
+              validator: validatePassword,
               obscureText: true,
               textInputAction: TextInputAction.done,
               onSaved: (password) {
