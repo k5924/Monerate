@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:monerate/src/widgets/export.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String kID = 'login_screen';
@@ -14,7 +15,20 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
-      child: Scaffold(),
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Monerate",
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              const AppIcon(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
