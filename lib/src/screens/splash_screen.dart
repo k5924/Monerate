@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
+import 'package:monerate/src/widgets/export.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String kID = 'splash_screen';
@@ -15,17 +16,17 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _navigateToHome();
+    _navigateToLoginScreen();
   }
 
-  Future<void> _navigateToHome() async {
+  Future<void> _navigateToLoginScreen() async {
     await Future.delayed(
       const Duration(
         seconds: 2,
       ),
       () => Navigator.pushReplacementNamed(
         context,
-        MyHomePage.kID,
+        LoginScreen.kID,
       ),
     );
   }
@@ -39,18 +40,12 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.account_balance,
-                size: 214,
-              ),
+              const AppIcon(),
               AnimatedTextKit(
                 animatedTexts: [
                   TyperAnimatedText(
                     'Monerate',
-                    textStyle: const TextStyle(
-                      fontSize: 42,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    textStyle: Theme.of(context).textTheme.headline4,
                     speed: const Duration(milliseconds: 220),
                   ),
                 ],
