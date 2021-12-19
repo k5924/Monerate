@@ -7,4 +7,5 @@ Map<String, Widget Function(BuildContext)> kRoutes = {
   SplashScreen.kID: (context) => const SplashScreen(),
   MyHomePage.kID: (context) => const MyHomePage(title: 'Fluter Demo'),
   LoginScreen.kID: (context) => const LoginScreen(),
+  ConstructionPage.kID: (context) => const ConstructionPage(),
 };

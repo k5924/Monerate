@@ -40,13 +40,12 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const AppIcon(
-              ),
+              const AppIcon(),
               AnimatedTextKit(
                 animatedTexts: [
                   TyperAnimatedText(
                     'Monerate',
-                    textStyle: Theme.of(context).textTheme.headline2,
+                    textStyle: Theme.of(context).textTheme.headline4,
                     speed: const Duration(milliseconds: 220),
                   ),
                 ],
