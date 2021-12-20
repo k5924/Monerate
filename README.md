@@ -1,6 +1,12 @@
-# Monerate
+<h1 align="center">
+  <br>
+  <a href="https://github.com/k5924/Monerate"><img src="https://raw.githubusercontent.com/k5924/Monerate/master/assets/images/Icon.png?token=ANOLIX763YSJW62OENIKSN3BZHARI" alt="Monerate" width="200"></a>
+  <br>
+  Monerate
+  <br>
+</h1>
 
-Monerate is a mobile budget tracking application which allows users to manage all of their finances in one location
+<h4 align="center">Monerate is a mobile budget tracking application which allows users to manage all of their finances in one location</h4>
 
 
 <div align="center">
@@ -12,6 +18,13 @@ Monerate is a mobile budget tracking application which allows users to manage al
 [![Tests are](https://github.com/k5924/Monerate/actions/workflows/release-drafter.yml/badge.svg)](https://github.com/k5924/Monerate/actions/workflows/release-drafter.yml)
 </div>
 
+<p align="center">
+  <a href="#introduction">Introduction</a> •
+  <a href="#planned-features">Planned Features</a> •
+  <a href="#download">Download</a> •
+  <a href="#langs-and-tools">Languages and Tools</a> •
+  <a href="#license">License</a>
+</p>
 
 ## Introduction
 
