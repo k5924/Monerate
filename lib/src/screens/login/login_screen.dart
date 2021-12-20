@@ -22,15 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "Monerate",
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-                const AppIcon(),
-                Text(
-                  "Sign In",
-                  style: Theme.of(context).textTheme.headline5,
-                ),
+                const ScreenHeader(screenName: "Sign In"),
                 const LoginForm(),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 10, 25, 0),
@@ -40,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextButton(
                         onPressed: () => Navigator.pushNamed(
                           context,
-                          ConstructionPage.kID,
+                          ForgotPasswordScreen.kID,
                         ),
                         child: const Text(
                           "Forgot Password?",
