@@ -15,6 +15,8 @@ class _LoginFormState extends State<LoginForm> {
 
   final _formKey = GlobalKey<FormState>();
 
+  bool _showPassword = false;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,13 +42,21 @@ class _LoginFormState extends State<LoginForm> {
             TextFormField(
               controller: passwordController,
               validator: PasswordValidator().validatePassword,
-              obscureText: true,
+              obscureText: !_showPassword,
               textInputAction: TextInputAction.done,
               onSaved: (password) {
                 passwordController.text = password!;
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: 'Password',
+                suffixIcon: GestureDetector(
+                  onTap: () => setState(() {
+                    _showPassword = !_showPassword;
+                  }),
+                  child: Icon(
+                    _showPassword ? Icons.visibility : Icons.visibility_off,
+                  ),
+                ),
               ),
             ),
             const SizedBox(
