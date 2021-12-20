@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
+import 'package:monerate/src/widgets/components/custom_alert_dialog.dart';
 
 class ForgotPasswordForm extends StatefulWidget {
   const ForgotPasswordForm({Key? key}) : super(key: key);
@@ -12,6 +14,32 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
   final TextEditingController emailController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  Future<String?> displayConfirmationDialog() {
+    return customAlertDialog(
+      context: context,
+      title: "Confirmation Required",
+      content:
+          "By continuing with this action, a password reset email will be sent to the email address provided. Do you wish to continue",
+      actions: [
+        OutlinedButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text(
+            "Cancel",
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.popAndPushNamed(
+              context,
+              LoginScreen.kID,
+            );
+          },
+          child: const Text("Send Email"),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +64,9 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  Navigator.pop(context);
+                  await displayConfirmationDialog();
                 }
               },
               style: ElevatedButton.styleFrom(
