@@ -32,22 +32,51 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 const LoginForm(),
-                OutlinedButton(
-                  onPressed: () => Navigator.pushNamed(
-                    context,
-                    ConstructionPage.kID,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 25, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.pushNamed(
+                          context,
+                          ConstructionPage.kID,
+                        ),
+                        child: const Text(
+                          "Forgot Password?",
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 10,
-                    ),
-                  ),
-                  child: const Text(
-                    "Sign Up",
-                    style: TextStyle(
-                      fontSize: 24,
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(25, 50, 25, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text("Don't have an account?"),
+                      OutlinedButton(
+                        onPressed: () => Navigator.pushNamed(
+                          context,
+                          ConstructionPage.kID,
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 30,
+                            vertical: 10,
+                          ),
+                        ),
+                        child: const Text(
+                          "Sign Up",
+                          style: TextStyle(
+                            fontSize: 24,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

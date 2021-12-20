@@ -18,7 +18,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(25, 25, 25, 50),
+      padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
       child: Form(
         key: _formKey,
         child: Column(
@@ -47,21 +47,6 @@ class _LoginFormState extends State<LoginForm> {
               },
               decoration: const InputDecoration(
                 hintText: 'Password',
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextButton(
-              onPressed: () => Navigator.pushNamed(
-                context,
-                ConstructionPage.kID,
-              ),
-              child: const Text(
-                "Forgot Password",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
               ),
             ),
             const SizedBox(
