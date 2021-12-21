@@ -14,12 +14,13 @@ class EmailValidator extends Validator {
   }
 
   String? confirmEmail(String? value1, String? value2) {
-    final String? validationResult = validateEmail(value1);
-    if (validationResult == null) {
+    final String? validationResult1 = validateEmail(value1);
+    final String? validationResult2 = validateEmail(value2);
+    if ((validationResult1 == null) & (validationResult2 == null)) {
       if (value1!.compareTo(value2!) != 0) {
         return "Emails do not match, please try again";
       }
     }
-    return validationResult;
+    return validationResult2;
   }
 }

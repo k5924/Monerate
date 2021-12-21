@@ -11,12 +11,13 @@ class PasswordValidator extends Validator {
   }
 
   String? confirmPassword(String? value1, String? value2) {
-    final String? validationResult = validatePassword(value1);
-    if (validationResult == null) {
+    final String? validationResult1 = validatePassword(value1);
+    final String? validationResult2 = validatePassword(value2);
+    if ((validationResult1 == null) & (validationResult2 == null)) {
       if (value1!.compareTo(value2!) != 0) {
         return "Passwords do not match, please try again";
       }
     }
-    return validationResult;
+    return validationResult2;
   }
 }
