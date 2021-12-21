@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/cupertino.dart';
 import 'package:monerate/src/screens/export.dart';
 
@@ -9,4 +11,5 @@ Map<String, Widget Function(BuildContext)> kRoutes = {
   LoginScreen.kID: (context) => const LoginScreen(),
   ConstructionPage.kID: (context) => const ConstructionPage(),
   ForgotPasswordScreen.kID: (context) => const ForgotPasswordScreen(),
+  SignUpScreen.kID: (context) => const SignUpScreen(),
 };
