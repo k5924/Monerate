@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
+import 'package:monerate/src/widgets/export.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
@@ -16,6 +18,33 @@ class _SignUpFormState extends State<SignUpForm> {
       TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  bool _showPassword = false;
+
+  Future<String?> displayConfirmationDialog() {
+    return customAlertDialog(
+      context: context,
+      title: "Terms and Conditions",
+      content: kTermsAndConditions,
+      actions: [
+        OutlinedButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text(
+            "Cancel",
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.popAndPushNamed(
+              context,
+              LoginScreen.kID,
+            );
+          },
+          child: const Text("Agree and Continue"),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,40 +66,95 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             TextFormField(
               controller: confirmEmailController,
               keyboardType: TextInputType.emailAddress,
-              validator: EmailValidator().validateEmail,
+              validator: (value) {
+                return EmailValidator().confirmEmail(
+                  emailController.text,
+                  confirmEmailController.text,
+                );
+              },
               onSaved: (value) {
                 confirmEmailController.text = value!;
               },
               decoration: const InputDecoration(
-                hintText: 'Email Address',
+                hintText: 'Confirm Email Address',
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             TextFormField(
               controller: passwordController,
               validator: PasswordValidator().validatePassword,
-              obscureText: true,
+              obscureText: !_showPassword,
               textInputAction: TextInputAction.done,
               onSaved: (password) {
                 passwordController.text = password!;
               },
               decoration: const InputDecoration(
                 hintText: 'Password',
-                // suffixIcon: GestureDetector(
-                //   onTap: () => setState(() {
-                //     _showPassword = !_showPassword;
-                //   }),
-                //   child: Icon(
-                //     _showPassword ? Icons.visibility : Icons.visibility_off,
-                //   ),
-                // ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: confirmPasswordController,
+              validator: (value) {
+                return PasswordValidator().confirmPassword(
+                  passwordController.text,
+                  confirmPasswordController.text,
+                );
+              },
+              obscureText: !_showPassword,
+              textInputAction: TextInputAction.done,
+              onSaved: (password) {
+                confirmPasswordController.text = password!;
+              },
+              decoration: const InputDecoration(
+                hintText: 'Confirm Password',
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            CheckboxListTile(
+              title: !_showPassword
+                  ? const Text("Show Password")
+                  : const Text("Hide Password"),
+              value: _showPassword,
+              onChanged: (value) {
+                setState(
+                  () {
+                    _showPassword = !_showPassword;
+                  },
+                );
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  await displayConfirmationDialog();
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 10,
+                ),
+              ),
+              child: const Text(
+                "Register",
+                style: TextStyle(
+                  fontSize: 18,
+                ),
               ),
             ),
           ],

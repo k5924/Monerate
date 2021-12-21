@@ -9,4 +9,14 @@ class PasswordValidator extends Validator {
       return "Enter a valid password (Minimum 6 chararacters)";
     }
   }
+
+  String? confirmPassword(String? value1, String? value2) {
+    final String? validationResult = validatePassword(value1);
+    if (validationResult == null) {
+      if (value1!.compareTo(value2!) != 0) {
+        return "Passwords do not match, please try again";
+      }
+    }
+    return validationResult;
+  }
 }

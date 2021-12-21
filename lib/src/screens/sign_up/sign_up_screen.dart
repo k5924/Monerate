@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String kID = 'sign_up_screen';
-  const SignUpScreen({ Key? key }) : super(key: key);
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
@@ -15,6 +16,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return CenteredScrollView(
       children: [
         const ScreenHeader(screenName: "Sign Up"),
+        const SignUpForm(),
         OutlinedButton(
           onPressed: () => Navigator.pop(context),
           style: OutlinedButton.styleFrom(

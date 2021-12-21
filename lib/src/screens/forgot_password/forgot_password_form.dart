@@ -20,7 +20,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
       context: context,
       title: "Confirmation Required",
       content:
-          "By continuing with this action, a password reset email will be sent to the email address provided. Do you wish to continue",
+          "By continuing with this action, a password reset email will be sent to the email address provided. Do you wish to continue?",
       actions: [
         OutlinedButton(
           onPressed: () => Navigator.pop(context),

@@ -7,6 +7,7 @@ Future<String?> customAlertDialog({
   required List<Widget> actions,
 }) {
   return showDialog(
+    barrierDismissible: false,
     context: context,
     builder: (context) => AlertDialog(
       title: Text(title),
