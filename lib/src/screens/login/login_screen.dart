@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 OutlinedButton(
                   onPressed: () => Navigator.pushNamed(
                     context,
-                    ConstructionPage.kID,
+                    SignUpScreen.kID,
                   ),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(

@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
-  static const String kID = 'forgot_password_screen';
-  const ForgotPasswordScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  static const String kID = 'sign_up_screen';
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return CenteredScrollView(
       children: [
-        const ScreenHeader(screenName: "Forgot Password"),
-        const ForgotPasswordForm(),
+        const ScreenHeader(screenName: "Sign Up"),
+        const SignUpForm(),
         OutlinedButton(
           onPressed: () => Navigator.pop(context),
           style: OutlinedButton.styleFrom(
