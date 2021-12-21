@@ -13,32 +13,26 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const ScreenHeader(screenName: "Forgot Password"),
-              const ForgotPasswordForm(),
-              OutlinedButton(
-                onPressed: () => Navigator.pop(context),
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 10,
-                  ),
-                ),
-                child: const Text(
-                  "Login",
-                  style: TextStyle(
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-            ],
+    return CenteredScrollView(
+      children: [
+        const ScreenHeader(screenName: "Forgot Password"),
+        const ForgotPasswordForm(),
+        OutlinedButton(
+          onPressed: () => Navigator.pop(context),
+          style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 30,
+              vertical: 10,
+            ),
+          ),
+          child: const Text(
+            "Login",
+            style: TextStyle(
+              fontSize: 24,
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
