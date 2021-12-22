@@ -1,4 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
@@ -17,12 +20,23 @@ class _LoginFormState extends State<LoginForm> {
 
   bool _showPassword = false;
 
+  final AuthProvider authProvider = AuthProvider();
+
+  late String result;
+
   @override
   void dispose() {
     // Clean up controllers when form is disposed
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+
+  Future<String?> _checkCredentials() async {
+    return authProvider.signIn(
+      emailController.text,
+      passwordController.text,
+    );
   }
 
   @override
@@ -71,12 +85,23 @@ class _LoginFormState extends State<LoginForm> {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  Navigator.pushNamed(
-                    context,
-                    MyHomePage.kID,
-                  );
+                  result = (await _checkCredentials())!;
+                  if (result == "Email Verified") {
+                    Navigator.pushNamed(
+                      context,
+                      MyHomePage.kID,
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          result,
+                        ),
+                      ),
+                    );
+                  }
                 }
               },
               style: ElevatedButton.styleFrom(
