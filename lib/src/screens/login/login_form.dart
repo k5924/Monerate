@@ -18,6 +18,14 @@ class _LoginFormState extends State<LoginForm> {
   bool _showPassword = false;
 
   @override
+  void dispose() {
+    // Clean up controllers when form is disposed
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),

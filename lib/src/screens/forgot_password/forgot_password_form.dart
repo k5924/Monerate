@@ -15,6 +15,13 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
 
   final _formKey = GlobalKey<FormState>();
 
+  @override
+  void dispose() {
+    // Clean up controllers when form is disposed
+    emailController.dispose();
+    super.dispose();
+  }
+
   Future<String?> displayConfirmationDialog() {
     return customAlertDialog(
       context: context,
