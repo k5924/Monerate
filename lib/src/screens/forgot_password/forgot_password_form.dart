@@ -1,4 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/components/custom_alert_dialog.dart';
@@ -15,11 +18,25 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
 
   final _formKey = GlobalKey<FormState>();
 
+  final AuthProvider authProvider = AuthProvider();
+
+  late String result;
+
   @override
   void dispose() {
     // Clean up controllers when form is disposed
     emailController.dispose();
     super.dispose();
+  }
+
+  void closeDialogBox() {
+    return Navigator.pop(context);
+  }
+
+  Future<String?> _sendPasswordResetEmail() async {
+    return authProvider.forgotPassword(
+      emailController.text,
+    );
   }
 
   Future<String?> displayConfirmationDialog() {
@@ -30,16 +47,28 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
           "By continuing with this action, a password reset email will be sent to the email address provided. Do you wish to continue?",
       actions: [
         OutlinedButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => closeDialogBox(),
           child: const Text(
             "Cancel",
           ),
         ),
         ElevatedButton(
-          onPressed: () {
-            Navigator.popAndPushNamed(
-              context,
-              LoginScreen.kID,
+          onPressed: () async {
+            result = (await _sendPasswordResetEmail())!;
+            if (result == "Password reset email sent") {
+              Navigator.popAndPushNamed(
+                context,
+                LoginScreen.kID,
+              );
+            } else {
+              closeDialogBox();
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  result,
+                ),
+              ),
             );
           },
           child: const Text("Send Email"),

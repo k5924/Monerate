@@ -4,6 +4,22 @@ class AuthProvider {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late UserCredential userCredential;
   late User? user;
+  late String caughtException;
+
+  String? exceptionCaught(String code) {
+    if (code == 'weak-password') {
+      return 'The password provided is too weak.';
+    } else if (code == 'email-already-in-use') {
+      return 'The account already exists for that email.';
+    } else if (code == 'too-many-requests') {
+      return 'Too many requests, please try again later';
+    } else if (code == 'user-not-found') {
+      return 'No user found for that email.';
+    } else if (code == 'wrong-password') {
+      return 'Wrong password provided for that user.';
+    }
+    return code;
+  }
 
   Future<String> verifyEmail(User? user) async {
     try {
@@ -11,10 +27,10 @@ class AuthProvider {
         await user.sendEmailVerification();
         return 'Please verify the email sent to the email address you provided';
       }
-      return 'Email Verified';
     } on FirebaseAuthException catch (e) {
-      return 'Too many requests, please try again later';
+      return caughtException = exceptionCaught(e.code)!;
     }
+    return 'Email Verified';
   }
 
   Future<String?> registerUser(String email, String password) async {
@@ -26,13 +42,7 @@ class AuthProvider {
       user = _auth.currentUser;
       return verifyEmail(user);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        return 'The password provided is too weak.';
-      } else if (e.code == 'email-already-in-use') {
-        return 'The account already exists for that email.';
-      } else if (e.code == 'too-many-requests') {
-        return 'Too many requests, please try again later';
-      }
+      return caughtException = exceptionCaught(e.code)!;
     }
   }
 
@@ -45,13 +55,18 @@ class AuthProvider {
       user = _auth.currentUser;
       return verifyEmail(user);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        return 'No user found for that email.';
-      } else if (e.code == 'wrong-password') {
-        return 'Wrong password provided for that user.';
-      } else if (e.code == 'too-many-requests') {
-        return 'Too many requests, please try again later';
-      }
+      return caughtException = exceptionCaught(e.code)!;
+    }
+  }
+
+  Future<String?> forgotPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(
+        email: email,
+      );
+      return "Password reset email sent";
+    } on FirebaseAuthException catch (e) {
+      return caughtException = exceptionCaught(e.code)!;
     }
   }
 }
