@@ -1,4 +1,4 @@
-package com.example.monerate
+package com.k5924.monerate
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,4 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
@@ -19,7 +22,32 @@ class _SignUpFormState extends State<SignUpForm> {
 
   final _formKey = GlobalKey<FormState>();
 
+  final AuthProvider authProvider = AuthProvider();
+
+  late String result;
+
   bool _showPassword = false;
+
+  @override
+  void dispose() {
+    // Clean up controllers when form is disposed
+    emailController.dispose();
+    confirmEmailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  Future<String?> _checkCredentials() async {
+    return authProvider.registerUser(
+      emailController.text,
+      passwordController.text,
+    );
+  }
+
+  void closeDialogBox() {
+    return Navigator.pop(context);
+  }
 
   Future<String?> displayConfirmationDialog() {
     return customAlertDialog(
@@ -28,16 +56,30 @@ class _SignUpFormState extends State<SignUpForm> {
       content: kTermsAndConditions,
       actions: [
         OutlinedButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => closeDialogBox(),
           child: const Text(
             "Cancel",
           ),
         ),
         ElevatedButton(
-          onPressed: () {
-            Navigator.popAndPushNamed(
-              context,
-              LoginScreen.kID,
+          onPressed: () async {
+            result = (await _checkCredentials())!;
+            // ignore: unnecessary_null_comparison
+            if (result ==
+                'Please verify the email sent to the email address you provided') {
+              Navigator.popAndPushNamed(
+                context,
+                LoginScreen.kID,
+              );
+            } else {
+              closeDialogBox();
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  result,
+                ),
+              ),
             );
           },
           child: const Text("Agree and Continue"),
