@@ -1,25 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:monerate/src/utilities/export.dart';
 
 class AuthProvider {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late UserCredential userCredential;
   late User? user;
-  late String caughtException;
-
-  String? exceptionCaught(String code) {
-    if (code == 'weak-password') {
-      return 'The password provided is too weak.';
-    } else if (code == 'email-already-in-use') {
-      return 'The account already exists for that email.';
-    } else if (code == 'too-many-requests') {
-      return 'Too many requests, please try again later';
-    } else if (code == 'user-not-found') {
-      return 'No user found for that email.';
-    } else if (code == 'wrong-password') {
-      return 'Wrong password provided for that user.';
-    }
-    return code;
-  }
+  late ExceptionsFactory exceptionsFactory;
 
   Future<String> verifyEmail(User? user) async {
     try {
@@ -28,7 +14,8 @@ class AuthProvider {
         return 'Please verify the email sent to the email address you provided';
       }
     } on FirebaseAuthException catch (e) {
-      return caughtException = exceptionCaught(e.code)!;
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
     }
     return 'Email Verified';
   }
@@ -42,7 +29,8 @@ class AuthProvider {
       user = _auth.currentUser;
       return verifyEmail(user);
     } on FirebaseAuthException catch (e) {
-      return caughtException = exceptionCaught(e.code)!;
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
     }
   }
 
@@ -55,7 +43,8 @@ class AuthProvider {
       user = _auth.currentUser;
       return verifyEmail(user);
     } on FirebaseAuthException catch (e) {
-      return caughtException = exceptionCaught(e.code)!;
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
     }
   }
 
@@ -66,7 +55,8 @@ class AuthProvider {
       );
       return "Password reset email sent";
     } on FirebaseAuthException catch (e) {
-      return caughtException = exceptionCaught(e.code)!;
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
     }
   }
 }
