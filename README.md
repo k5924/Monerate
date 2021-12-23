@@ -36,7 +36,7 @@ This application works by using the Flutter UI framework in Dart to create the m
 
 ## Download
 
-- place download button here
+[DOWNLOAD](https://github.com/k5924/Monerate/releases/latest)
 
 ## Languages and Tools
 
