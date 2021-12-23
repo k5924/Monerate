@@ -22,7 +22,7 @@
   <a href="#introduction">Introduction</a> •
   <a href="#planned-features">Planned Features</a> •
   <a href="#download">Download</a> •
-  <a href="#langs-and-tools">Languages and Tools</a> •
+  <a href="#languages-and-tools">Languages and Tools</a> •
   <a href="#license">License</a>
 </p>
 
