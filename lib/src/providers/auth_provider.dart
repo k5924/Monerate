@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
 class AuthProvider {
@@ -27,6 +28,7 @@ class AuthProvider {
         password: password,
       );
       user = _auth.currentUser;
+      await DatabaseProvider(uid: user!.uid).createNewUser();
       return verifyEmail(user);
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
