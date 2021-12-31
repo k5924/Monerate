@@ -1,3 +1,4 @@
+export 'complete_profile/export.dart';
 export 'construction_page.dart';
 export 'forgot_password/export.dart';
 export 'homepage.dart';

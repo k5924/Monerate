@@ -103,7 +103,7 @@ class _LoginFormState extends State<LoginForm> {
                     } else {
                       Navigator.pushNamed(
                         context,
-                        ConstructionPage.kID,
+                        CompleteProfileScreen.kID,
                       );
                     }
                   } else {
