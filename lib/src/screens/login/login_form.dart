@@ -22,7 +22,8 @@ class _LoginFormState extends State<LoginForm> {
 
   final AuthProvider authProvider = AuthProvider();
 
-  late String result;
+  late String verified;
+  late bool completeProfile;
 
   @override
   void dispose() {
@@ -37,6 +38,10 @@ class _LoginFormState extends State<LoginForm> {
       emailController.text,
       passwordController.text,
     );
+  }
+
+  Future<bool> _isProfileComplete() async {
+    return authProvider.checkProfile();
   }
 
   @override
@@ -87,17 +92,25 @@ class _LoginFormState extends State<LoginForm> {
             ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  result = (await _checkCredentials())!;
-                  if (result == "Email Verified") {
-                    Navigator.pushNamed(
-                      context,
-                      MyHomePage.kID,
-                    );
+                  verified = (await _checkCredentials())!;
+                  if (verified == "Email Verified") {
+                    completeProfile = await _isProfileComplete();
+                    if (completeProfile) {
+                      Navigator.pushNamed(
+                        context,
+                        MyHomePage.kID,
+                      );
+                    } else {
+                      Navigator.pushNamed(
+                        context,
+                        ConstructionPage.kID,
+                      );
+                    }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          result,
+                          verified,
                         ),
                       ),
                     );

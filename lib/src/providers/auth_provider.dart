@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:monerate/src/models/user_model.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
@@ -59,6 +60,17 @@ class AuthProvider {
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
+    }
+  }
+
+  Future<bool> checkProfile() async {
+    user = _auth.currentUser;
+    final UserModel userModel =
+        await DatabaseProvider(uid: user!.uid).getProfile();
+    if (userModel.getUserType() == null) {
+      return false;
+    } else {
+      return true;
     }
   }
 }
