@@ -8,12 +8,14 @@ void main() {
       expect(result, "This field cant be left empty");
     });
 
-    test('Non empty name doesnt returns error', () {
+    test('Non empty name doesnt return error', () {
       final result = NameValidator().validateName('a');
       expect(result, null);
     });
 
-    
-    
+    test('Number in name returns error', () {
+      final result = NameValidator().validateName('1');
+      expect(result, 'Please enter a valid name');
+    });
   });
 }
