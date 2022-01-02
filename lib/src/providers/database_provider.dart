@@ -26,4 +26,9 @@ class DatabaseProvider {
     });
     return userModel;
   }
+
+  Future<void> updateProfile(UserModel profileData) async {
+    userModel = profileData;
+    await usersCollection.doc(uid).update(userModel.toMap());
+  }
 }
