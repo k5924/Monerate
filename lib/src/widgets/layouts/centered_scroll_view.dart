@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class CenteredScrollView extends StatefulWidget {
   final List<Widget> children;
-  const CenteredScrollView({Key? key, required this.children}) : super(key: key);
+  const CenteredScrollView({Key? key, required this.children})
+      : super(key: key);
 
   @override
   _CenteredScrollViewState createState() => _CenteredScrollViewState();

@@ -15,6 +15,8 @@ class ExceptionsFactory {
         return 'No user found for that email.';
       case 'wrong-password':
         return 'Wrong password provided for that user.';
+      case 'network-request-failed':
+        return 'Problem connecting to the server, please check the network connection and try again later.';
       default:
         return exception;
     }

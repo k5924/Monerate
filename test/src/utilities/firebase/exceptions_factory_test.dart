@@ -36,6 +36,12 @@ void main() {
       expect(result, 'Wrong password provided for that user.');
     });
 
+    test('No network connection for Firebase', () {
+      exceptionsFactory = ExceptionsFactory('network-request-failed');
+      final result = exceptionsFactory.exceptionCaught();
+      expect(result, 'Problem connecting to the server, please check the network connection and try again later.');
+    });
+
     test('Exception which is not predefined returns exception in plain text', () {
       exceptionsFactory = ExceptionsFactory('undefined-exception');
       final result = exceptionsFactory.exceptionCaught();

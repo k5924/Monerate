@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:monerate/src/models/export.dart';
+import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
 class AuthProvider {
@@ -6,6 +8,7 @@ class AuthProvider {
   late UserCredential userCredential;
   late User? user;
   late ExceptionsFactory exceptionsFactory;
+  late UserModel userModel;
 
   Future<String> verifyEmail(User? user) async {
     try {
@@ -27,6 +30,7 @@ class AuthProvider {
         password: password,
       );
       user = _auth.currentUser;
+      await DatabaseProvider(uid: user!.uid).createNewUser();
       return verifyEmail(user);
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
@@ -54,6 +58,71 @@ class AuthProvider {
         email: email,
       );
       return "Password reset email sent";
+    } on FirebaseAuthException catch (e) {
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
+    }
+  }
+
+  Future<Object> checkProfile() async {
+    try {
+      user = _auth.currentUser;
+      userModel = await DatabaseProvider(uid: user!.uid).getProfile();
+      if (userModel.getUserType() == null ||
+          userModel.getUserType() == 'null') {
+        return false;
+      } else {
+        return true;
+      }
+    } on FirebaseAuthException catch (e) {
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
+    }
+  }
+
+  Future<String?> updateUserProfile(
+    String firstName,
+    String lastName,
+    String userType,
+  ) async {
+    try {
+      user = _auth.currentUser;
+      userModel = UserModel(
+        firstName: firstName,
+        lastName: lastName,
+        userType: userType,
+      );
+      await DatabaseProvider(uid: user!.uid).updateProfile(userModel);
+    } on FirebaseAuthException catch (e) {
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
+    }
+  }
+
+  Future<String?> updateFinancialAdvisorProfile(
+    String firstName,
+    String lastName,
+    String userType,
+    String licenseID,
+  ) async {
+    try {
+      user = _auth.currentUser;
+      userModel = FinancialAdvisorModel(
+        firstName: firstName,
+        lastName: lastName,
+        userType: userType,
+        licenseID: licenseID,
+      );
+      await DatabaseProvider(uid: user!.uid).updateProfile(userModel);
+    } on FirebaseAuthException catch (e) {
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
+    }
+  }
+
+  Future<String?> logout() async {
+    try {
+      _auth.signOut();
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;

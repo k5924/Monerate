@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
@@ -22,13 +23,17 @@ class _LoginFormState extends State<LoginForm> {
 
   final AuthProvider authProvider = AuthProvider();
 
-  late String result;
+  late String verified;
+  late Object completeProfile;
+
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void dispose() {
     // Clean up controllers when form is disposed
     emailController.dispose();
     passwordController.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -37,6 +42,10 @@ class _LoginFormState extends State<LoginForm> {
       emailController.text,
       passwordController.text,
     );
+  }
+
+  Future<Object> _isProfileComplete() async {
+    return authProvider.checkProfile();
   }
 
   @override
@@ -51,6 +60,7 @@ class _LoginFormState extends State<LoginForm> {
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
               validator: EmailValidator().validateEmail,
+              focusNode: _focusNode,
               onSaved: (value) {
                 emailController.text = value!;
               },
@@ -66,6 +76,7 @@ class _LoginFormState extends State<LoginForm> {
               validator: PasswordValidator().validatePassword,
               obscureText: !_showPassword,
               textInputAction: TextInputAction.done,
+              focusNode: _focusNode,
               onSaved: (password) {
                 passwordController.text = password!;
               },
@@ -87,17 +98,39 @@ class _LoginFormState extends State<LoginForm> {
             ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  result = (await _checkCredentials())!;
-                  if (result == "Email Verified") {
-                    Navigator.pushNamed(
-                      context,
-                      MyHomePage.kID,
-                    );
+                  FocusScope.of(context).unfocus();
+                  EasyLoading.show(status: 'loading...');
+                  verified = (await _checkCredentials())!;
+                  if (verified == "Email Verified") {
+                    completeProfile = await _isProfileComplete();
+                    if (completeProfile == true) {
+                      Navigator.pushNamed(
+                        context,
+                        DashboardScreen.kID,
+                      );
+                      EasyLoading.dismiss();
+                    } else if (completeProfile == false) {
+                      Navigator.pushNamed(
+                        context,
+                        CompleteProfileScreen.kID,
+                      );
+                      EasyLoading.dismiss();
+                    } else {
+                      EasyLoading.dismiss();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            completeProfile.toString(),
+                          ),
+                        ),
+                      );
+                    }
                   } else {
+                    EasyLoading.dismiss();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          result,
+                          verified,
                         ),
                       ),
                     );

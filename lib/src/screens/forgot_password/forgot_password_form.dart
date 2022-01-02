@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
@@ -19,13 +20,14 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
   final _formKey = GlobalKey<FormState>();
 
   final AuthProvider authProvider = AuthProvider();
-
+  final FocusNode _focusNode = FocusNode();
   late String result;
 
   @override
   void dispose() {
     // Clean up controllers when form is disposed
     emailController.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -54,6 +56,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
         ),
         ElevatedButton(
           onPressed: () async {
+            EasyLoading.show(status: 'loading...');
             result = (await _sendPasswordResetEmail())!;
             if (result == "Password reset email sent") {
               Navigator.popAndPushNamed(
@@ -63,6 +66,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
             } else {
               closeDialogBox();
             }
+            EasyLoading.dismiss();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
@@ -88,6 +92,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
             TextFormField(
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
+              focusNode: _focusNode,
               validator: EmailValidator().validateEmail,
               onSaved: (value) {
                 emailController.text = value!;
@@ -102,6 +107,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
             ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
+                  FocusScope.of(context).unfocus();
                   await displayConfirmationDialog();
                 }
               },
