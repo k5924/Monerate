@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/k5924/Monerate"><img src="https://raw.githubusercontent.com/k5924/Monerate/master/assets/images/Icon.png?token=ANOLIX763YSJW62OENIKSN3BZHARI" alt="Monerate" width="200"></a>
+  <a href="https://github.com/k5924/Monerate"><img src="https://github.com/k5924/Monerate/blob/master/assets/images/Icon.png?raw=true" alt="Monerate" width="200"></a>
   <br>
   Monerate
   <br>
