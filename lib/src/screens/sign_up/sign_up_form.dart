@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
@@ -28,6 +29,8 @@ class _SignUpFormState extends State<SignUpForm> {
 
   bool _showPassword = false;
 
+  final FocusNode _focusNode = FocusNode();
+
   @override
   void dispose() {
     // Clean up controllers when form is disposed
@@ -35,6 +38,7 @@ class _SignUpFormState extends State<SignUpForm> {
     confirmEmailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -63,6 +67,7 @@ class _SignUpFormState extends State<SignUpForm> {
         ),
         ElevatedButton(
           onPressed: () async {
+            EasyLoading.show(status: 'loading...');
             result = (await _checkCredentials())!;
             // ignore: unnecessary_null_comparison
             if (result ==
@@ -74,6 +79,7 @@ class _SignUpFormState extends State<SignUpForm> {
             } else {
               closeDialogBox();
             }
+            EasyLoading.dismiss();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
@@ -100,6 +106,7 @@ class _SignUpFormState extends State<SignUpForm> {
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
               validator: EmailValidator().validateEmail,
+              focusNode: _focusNode,
               onSaved: (value) {
                 emailController.text = value!;
               },
@@ -119,6 +126,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   confirmEmailController.text,
                 );
               },
+              focusNode: _focusNode,
               onSaved: (value) {
                 confirmEmailController.text = value!;
               },
@@ -134,6 +142,7 @@ class _SignUpFormState extends State<SignUpForm> {
               validator: PasswordValidator().validatePassword,
               obscureText: !_showPassword,
               textInputAction: TextInputAction.done,
+              focusNode: _focusNode,
               onSaved: (password) {
                 passwordController.text = password!;
               },
@@ -154,6 +163,7 @@ class _SignUpFormState extends State<SignUpForm> {
               },
               obscureText: !_showPassword,
               textInputAction: TextInputAction.done,
+              focusNode: _focusNode,
               onSaved: (password) {
                 confirmPasswordController.text = password!;
               },
@@ -183,6 +193,7 @@ class _SignUpFormState extends State<SignUpForm> {
             ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
+                  FocusScope.of(context).unfocus();
                   await displayConfirmationDialog();
                 }
               },
