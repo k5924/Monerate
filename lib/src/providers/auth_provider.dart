@@ -68,7 +68,8 @@ class AuthProvider {
     try {
       user = _auth.currentUser;
       userModel = await DatabaseProvider(uid: user!.uid).getProfile();
-      if (userModel.getUserType() == null) {
+      if (userModel.getUserType() == null ||
+          userModel.getUserType() == 'null') {
         return false;
       } else {
         return true;
@@ -119,8 +120,8 @@ class AuthProvider {
     }
   }
 
-  Future<String?> logout() async{
-    try{
+  Future<String?> logout() async {
+    try {
       _auth.signOut();
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
