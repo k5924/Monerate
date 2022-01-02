@@ -1,4 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:monerate/src/providers/export.dart';
+import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
@@ -13,8 +18,18 @@ class CompleteEndUserProfile extends StatefulWidget {
 class _CompleteEndUserProfileState extends State<CompleteEndUserProfile> {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
-
+  final FocusNode _focusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
+  final AuthProvider authProvider = AuthProvider();
+
+  @override
+  void dispose() {
+    // Clean up controllers when form is disposed
+    firstNameController.dispose();
+    lastNameController.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +44,7 @@ class _CompleteEndUserProfileState extends State<CompleteEndUserProfile> {
                 TextFormField(
                   controller: firstNameController,
                   validator: NameValidator().validateName,
+                  focusNode: _focusNode,
                   onSaved: (firstName) {
                     firstNameController.text = firstName!;
                   },
@@ -42,6 +58,7 @@ class _CompleteEndUserProfileState extends State<CompleteEndUserProfile> {
                 TextFormField(
                   controller: lastNameController,
                   validator: NameValidator().validateName,
+                  focusNode: _focusNode,
                   onSaved: (lastName) {
                     lastNameController.text = lastName!;
                   },
@@ -54,7 +71,27 @@ class _CompleteEndUserProfileState extends State<CompleteEndUserProfile> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    if (_formKey.currentState!.validate()) {}
+                    if (_formKey.currentState!.validate()) {
+                      FocusScope.of(context).unfocus();
+                      EasyLoading.show(status: 'loading...');
+                      final result = await _updateProfile();
+                      if (result != null) {
+                        EasyLoading.dismiss();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              result,
+                            ),
+                          ),
+                        );
+                      } else {
+                        Navigator.pushReplacementNamed(
+                          context,
+                          DashboardScreen.kID,
+                        );
+                        EasyLoading.dismiss();
+                      }
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
@@ -92,6 +129,14 @@ class _CompleteEndUserProfileState extends State<CompleteEndUserProfile> {
           ),
         ),
       ],
+    );
+  }
+
+  Future<String?> _updateProfile() {
+    return authProvider.updateUserProfile(
+      firstNameController.text,
+      lastNameController.text,
+      'End-User',
     );
   }
 }

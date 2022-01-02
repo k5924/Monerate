@@ -1,4 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:monerate/src/providers/export.dart';
+import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
@@ -15,8 +20,21 @@ class _CompleteFinancialAdvisorProfileState
     extends State<CompleteFinancialAdvisorProfile> {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController licenseIDController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
 
   final _formKey = GlobalKey<FormState>();
+  final AuthProvider authProvider = AuthProvider();
+
+  @override
+  void dispose() {
+    // Clean up controllers when form is disposed
+    firstNameController.dispose();
+    lastNameController.dispose();
+    licenseIDController.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +49,7 @@ class _CompleteFinancialAdvisorProfileState
                 TextFormField(
                   controller: firstNameController,
                   validator: NameValidator().validateName,
+                  focusNode: _focusNode,
                   onSaved: (firstName) {
                     firstNameController.text = firstName!;
                   },
@@ -44,6 +63,7 @@ class _CompleteFinancialAdvisorProfileState
                 TextFormField(
                   controller: lastNameController,
                   validator: NameValidator().validateName,
+                  focusNode: _focusNode,
                   onSaved: (lastName) {
                     lastNameController.text = lastName!;
                   },
@@ -54,9 +74,43 @@ class _CompleteFinancialAdvisorProfileState
                 const SizedBox(
                   height: 20,
                 ),
+                TextFormField(
+                  controller: licenseIDController,
+                  validator: LicenseValidator().validateLicense,
+                  focusNode: _focusNode,
+                  onSaved: (licenseID) {
+                    licenseIDController.text = licenseID!;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'License ID',
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 ElevatedButton(
                   onPressed: () async {
-                    if (_formKey.currentState!.validate()) {}
+                    if (_formKey.currentState!.validate()) {
+                      FocusScope.of(context).unfocus();
+                      EasyLoading.show(status: 'loading...');
+                      final result = await _updateProfile();
+                      if (result != null) {
+                        EasyLoading.dismiss();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              result,
+                            ),
+                          ),
+                        );
+                      } else {
+                        Navigator.pushReplacementNamed(
+                          context,
+                          DashboardScreen.kID,
+                        );
+                        EasyLoading.dismiss();
+                      }
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
@@ -94,6 +148,15 @@ class _CompleteFinancialAdvisorProfileState
           ),
         ),
       ],
+    );
+  }
+
+  Future<String?> _updateProfile() {
+    return authProvider.updateFinancialAdvisorProfile(
+      firstNameController.text,
+      lastNameController.text,
+      'Financial Advisor',
+      licenseIDController.text,
     );
   }
 }
