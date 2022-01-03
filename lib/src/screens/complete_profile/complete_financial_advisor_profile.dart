@@ -90,14 +90,7 @@ class _CompleteFinancialAdvisorProfileState
                       EasyLoading.show(status: 'loading...');
                       final result = await _updateProfile();
                       if (result != null) {
-                        EasyLoading.dismiss();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              result,
-                            ),
-                          ),
-                        );
+                        EasyLoading.showError(result);
                       } else {
                         Navigator.pushReplacementNamed(
                           context,

@@ -29,7 +29,6 @@ class _SignUpFormState extends State<SignUpForm> {
 
   bool _showPassword = false;
 
-
   @override
   void dispose() {
     // Clean up controllers when form is disposed
@@ -74,17 +73,11 @@ class _SignUpFormState extends State<SignUpForm> {
                 context,
                 LoginScreen.kID,
               );
+              EasyLoading.showSuccess(result);
             } else {
               closeDialogBox();
+              EasyLoading.showError(result);
             }
-            EasyLoading.dismiss();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  result,
-                ),
-              ),
-            );
           },
           child: const Text("Agree and Continue"),
         ),

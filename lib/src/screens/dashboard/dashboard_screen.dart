@@ -94,14 +94,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             EasyLoading.show();
                             final result = await _signOut();
                             if (result != null) {
-                              EasyLoading.dismiss();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    result,
-                                  ),
-                                ),
-                              );
+                              EasyLoading.showError(result);
                             } else {
                               Navigator.pushReplacementNamed(
                                 context,

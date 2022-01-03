@@ -61,17 +61,11 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                 context,
                 LoginScreen.kID,
               );
+              EasyLoading.showSuccess(result);
             } else {
               closeDialogBox();
+              EasyLoading.showError(result);
             }
-            EasyLoading.dismiss();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  result,
-                ),
-              ),
-            );
           },
           child: const Text("Send Email"),
         ),
