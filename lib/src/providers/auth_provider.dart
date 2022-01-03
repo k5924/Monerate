@@ -128,4 +128,15 @@ class AuthProvider {
       return exceptionsFactory.exceptionCaught()!;
     }
   }
+
+  Future<Object> getProfile() async {
+    try {
+      user = _auth.currentUser;
+      userModel = await DatabaseProvider(uid: user!.uid).getProfile();
+      return userModel.toMap();
+    } on FirebaseAuthException catch (e) {
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
+    }
+  }
 }

@@ -20,14 +20,12 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
   final _formKey = GlobalKey<FormState>();
 
   final AuthProvider authProvider = AuthProvider();
-  final FocusNode _focusNode = FocusNode();
   late String result;
 
   @override
   void dispose() {
     // Clean up controllers when form is disposed
     emailController.dispose();
-    _focusNode.dispose();
     super.dispose();
   }
 
@@ -63,17 +61,11 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                 context,
                 LoginScreen.kID,
               );
+              EasyLoading.showSuccess(result);
             } else {
               closeDialogBox();
+              EasyLoading.showError(result);
             }
-            EasyLoading.dismiss();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  result,
-                ),
-              ),
-            );
           },
           child: const Text("Send Email"),
         ),
@@ -92,7 +84,6 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
             TextFormField(
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
-              focusNode: _focusNode,
               validator: EmailValidator().validateEmail,
               onSaved: (value) {
                 emailController.text = value!;

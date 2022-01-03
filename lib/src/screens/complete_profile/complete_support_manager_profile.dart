@@ -20,7 +20,6 @@ class _CompleteSupportManagerProfileState
     extends State<CompleteSupportManagerProfile> {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
   final AuthProvider authProvider = AuthProvider();
 
@@ -29,7 +28,6 @@ class _CompleteSupportManagerProfileState
     // Clean up controllers when form is disposed
     firstNameController.dispose();
     lastNameController.dispose();
-    _focusNode.dispose();
     super.dispose();
   }
 
@@ -46,7 +44,6 @@ class _CompleteSupportManagerProfileState
                 TextFormField(
                   controller: firstNameController,
                   validator: NameValidator().validateName,
-                  focusNode: _focusNode,
                   onSaved: (firstName) {
                     firstNameController.text = firstName!;
                   },
@@ -60,7 +57,6 @@ class _CompleteSupportManagerProfileState
                 TextFormField(
                   controller: lastNameController,
                   validator: NameValidator().validateName,
-                  focusNode: _focusNode,
                   onSaved: (lastName) {
                     lastNameController.text = lastName!;
                   },
@@ -78,14 +74,7 @@ class _CompleteSupportManagerProfileState
                       EasyLoading.show();
                       final result = await _updateProfile();
                       if (result != null) {
-                        EasyLoading.dismiss();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              result,
-                            ),
-                          ),
-                        );
+                        EasyLoading.showError(result);
                       } else {
                         Navigator.pushReplacementNamed(
                           context,

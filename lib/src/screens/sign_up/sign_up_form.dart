@@ -29,8 +29,6 @@ class _SignUpFormState extends State<SignUpForm> {
 
   bool _showPassword = false;
 
-  final FocusNode _focusNode = FocusNode();
-
   @override
   void dispose() {
     // Clean up controllers when form is disposed
@@ -38,7 +36,6 @@ class _SignUpFormState extends State<SignUpForm> {
     confirmEmailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
-    _focusNode.dispose();
     super.dispose();
   }
 
@@ -76,17 +73,11 @@ class _SignUpFormState extends State<SignUpForm> {
                 context,
                 LoginScreen.kID,
               );
+              EasyLoading.showSuccess(result);
             } else {
               closeDialogBox();
+              EasyLoading.showError(result);
             }
-            EasyLoading.dismiss();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  result,
-                ),
-              ),
-            );
           },
           child: const Text("Agree and Continue"),
         ),
@@ -106,7 +97,6 @@ class _SignUpFormState extends State<SignUpForm> {
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
               validator: EmailValidator().validateEmail,
-              focusNode: _focusNode,
               onSaved: (value) {
                 emailController.text = value!;
               },
@@ -126,7 +116,6 @@ class _SignUpFormState extends State<SignUpForm> {
                   confirmEmailController.text,
                 );
               },
-              focusNode: _focusNode,
               onSaved: (value) {
                 confirmEmailController.text = value!;
               },
@@ -142,7 +131,6 @@ class _SignUpFormState extends State<SignUpForm> {
               validator: PasswordValidator().validatePassword,
               obscureText: !_showPassword,
               textInputAction: TextInputAction.done,
-              focusNode: _focusNode,
               onSaved: (password) {
                 passwordController.text = password!;
               },
@@ -163,7 +151,6 @@ class _SignUpFormState extends State<SignUpForm> {
               },
               obscureText: !_showPassword,
               textInputAction: TextInputAction.done,
-              focusNode: _focusNode,
               onSaved: (password) {
                 confirmPasswordController.text = password!;
               },

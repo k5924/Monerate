@@ -26,14 +26,12 @@ class _LoginFormState extends State<LoginForm> {
   late String verified;
   late Object completeProfile;
 
-  final FocusNode _focusNode = FocusNode();
 
   @override
   void dispose() {
     // Clean up controllers when form is disposed
     emailController.dispose();
     passwordController.dispose();
-    _focusNode.dispose();
     super.dispose();
   }
 
@@ -60,7 +58,6 @@ class _LoginFormState extends State<LoginForm> {
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
               validator: EmailValidator().validateEmail,
-              focusNode: _focusNode,
               onSaved: (value) {
                 emailController.text = value!;
               },
@@ -76,7 +73,6 @@ class _LoginFormState extends State<LoginForm> {
               validator: PasswordValidator().validatePassword,
               obscureText: !_showPassword,
               textInputAction: TextInputAction.done,
-              focusNode: _focusNode,
               onSaved: (password) {
                 passwordController.text = password!;
               },
@@ -116,24 +112,10 @@ class _LoginFormState extends State<LoginForm> {
                       );
                       EasyLoading.dismiss();
                     } else {
-                      EasyLoading.dismiss();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            completeProfile.toString(),
-                          ),
-                        ),
-                      );
+                      EasyLoading.showError(completeProfile.toString());
                     }
                   } else {
-                    EasyLoading.dismiss();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          verified,
-                        ),
-                      ),
-                    );
+                    EasyLoading.showError(verified);
                   }
                 }
               },

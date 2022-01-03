@@ -16,4 +16,5 @@ Map<String, Widget Function(BuildContext)> kRoutes = {
   CompleteSupportManagerProfile.kID: (context) =>
       const CompleteSupportManagerProfile(),
   DashboardScreen.kID: (context) => const DashboardScreen(),
+  ViewProfileScreen.kID: (context) => const ViewProfileScreen(),
 };

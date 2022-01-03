@@ -21,7 +21,6 @@ class _CompleteFinancialAdvisorProfileState
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController licenseIDController = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
 
   final _formKey = GlobalKey<FormState>();
   final AuthProvider authProvider = AuthProvider();
@@ -32,7 +31,6 @@ class _CompleteFinancialAdvisorProfileState
     firstNameController.dispose();
     lastNameController.dispose();
     licenseIDController.dispose();
-    _focusNode.dispose();
     super.dispose();
   }
 
@@ -49,7 +47,6 @@ class _CompleteFinancialAdvisorProfileState
                 TextFormField(
                   controller: firstNameController,
                   validator: NameValidator().validateName,
-                  focusNode: _focusNode,
                   onSaved: (firstName) {
                     firstNameController.text = firstName!;
                   },
@@ -63,7 +60,6 @@ class _CompleteFinancialAdvisorProfileState
                 TextFormField(
                   controller: lastNameController,
                   validator: NameValidator().validateName,
-                  focusNode: _focusNode,
                   onSaved: (lastName) {
                     lastNameController.text = lastName!;
                   },
@@ -77,7 +73,6 @@ class _CompleteFinancialAdvisorProfileState
                 TextFormField(
                   controller: licenseIDController,
                   validator: LicenseValidator().validateLicense,
-                  focusNode: _focusNode,
                   onSaved: (licenseID) {
                     licenseIDController.text = licenseID!;
                   },
@@ -95,14 +90,7 @@ class _CompleteFinancialAdvisorProfileState
                       EasyLoading.show(status: 'loading...');
                       final result = await _updateProfile();
                       if (result != null) {
-                        EasyLoading.dismiss();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              result,
-                            ),
-                          ),
-                        );
+                        EasyLoading.showError(result);
                       } else {
                         Navigator.pushReplacementNamed(
                           context,
