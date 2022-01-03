@@ -18,7 +18,6 @@ class CompleteEndUserProfile extends StatefulWidget {
 class _CompleteEndUserProfileState extends State<CompleteEndUserProfile> {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
   final AuthProvider authProvider = AuthProvider();
 
@@ -27,7 +26,6 @@ class _CompleteEndUserProfileState extends State<CompleteEndUserProfile> {
     // Clean up controllers when form is disposed
     firstNameController.dispose();
     lastNameController.dispose();
-    _focusNode.dispose();
     super.dispose();
   }
 
@@ -44,7 +42,6 @@ class _CompleteEndUserProfileState extends State<CompleteEndUserProfile> {
                 TextFormField(
                   controller: firstNameController,
                   validator: NameValidator().validateName,
-                  focusNode: _focusNode,
                   onSaved: (firstName) {
                     firstNameController.text = firstName!;
                   },
@@ -58,7 +55,6 @@ class _CompleteEndUserProfileState extends State<CompleteEndUserProfile> {
                 TextFormField(
                   controller: lastNameController,
                   validator: NameValidator().validateName,
-                  focusNode: _focusNode,
                   onSaved: (lastName) {
                     lastNameController.text = lastName!;
                   },

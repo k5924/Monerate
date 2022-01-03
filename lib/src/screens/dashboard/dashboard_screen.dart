@@ -69,9 +69,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          "Settings",
+                        AppBar(
+                          title: const Text(
+                            "Settings",
+                          ),
                         ),
+                        // const Text(
+                        //   "Settings",
+                        // ),
                         const SizedBox(
                           height: 20,
                         ),
