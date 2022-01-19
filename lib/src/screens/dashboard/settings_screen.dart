@@ -68,7 +68,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: ListTile(
                   leading: const Icon(Icons.email),
                   title: const Text("Change Email"),
-                  onTap: () async {},
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    ChangeEmailScreen.kID,
+                  ),
                 ),
               ),
               const SizedBox(

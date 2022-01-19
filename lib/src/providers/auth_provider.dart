@@ -139,4 +139,23 @@ class AuthProvider {
       return exceptionsFactory.exceptionCaught()!;
     }
   }
+
+  Future<String?> changeEmail(String newEmail, String password) async {
+    try {
+      user = _auth.currentUser;
+      final currentEmail = user!.email;
+      final credential = EmailAuthProvider.credential(
+        email: currentEmail!,
+        password: password,
+      );
+      await user!
+          .reauthenticateWithCredential(credential)
+          .then((value) => user!.updateEmail(newEmail));
+      await user!.sendEmailVerification();
+      logout();
+    } on FirebaseAuthException catch (e) {
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
+    }
+  }
 }
