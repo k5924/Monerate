@@ -1,3 +1,5 @@
+export 'change_email/export.dart';
+export 'change_password/export.dart';
 export 'complete_profile/export.dart';
 export 'construction_page.dart';
 export 'dashboard/export.dart';

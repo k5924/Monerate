@@ -39,44 +39,78 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(
                 height: 20,
               ),
-              ListTile(
-                title: const Text("Personal Details"),
-                onTap: () async {
-                  EasyLoading.show(status: 'loading...');
-                  final result = await _viewPersonalDetails();
-                  if (result.runtimeType == String) {
-                    EasyLoading.showError(result.toString());
-                  } else {
-                    Navigator.pushNamed(
-                      context,
-                      ViewProfileScreen.kID,
-                      arguments: result,
-                    );
-                    EasyLoading.dismiss();
-                  }
-                },
-                tileColor: Colors.blue,
+              Card(
+                elevation: 8,
+                child: ListTile(
+                  leading: const Icon(Icons.person),
+                  title: const Text("Personal Details"),
+                  onTap: () async {
+                    EasyLoading.show(status: 'loading...');
+                    final result = await _viewPersonalDetails();
+                    if (result.runtimeType == String) {
+                      EasyLoading.showError(result.toString());
+                    } else {
+                      Navigator.pushNamed(
+                        context,
+                        ViewProfileScreen.kID,
+                        arguments: result,
+                      );
+                      EasyLoading.dismiss();
+                    }
+                  },
+                ),
               ),
               const SizedBox(
                 height: 20,
               ),
-              ListTile(
-                title: const Text("Logout"),
-                onTap: () async {
-                  EasyLoading.show();
-                  final result = await _signOut();
-                  if (result != null) {
-                    EasyLoading.showError(result);
-                  } else {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      LoginScreen.kID,
-                    );
-                    EasyLoading.dismiss();
-                  }
-                },
-                tileColor: Colors.purple,
-              )
+              Card(
+                elevation: 8,
+                child: ListTile(
+                  leading: const Icon(Icons.email),
+                  title: const Text("Change Email"),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    ChangeEmailScreen.kID,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Card(
+                elevation: 8,
+                child: ListTile(
+                  leading: const Icon(Icons.password),
+                  title: const Text("Change Password"),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    ChangePasswordScreen.kID,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Card(
+                elevation: 8,
+                child: ListTile(
+                  leading: const Icon(Icons.logout),
+                  title: const Text("Logout"),
+                  onTap: () async {
+                    EasyLoading.show();
+                    final result = await _signOut();
+                    if (result != null) {
+                      EasyLoading.showError(result);
+                    } else {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        LoginScreen.kID,
+                      );
+                      EasyLoading.dismiss();
+                    }
+                  },
+                ),
+              ),
             ],
           ),
         ),
