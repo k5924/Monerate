@@ -78,7 +78,7 @@ class _CompleteSupportManagerProfileState
                       } else {
                         Navigator.pushReplacementNamed(
                           context,
-                          DashboardScreen.kID,
+                          SupportManagerDashboardScreen.kID,
                         );
                         EasyLoading.dismiss();
                       }

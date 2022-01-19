@@ -3,15 +3,17 @@
 import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 
-class DashboardScreen extends StatefulWidget {
-  static const String kID = 'dashboard_screen';
-  const DashboardScreen({Key? key}) : super(key: key);
+class SupportManagerDashboardScreen extends StatefulWidget {
+  static const String kID = 'support_manager_dashboard_screen';
+  const SupportManagerDashboardScreen({Key? key}) : super(key: key);
 
   @override
-  _DashboardScreenState createState() => _DashboardScreenState();
+  _SupportManagerDashboardScreenState createState() =>
+      _SupportManagerDashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _SupportManagerDashboardScreenState
+    extends State<SupportManagerDashboardScreen> {
   int _currentIndex = 0;
   late PageController _pageController;
 
@@ -48,14 +50,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         Text(
-                          "HomePage",
+                          "Support Manager HomePage",
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-              const SettingsScreen(),
+              const SettingsWithoutHelpOption(),
             ],
           ),
         ),

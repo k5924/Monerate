@@ -76,7 +76,7 @@ class _CompleteEndUserProfileState extends State<CompleteEndUserProfile> {
                       } else {
                         Navigator.pushReplacementNamed(
                           context,
-                          DashboardScreen.kID,
+                          EndUserDashboardScreen.kID,
                         );
                         EasyLoading.dismiss();
                       }

@@ -6,7 +6,6 @@ String kInitialRoute = SplashScreen.kID;
 Map<String, Widget Function(BuildContext)> kRoutes = {
   SplashScreen.kID: (context) => const SplashScreen(),
   LoginScreen.kID: (context) => const LoginScreen(),
-  ConstructionPage.kID: (context) => const ConstructionPage(),
   ForgotPasswordScreen.kID: (context) => const ForgotPasswordScreen(),
   SignUpScreen.kID: (context) => const SignUpScreen(),
   CompleteProfileScreen.kID: (context) => const CompleteProfileScreen(),
@@ -15,8 +14,10 @@ Map<String, Widget Function(BuildContext)> kRoutes = {
       const CompleteFinancialAdvisorProfile(),
   CompleteSupportManagerProfile.kID: (context) =>
       const CompleteSupportManagerProfile(),
-  DashboardScreen.kID: (context) => const DashboardScreen(),
   ViewProfileScreen.kID: (context) => const ViewProfileScreen(),
   ChangeEmailScreen.kID: (context) => const ChangeEmailScreen(),
   ChangePasswordScreen.kID: (context) => const ChangePasswordScreen(),
+  EndUserDashboardScreen.kID: (context) => const EndUserDashboardScreen(),
+  SupportManagerDashboardScreen.kID: (context) => const SupportManagerDashboardScreen(),
+  FinancialAdvisorDashboardScreen.kID: (context) => const FinancialAdvisorDashboardScreen(),
 };

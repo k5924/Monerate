@@ -26,7 +26,6 @@ class _LoginFormState extends State<LoginForm> {
   late String verified;
   late Object completeProfile;
 
-
   @override
   void dispose() {
     // Clean up controllers when form is disposed
@@ -40,6 +39,10 @@ class _LoginFormState extends State<LoginForm> {
       emailController.text,
       passwordController.text,
     );
+  }
+
+  Future<String?> _getUserType() async {
+    return authProvider.getUserType();
   }
 
   Future<Object> _isProfileComplete() async {
@@ -100,10 +103,31 @@ class _LoginFormState extends State<LoginForm> {
                   if (verified == "Email Verified") {
                     completeProfile = await _isProfileComplete();
                     if (completeProfile == true) {
-                      Navigator.pushNamed(
-                        context,
-                        DashboardScreen.kID,
-                      );
+                      final userType = await _getUserType();
+                      if(userType == "End-User"){
+                        Navigator.pushReplacementNamed(
+                          context,
+                          EndUserDashboardScreen.kID,
+                        );
+                        EasyLoading.dismiss();
+                      }
+                      else if(userType == "Financial Advisor"){
+                        Navigator.pushReplacementNamed(
+                          context,
+                          FinancialAdvisorDashboardScreen.kID,
+                        );
+                        EasyLoading.dismiss();
+                      }
+                      else if(userType == "Support Manager"){
+                        Navigator.pushReplacementNamed(
+                          context,
+                          SupportManagerDashboardScreen.kID,
+                        );
+                        EasyLoading.dismiss();
+                      }
+                      else{
+                        EasyLoading.showError(userType.toString());
+                      }
                       EasyLoading.dismiss();
                     } else if (completeProfile == false) {
                       Navigator.pushNamed(
