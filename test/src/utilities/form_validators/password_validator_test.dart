@@ -5,7 +5,7 @@ void main() {
   group('Password Validator: ', () {
     test('Empty password returns error', () {
       final result = PasswordValidator().validatePassword('');
-      expect(result, "A Password is required to login");
+      expect(result, "A Password is required");
     });
 
     test('Password less than six characters returns error', () {
@@ -22,7 +22,7 @@ void main() {
 
     test('Empty passwords returns error', () {
       final result = PasswordValidator().confirmPassword('', '');
-      expect(result, "A Password is required to login");
+      expect(result, "A Password is required");
     });
 
     test('If passwords are less than 6 characters, return error', () {
