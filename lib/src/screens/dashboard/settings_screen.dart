@@ -82,7 +82,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: ListTile(
                   leading: const Icon(Icons.password),
                   title: const Text("Change Password"),
-                  onTap: () async {},
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    ChangePasswordScreen.kID,
+                  ),
                 ),
               ),
               const SizedBox(
