@@ -176,4 +176,15 @@ class AuthProvider {
       return exceptionsFactory.exceptionCaught()!;
     }
   }
+
+  Future<String?> getUserType() async {
+    try {
+      user = _auth.currentUser;
+      userModel = await DatabaseProvider(uid: user!.uid).getProfile();
+      return userModel.userType;
+    } on FirebaseAuthException catch (e) {
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
+    }
+  }
 }

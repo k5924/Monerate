@@ -1,10 +1,13 @@
 export 'change_email/export.dart';
 export 'change_password/export.dart';
 export 'complete_profile/export.dart';
-export 'construction_page.dart';
-export 'dashboard/export.dart';
+export 'end_user_dashboard/export.dart';
+export 'financial_advisor_dashboard/export.dart';
 export 'forgot_password/export.dart';
 export 'login/export.dart';
 export 'profile/export.dart';
+export 'settings_with_help/export.dart';
+export 'settings_without_help_option/export.dart';
 export 'sign_up/export.dart';
-export 'splash_screen.dart';
+export 'splash_screen/export.dart';
+export 'support_manager_dashboard/export.dart';

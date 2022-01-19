@@ -94,7 +94,7 @@ class _CompleteFinancialAdvisorProfileState
                       } else {
                         Navigator.pushReplacementNamed(
                           context,
-                          DashboardScreen.kID,
+                          FinancialAdvisorDashboardScreen.kID,
                         );
                         EasyLoading.dismiss();
                       }

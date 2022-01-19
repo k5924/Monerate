@@ -5,14 +5,15 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 
-class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+class SettingsWithoutHelpOption extends StatefulWidget {
+  const SettingsWithoutHelpOption({Key? key}) : super(key: key);
 
   @override
-  _SettingsScreenState createState() => _SettingsScreenState();
+  _SettingsWithoutHelpOptionState createState() =>
+      _SettingsWithoutHelpOptionState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsWithoutHelpOptionState extends State<SettingsWithoutHelpOption> {
   final AuthProvider authProvider = AuthProvider();
 
   Future<String?>? _signOut() async {
