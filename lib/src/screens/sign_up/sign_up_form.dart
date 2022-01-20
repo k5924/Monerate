@@ -46,18 +46,18 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
-  void closeDialogBox() {
+  void _closeDialogBox() {
     return Navigator.pop(context);
   }
 
-  Future<String?> displayConfirmationDialog() {
+  Future<String?> _displayConfirmationDialog() {
     return customAlertDialog(
       context: context,
       title: "Terms and Conditions",
       content: kTermsAndConditions,
       actions: [
         OutlinedButton(
-          onPressed: () => closeDialogBox(),
+          onPressed: () => _closeDialogBox(),
           child: const Text(
             "Cancel",
           ),
@@ -75,7 +75,7 @@ class _SignUpFormState extends State<SignUpForm> {
               );
               EasyLoading.showSuccess(result);
             } else {
-              closeDialogBox();
+              _closeDialogBox();
               EasyLoading.showError(result);
             }
           },
@@ -181,7 +181,7 @@ class _SignUpFormState extends State<SignUpForm> {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   FocusScope.of(context).unfocus();
-                  await displayConfirmationDialog();
+                  await _displayConfirmationDialog();
                 }
               },
               style: ElevatedButton.styleFrom(

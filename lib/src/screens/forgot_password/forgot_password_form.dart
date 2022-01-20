@@ -29,7 +29,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
     super.dispose();
   }
 
-  void closeDialogBox() {
+  void _closeDialogBox() {
     return Navigator.pop(context);
   }
 
@@ -39,7 +39,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
     );
   }
 
-  Future<String?> displayConfirmationDialog() {
+  Future<String?> _displayConfirmationDialog() {
     return customAlertDialog(
       context: context,
       title: "Confirmation Required",
@@ -47,7 +47,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
           "By continuing with this action, a password reset email will be sent to the email address provided. Do you wish to continue?",
       actions: [
         OutlinedButton(
-          onPressed: () => closeDialogBox(),
+          onPressed: () => _closeDialogBox(),
           child: const Text(
             "Cancel",
           ),
@@ -63,7 +63,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
               );
               EasyLoading.showSuccess(result);
             } else {
-              closeDialogBox();
+              _closeDialogBox();
               EasyLoading.showError(result);
             }
           },
@@ -99,7 +99,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   FocusScope.of(context).unfocus();
-                  await displayConfirmationDialog();
+                  await _displayConfirmationDialog();
                 }
               },
               style: ElevatedButton.styleFrom(

@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/providers/remote_config_provider.dart';
@@ -32,7 +31,7 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
     super.dispose();
   }
 
-  getRemoteConfig() async {
+  Future<String> _getRemoteConfig() async {
     final key = await remoteConfigProvider.getYahooFinanceAPIKey();
     return key;
   }
@@ -61,7 +60,7 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
                         ),
                         TextButton(
                           onPressed: () async {
-                            final result = await getRemoteConfig();
+                            final result = await _getRemoteConfig();
                             print(result);
                           },
                           child: const Text(
