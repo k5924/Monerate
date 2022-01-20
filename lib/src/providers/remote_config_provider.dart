@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 class RemoteConfigProvider {
   late RemoteConfig remoteConfig;
 
-  Future<RemoteConfig?> initialise() async {
+  Future<RemoteConfig?> _initialise() async {
     final remoteConfig = RemoteConfig.instance;
     try {
       await remoteConfig.setConfigSettings(
@@ -26,7 +26,7 @@ class RemoteConfigProvider {
   }
 
   Future<String> getYahooFinanceAPIKey() async {
-    final remoteConfig = await initialise();
+    final remoteConfig = await _initialise();
     return remoteConfig!.getString('yahoo_finance_api_key');
   }
 }
