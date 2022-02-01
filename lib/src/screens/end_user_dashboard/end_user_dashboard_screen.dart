@@ -1,11 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
-import 'package:monerate/src/providers/remote_config_provider.dart';
 import 'package:monerate/src/screens/export.dart';
 
 class EndUserDashboardScreen extends StatefulWidget {
@@ -37,9 +35,9 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
     super.dispose();
   }
 
-  _getNews() async {
+  Future<void> _getNews() async {
     EasyLoading.show(status: 'loading...');
-    var result = await yahooFinanceProvider.getNewsArticles();
+    final result = await yahooFinanceProvider.getNewsArticles();
     if (result.runtimeType == String) {
       EasyLoading.showError(
         "An error was encountered, news has not been fetched",

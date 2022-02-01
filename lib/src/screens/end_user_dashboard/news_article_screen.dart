@@ -28,13 +28,11 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Container(
-        child: WebView(
-          onWebViewCreated: (WebViewController webViewController) {
-            _completer.complete(webViewController);
-          },
-          initialUrl: widget.url,
-        ),
+      body: WebView(
+        onWebViewCreated: (WebViewController webViewController) {
+          _completer.complete(webViewController);
+        },
+        initialUrl: widget.url,
       ),
     );
   }
