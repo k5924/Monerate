@@ -1,14 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
 class AuthProvider {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth auth;
+  final DatabaseProvider databaseProvider =
+      DatabaseProvider(db: FirebaseFirestore.instance);
+
   late UserCredential userCredential;
   late User? user;
   late ExceptionsFactory exceptionsFactory;
   late UserModel userModel;
+
+  AuthProvider({required this.auth});
 
   Future<String> verifyEmail(User? user) async {
     try {
@@ -25,12 +31,12 @@ class AuthProvider {
 
   Future<String?> registerUser(String email, String password) async {
     try {
-      userCredential = await _auth.createUserWithEmailAndPassword(
+      userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      user = _auth.currentUser;
-      await DatabaseProvider(uid: user!.uid).createNewUser();
+      user = auth.currentUser;
+      await databaseProvider.createNewUser(uid: user!.uid);
       return verifyEmail(user);
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
@@ -40,11 +46,11 @@ class AuthProvider {
 
   Future<String?> signIn(String email, String password) async {
     try {
-      userCredential = await _auth.signInWithEmailAndPassword(
+      userCredential = await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      user = _auth.currentUser;
+      user = auth.currentUser;
       return verifyEmail(user);
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
@@ -54,7 +60,7 @@ class AuthProvider {
 
   Future<String?> forgotPassword(String email) async {
     try {
-      await _auth.sendPasswordResetEmail(
+      await auth.sendPasswordResetEmail(
         email: email,
       );
       return "Password reset email sent";
@@ -66,8 +72,8 @@ class AuthProvider {
 
   Future<Object> checkProfile() async {
     try {
-      user = _auth.currentUser;
-      userModel = await DatabaseProvider(uid: user!.uid).getProfile();
+      user = auth.currentUser;
+      userModel = await databaseProvider.getProfile(uid: user!.uid);
       if (userModel.getUserType() == null ||
           userModel.getUserType() == 'null') {
         return false;
@@ -86,13 +92,16 @@ class AuthProvider {
     String userType,
   ) async {
     try {
-      user = _auth.currentUser;
+      user = auth.currentUser;
       userModel = UserModel(
         firstName: firstName,
         lastName: lastName,
         userType: userType,
       );
-      await DatabaseProvider(uid: user!.uid).updateProfile(userModel);
+      await databaseProvider.updateProfile(
+        profileData: userModel,
+        uid: user!.uid,
+      );
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
@@ -106,14 +115,17 @@ class AuthProvider {
     String licenseID,
   ) async {
     try {
-      user = _auth.currentUser;
+      user = auth.currentUser;
       userModel = FinancialAdvisorModel(
         firstName: firstName,
         lastName: lastName,
         userType: userType,
         licenseID: licenseID,
       );
-      await DatabaseProvider(uid: user!.uid).updateProfile(userModel);
+      await databaseProvider.updateProfile(
+        profileData: userModel,
+        uid: user!.uid,
+      );
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
@@ -122,7 +134,7 @@ class AuthProvider {
 
   Future<String?> logout() async {
     try {
-      _auth.signOut();
+      auth.signOut();
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
@@ -131,8 +143,8 @@ class AuthProvider {
 
   Future<Object> getProfile() async {
     try {
-      user = _auth.currentUser;
-      userModel = await DatabaseProvider(uid: user!.uid).getProfile();
+      user = auth.currentUser;
+      userModel = await databaseProvider.getProfile(uid: user!.uid);
       return userModel.toMap();
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
@@ -142,7 +154,7 @@ class AuthProvider {
 
   Future<String?> changeEmail(String newEmail, String password) async {
     try {
-      user = _auth.currentUser;
+      user = auth.currentUser;
       final currentEmail = user!.email;
       final credential = EmailAuthProvider.credential(
         email: currentEmail!,
@@ -161,7 +173,7 @@ class AuthProvider {
 
   Future<String?> changePassword(String oldPassword, String newPassword) async {
     try {
-      user = _auth.currentUser;
+      user = auth.currentUser;
       final currentEmail = user!.email;
       final credential = EmailAuthProvider.credential(
         email: currentEmail!,
@@ -179,8 +191,8 @@ class AuthProvider {
 
   Future<String?> getUserType() async {
     try {
-      user = _auth.currentUser;
-      userModel = await DatabaseProvider(uid: user!.uid).getProfile();
+      user = auth.currentUser;
+      userModel = await databaseProvider.getProfile(uid: user!.uid);
       return userModel.userType;
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);

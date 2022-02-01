@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/providers/export.dart';
@@ -23,7 +24,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
 
   bool _showPassword = false;
 
-  final AuthProvider authProvider = AuthProvider();
+  final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
   @override
   void dispose() {
@@ -34,7 +35,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
     super.dispose();
   }
 
-  void closeDialogBox() {
+  void _closeDialogBox() {
     return Navigator.pop(context);
   }
 
@@ -45,7 +46,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
     );
   }
 
-  Future<String?> displayConfirmationDialog() {
+  Future<String?> _displayConfirmationDialog() {
     return customAlertDialog(
       context: context,
       title: "Confirmation Required",
@@ -53,7 +54,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
           "By continuing with this action, you will be signed out of the current session. A verification email will be sent to the provided email which must be verified before logging in with your new credentials. Do you wish to continue?",
       actions: [
         OutlinedButton(
-          onPressed: () => closeDialogBox(),
+          onPressed: () => _closeDialogBox(),
           child: const Text(
             "Cancel",
           ),
@@ -63,7 +64,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
             EasyLoading.show(status: 'loading...');
             final result = await _updateEmail();
             if (result != null) {
-              closeDialogBox();
+              _closeDialogBox();
               EasyLoading.showError(result);
             } else {
               Navigator.pushReplacementNamed(
@@ -161,7 +162,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             FocusScope.of(context).unfocus();
-                            await displayConfirmationDialog();
+                            await _displayConfirmationDialog();
                           }
                         },
                         style: ElevatedButton.styleFrom(
