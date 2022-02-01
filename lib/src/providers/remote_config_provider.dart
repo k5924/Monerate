@@ -2,10 +2,11 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/services.dart';
 
 class RemoteConfigProvider {
-  late RemoteConfig remoteConfig;
+  final RemoteConfig remoteConfig;
+
+  RemoteConfigProvider({required this.remoteConfig});
 
   Future<RemoteConfig?> _initialise() async {
-    final remoteConfig = RemoteConfig.instance;
     try {
       await remoteConfig.setConfigSettings(
         RemoteConfigSettings(
@@ -19,8 +20,10 @@ class RemoteConfigProvider {
       // Fetch exception.
       print(exception);
     } catch (exception) {
-      print('Unable to fetch remote config. Cached or default values will be '
-          'used');
+      print(
+        'Unable to fetch remote config. Cached or default values will be '
+        'used',
+      );
       print(exception);
     }
   }

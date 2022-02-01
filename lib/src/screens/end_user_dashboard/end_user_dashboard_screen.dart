@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/providers/remote_config_provider.dart';
@@ -16,7 +17,7 @@ class EndUserDashboardScreen extends StatefulWidget {
 class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
   int _currentIndex = 0;
   late PageController _pageController;
-  final RemoteConfigProvider remoteConfigProvider = RemoteConfigProvider();
+  final RemoteConfigProvider remoteConfigProvider = RemoteConfigProvider(remoteConfig: RemoteConfig.instance);
 
   @override
   void initState() {
