@@ -2,6 +2,8 @@
 
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/providers/remote_config_provider.dart';
 import 'package:monerate/src/screens/export.dart';
@@ -17,12 +19,15 @@ class EndUserDashboardScreen extends StatefulWidget {
 class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
   int _currentIndex = 0;
   late PageController _pageController;
-  final RemoteConfigProvider remoteConfigProvider = RemoteConfigProvider(remoteConfig: RemoteConfig.instance);
+  final YahooFinanceProvider yahooFinanceProvider = YahooFinanceProvider();
+
+  late List<ArticleModel> articles = <ArticleModel>[];
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
+    _getNews();
   }
 
   @override
@@ -32,9 +37,17 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
     super.dispose();
   }
 
-  Future<String> _getRemoteConfig() async {
-    final key = await remoteConfigProvider.getYahooFinanceAPIKey();
-    return key;
+  _getNews() async {
+    EasyLoading.show(status: 'loading...');
+    var result = await yahooFinanceProvider.getNewsArticles();
+    if (result.runtimeType == String) {
+      EasyLoading.showError(
+        "An error was encountered, news has not been fetched",
+      );
+    } else {
+      articles = result as List<ArticleModel>;
+      EasyLoading.dismiss();
+    }
   }
 
   @override
@@ -56,23 +69,16 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           "End User HomePage",
-                        ),
-                        TextButton(
-                          onPressed: () async {
-                            final result = await _getRemoteConfig();
-                            print(result);
-                          },
-                          child: const Text(
-                            "Test",
-                          ),
+                          style: Theme.of(context).textTheme.headline5,
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
+              NewsTab(articles: articles),
               const SettingsWithHelpOption(),
             ],
           ),
@@ -91,6 +97,10 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: "Dashboard",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.chrome_reader_mode),
+              label: "News",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
