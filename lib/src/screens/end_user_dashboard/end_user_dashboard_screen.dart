@@ -1,9 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:monerate/src/models/export.dart';
-import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 
 class EndUserDashboardScreen extends StatefulWidget {
@@ -60,6 +57,7 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
                 ),
               ),
               const NewsTab(),
+              const AccountBalancesTab(),
               const SettingsWithHelpOption(),
             ],
           ),
@@ -75,13 +73,19 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
             );
           },
           items: const [
+            
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
+              
               label: "Dashboard",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.chrome_reader_mode),
               label: "News",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_balance_wallet),
+              label: "Balances",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
