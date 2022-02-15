@@ -18,6 +18,7 @@ class _NewsTabState extends State<NewsTab> {
   @override
   void initState() {
     super.initState();
+
     _getNews();
   }
 
@@ -40,32 +41,38 @@ class _NewsTabState extends State<NewsTab> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: articles.length,
-        itemBuilder: (context, index) {
-          return Card(
-            elevation: 4,
-            child: ListTile(
-              leading: Image.network(articles[index].thumbnailURL),
-              title: Text(
-                articles[index].title,
+    return RefreshIndicator(
+      onRefresh: () async {
+        articles.clear();
+        await _getNews();
+      },
+      child: SingleChildScrollView(
+        child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: articles.length,
+          itemBuilder: (context, index) {
+            return Card(
+              elevation: 4,
+              child: ListTile(
+                leading: Image.network(articles[index].thumbnailURL),
+                title: Text(
+                  articles[index].title,
+                ),
+                subtitle: Text(articles[index].provider),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          NewsArticleScreen(url: articles[index].url),
+                    ),
+                  );
+                },
               ),
-              subtitle: Text(articles[index].provider),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        NewsArticleScreen(url: articles[index].url),
-                  ),
-                );
-              },
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
