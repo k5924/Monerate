@@ -17,15 +17,11 @@ class EndUserDashboardScreen extends StatefulWidget {
 class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
   int _currentIndex = 0;
   late PageController _pageController;
-  final YahooFinanceProvider yahooFinanceProvider = YahooFinanceProvider();
-
-  late List<ArticleModel> articles = <ArticleModel>[];
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
-    _getNews();
   }
 
   @override
@@ -33,19 +29,6 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
     // Clean up controllers when screen is disposed
     _pageController.dispose();
     super.dispose();
-  }
-
-  Future<void> _getNews() async {
-    EasyLoading.show(status: 'loading...');
-    final result = await yahooFinanceProvider.getNewsArticles();
-    if (result.runtimeType == String) {
-      EasyLoading.showError(
-        "An error was encountered, news has not been fetched",
-      );
-    } else {
-      articles = result as List<ArticleModel>;
-      EasyLoading.dismiss();
-    }
   }
 
   @override
@@ -76,7 +59,7 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
                   ),
                 ),
               ),
-              NewsTab(articles: articles),
+              const NewsTab(),
               const SettingsWithHelpOption(),
             ],
           ),
