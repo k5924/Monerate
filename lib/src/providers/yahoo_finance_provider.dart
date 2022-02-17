@@ -12,6 +12,7 @@ class YahooFinanceProvider {
   late String apiKey;
 
   List<ArticleModel> news = [];
+  List<TickerModel> tickers = [];
 
   YahooFinanceProvider() {
     getAPIKey();
@@ -26,6 +27,7 @@ class YahooFinanceProvider {
     final ExternalAPIProvider externalAPIProvider = ExternalAPIProvider(
       url: url,
       endPoint: '/news/v2/list',
+      parameters: null,
       headers: {
         'content-type': 'text/plain',
         'x-rapidapi-host': url,
@@ -52,6 +54,40 @@ class YahooFinanceProvider {
       return news;
     } else {
       return "error";
+    }
+  }
+
+  Future<Object> getTickerSymbol(String searchParameter) async {
+    await getAPIKey();
+    final ExternalAPIProvider externalAPIProvider = ExternalAPIProvider(
+      url: url,
+      endPoint: '/auto-complete',
+      parameters: {
+        'q': searchParameter,
+        'region': 'UK',
+      },
+      headers: {
+        'x-rapidapi-host': url,
+        'x-rapidapi-key': apiKey,
+      },
+    );
+    final tickerList = await externalAPIProvider.getData();
+    if (tickerList.runtimeType == int) {
+      return "error";
+    } else {
+      tickerList["quotes"].forEach((element) {
+        if (element["longname"] != "" &&
+            element["symbol"] != "" &&
+            element["exchange"] != "") {
+          final TickerModel tickerModel = TickerModel(
+            longName: element["longname"] as String,
+            symbol: element["symbol"] as String,
+            exchange: element["exchange"] as String,
+          );
+          tickers.add(tickerModel);
+        }
+      });
+      return tickers;
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:monerate/src/screens/export.dart';
 
 class AccountBalancesTab extends StatefulWidget {
   const AccountBalancesTab({Key? key}) : super(key: key);
@@ -33,7 +34,12 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
           SpeedDialChild(
             child: const Icon(Icons.trending_up),
             label: 'Stock Market Investments',
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                SearchInvestmentScreen.kID,
+              );
+            },
           ),
           SpeedDialChild(
             child: const Icon(Icons.money),
