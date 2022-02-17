@@ -18,7 +18,6 @@ class _NewsTabState extends State<NewsTab> {
   @override
   void initState() {
     super.initState();
-
     _getNews();
   }
 

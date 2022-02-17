@@ -6,6 +6,7 @@ export 'financial_advisor_dashboard/export.dart';
 export 'forgot_password/export.dart';
 export 'login/export.dart';
 export 'profile/export.dart';
+export 'search_investment/export.dart';
 export 'settings_with_help/export.dart';
 export 'settings_without_help_option/export.dart';
 export 'sign_up/export.dart';
