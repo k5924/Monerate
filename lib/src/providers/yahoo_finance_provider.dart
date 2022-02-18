@@ -76,9 +76,9 @@ class YahooFinanceProvider {
       return "error";
     } else {
       tickerList["quotes"].forEach((element) {
-        if (element["longname"] != "" &&
-            element["symbol"] != "" &&
-            element["exchange"] != "") {
+        if (element["longname"] != null &&
+            element["symbol"] != null &&
+            element["exchange"] != null) {
           final TickerModel tickerModel = TickerModel(
             longName: element["longname"] as String,
             symbol: element["symbol"] as String,
