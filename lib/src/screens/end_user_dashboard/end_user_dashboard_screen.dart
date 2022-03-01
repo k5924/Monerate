@@ -1,7 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
+import 'package:monerate/src/utilities/export.dart';
 
 class EndUserDashboardScreen extends StatefulWidget {
   static const String kID = 'end_user_dashboard_screen';
@@ -13,11 +18,16 @@ class EndUserDashboardScreen extends StatefulWidget {
 
 class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
   int _currentIndex = 0;
+  String uid = '';
   late PageController _pageController;
+  final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
+  final DatabaseProvider databaseProvider =
+      DatabaseProvider(db: FirebaseFirestore.instance);
 
   @override
   void initState() {
     super.initState();
+    getCurrentUser();
     _pageController = PageController();
   }
 
@@ -26,6 +36,15 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
     // Clean up controllers when screen is disposed
     _pageController.dispose();
     super.dispose();
+  }
+
+  Future<void> getCurrentUser() async {
+    try {
+      uid = await authProvider.getUID();
+    } on FirebaseAuthException catch (e) {
+      final exceptionsFactory = ExceptionsFactory(e.code);
+      EasyLoading.showError(exceptionsFactory.exceptionCaught()!);
+    }
   }
 
   @override
@@ -57,7 +76,9 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
                 ),
               ),
               const NewsTab(),
-              const AccountBalancesTab(),
+              AccountBalancesTab(
+                uid: uid,
+              ),
               const SettingsWithHelpOption(),
             ],
           ),

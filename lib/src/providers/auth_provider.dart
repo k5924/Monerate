@@ -199,4 +199,37 @@ class AuthProvider {
       return exceptionsFactory.exceptionCaught()!;
     }
   }
+
+  Future<String?> addInvestment({
+    required String name,
+    required String symbol,
+    required String type,
+    required String amount,
+    required String price,
+  }) async {
+    try {
+      user = auth.currentUser;
+      final userID = user!.uid;
+      await databaseProvider.addBalance(
+        name: name,
+        symbol: symbol,
+        type: type,
+        amount: amount,
+        price: price,
+        uid: userID,
+      );
+    } on FirebaseAuthException catch (e) {
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
+    }
+  }
+
+  Future<String> getUID() async {
+    try {
+      user = auth.currentUser;
+      return user!.uid;
+    } on FirebaseAuthException {
+      rethrow;
+    }
+  }
 }

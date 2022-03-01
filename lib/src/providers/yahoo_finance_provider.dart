@@ -90,4 +90,27 @@ class YahooFinanceProvider {
       return tickers;
     }
   }
+
+  Future<Object> getPrice(String tickerSymbol) async {
+    await getAPIKey();
+    final ExternalAPIProvider externalAPIProvider = ExternalAPIProvider(
+      url: url,
+      endPoint: '/stock/v2/get-summary',
+      parameters: {
+        'symbol': tickerSymbol,
+        'region': 'UK',
+      },
+      headers: {
+        'x-rapidapi-host': url,
+        'x-rapidapi-key': apiKey,
+      },
+    );
+    final stockSummary = await externalAPIProvider.getData();
+    if (stockSummary.runtimeType == int) {
+      return "error";
+    } else {
+      final price = stockSummary["price"]["regularMarketPrice"]["raw"];
+      return price.toString();
+    }
+  }
 }
