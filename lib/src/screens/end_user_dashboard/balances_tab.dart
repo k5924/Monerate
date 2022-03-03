@@ -103,7 +103,12 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
           SpeedDialChild(
             child: const Icon(Icons.money),
             label: 'Cryptocurrency Investments',
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                SelectCryptoExchangeScreen.kID,
+              );
+            },
           ),
           SpeedDialChild(
             child: const Icon(Icons.account_balance),
