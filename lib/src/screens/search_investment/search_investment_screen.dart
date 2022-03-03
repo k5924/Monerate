@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
+import 'package:monerate/src/screens/search_investment/provide_investment_details.dart';
 import 'package:monerate/src/utilities/export.dart';
 
 class SearchInvestmentScreen extends StatefulWidget {
@@ -16,6 +17,12 @@ class _SearchInvestmentScreenState extends State<SearchInvestmentScreen> {
   final TextEditingController searchController = TextEditingController();
   late List<TickerModel> investments = <TickerModel>[];
   final YahooFinanceProvider yahooFinanceProvider = YahooFinanceProvider();
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   Future<void> getInvestment() async {
     EasyLoading.show(status: 'loading...');
@@ -48,7 +55,6 @@ class _SearchInvestmentScreenState extends State<SearchInvestmentScreen> {
               onSubmitted: (search) async {
                 searchController.text = search;
                 if (Validator().presenceDetection(searchController.text)) {
-                  print(searchController.text);
                   await getInvestment();
                 }
               },
@@ -73,7 +79,16 @@ class _SearchInvestmentScreenState extends State<SearchInvestmentScreen> {
                     subtitle: Text(
                       "Exchange ${investments[index].exchange}\nTicker Symbol: ${investments[index].symbol}",
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProvideInvestmentDetails(
+                            investment: investments[index],
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 );
               },

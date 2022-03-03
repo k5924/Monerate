@@ -26,6 +26,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
+  @override
+  void dispose() {
+    oldPasswordController.dispose();
+    newPasswordController.dispose();
+    confirmNewPasswordController.dispose();
+    super.dispose();
+  }
+
   void _closeDialogBox() {
     return Navigator.pop(context);
   }
