@@ -19,6 +19,10 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
   final DatabaseProvider databaseProvider =
       DatabaseProvider(db: FirebaseFirestore.instance);
+  late Stream<QuerySnapshot<Object?>> balanceStream = databaseProvider
+      .balanceCollection
+      .where('userID', isEqualTo: widget.uid)
+      .snapshots();
 
   @override
   void initState() {
@@ -33,9 +37,7 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             StreamBuilder<QuerySnapshot>(
-              stream: databaseProvider.balanceCollection
-                  .where('userID', isEqualTo: widget.uid)
-                  .snapshots(),
+              stream: balanceStream,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(child: CircularProgressIndicator());
@@ -65,7 +67,7 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
                             balances[index].name,
                           ),
                           trailing: Text(
-                            "Price ${(double.parse(balances[index].amount) * double.parse(balances[index].price)).toString()}",
+                            "Price £${(double.parse(balances[index].amount) * double.parse(balances[index].price)).toStringAsFixed(2)}",
                           ),
                           subtitle: Text(
                             'Ticker: ${balances[index].symbol} Type: ${balances[index].type} Holdings: ${balances[index].amount}',

@@ -18,6 +18,12 @@ class _SearchInvestmentScreenState extends State<SearchInvestmentScreen> {
   late List<TickerModel> investments = <TickerModel>[];
   final YahooFinanceProvider yahooFinanceProvider = YahooFinanceProvider();
 
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   Future<void> getInvestment() async {
     EasyLoading.show(status: 'loading...');
     final result =
@@ -75,12 +81,13 @@ class _SearchInvestmentScreenState extends State<SearchInvestmentScreen> {
                     ),
                     onTap: () {
                       Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ProvideInvestmentDetails(investment: investments[index]),
-                    ),
-                  );
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProvideInvestmentDetails(
+                            investment: investments[index],
+                          ),
+                        ),
+                      );
                     },
                   ),
                 );

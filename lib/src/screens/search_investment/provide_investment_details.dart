@@ -27,6 +27,12 @@ class _ProvideInvestmentDetailsState extends State<ProvideInvestmentDetails> {
   final YahooFinanceProvider yahooFinanceProvider = YahooFinanceProvider();
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
+  @override
+  void dispose() {
+    amountOwnedController.dispose();
+    super.dispose();
+  }
+
   Future<bool> _addInvestment() async {
     EasyLoading.show(status: 'loading...');
     final result =
