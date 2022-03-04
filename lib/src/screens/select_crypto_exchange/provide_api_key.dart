@@ -37,7 +37,6 @@ class _ProvideAPIKeyState extends State<ProvideAPIKey> {
           "An error was encountered, investments have not been fetched",
         );
       } else {
-        print(result);
         EasyLoading.dismiss();
       }
     }
