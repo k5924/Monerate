@@ -2,11 +2,11 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/services.dart';
 
 class RemoteConfigProvider {
-  final RemoteConfig remoteConfig;
+  final FirebaseRemoteConfig remoteConfig;
 
   RemoteConfigProvider({required this.remoteConfig});
 
-  Future<RemoteConfig?> _initialise() async {
+  Future<FirebaseRemoteConfig?> _initialise() async {
     try {
       await remoteConfig.setConfigSettings(
         RemoteConfigSettings(

@@ -6,7 +6,7 @@ import 'package:monerate/src/providers/export.dart';
 
 class YahooFinanceProvider {
   final RemoteConfigProvider remoteConfigProvider =
-      RemoteConfigProvider(remoteConfig: RemoteConfig.instance);
+      RemoteConfigProvider(remoteConfig: FirebaseRemoteConfig.instance);
   final String url = "yh-finance.p.rapidapi.com";
 
   late String apiKey;
