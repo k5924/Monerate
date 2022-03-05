@@ -9,10 +9,12 @@ class FinancialAdvisorDashboardScreen extends StatefulWidget {
   const FinancialAdvisorDashboardScreen({Key? key}) : super(key: key);
 
   @override
-  _FinancialAdvisorDashboardScreenState createState() => _FinancialAdvisorDashboardScreenState();
+  _FinancialAdvisorDashboardScreenState createState() =>
+      _FinancialAdvisorDashboardScreenState();
 }
 
-class _FinancialAdvisorDashboardScreenState extends State<FinancialAdvisorDashboardScreen> {
+class _FinancialAdvisorDashboardScreenState
+    extends State<FinancialAdvisorDashboardScreen> {
   int _currentIndex = 0;
   late PageController _pageController;
 
@@ -61,6 +63,7 @@ class _FinancialAdvisorDashboardScreenState extends State<FinancialAdvisorDashbo
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
+          unselectedItemColor: Theme.of(context).unselectedWidgetColor,
           currentIndex: _currentIndex,
           onTap: (value) {
             _currentIndex = value;

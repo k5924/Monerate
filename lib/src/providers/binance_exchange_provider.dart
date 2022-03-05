@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:monerate/src/providers/export.dart';
@@ -15,16 +17,14 @@ class BinanceExchangeProvider {
   }
 
   Future getBalances(String secret, String apiKey) async {
-    final String timestamp =
-        "timestamp=${DateTime.now().millisecondsSinceEpoch}";
-    final String query = '' + '&' + timestamp;
-    final String signature = _hmacSha256(query, secret);
+    final String timestamp = "${DateTime.now().millisecondsSinceEpoch}";
+    final String signature = _hmacSha256('timestamp=$timestamp', secret);
     final ExternalAPIProvider externalAPIProvider = ExternalAPIProvider(
       url: url,
       endPoint: '/api/v3/account',
       parameters: {
-        '?': query,
-        '&signature': signature,
+        'timestamp': timestamp,
+        'signature': signature,
       },
       headers: {
         'X-MBX-APIKEY': apiKey,
@@ -34,7 +34,17 @@ class BinanceExchangeProvider {
     if (cryptoBalances.runtimeType == int) {
       return "error";
     } else {
-      return cryptoBalances;
+      cryptoBalances['balances'].forEach((element) {
+        if (element['free'] != null &&
+            element['locked'] != null &&
+            element['asset'] != null) {
+          if (0 <
+              (double.parse(element['free'].toString()) +
+                  double.parse(element['locked'].toString()))) {
+            print(element['asset'] + element['free'] + element['locked']);
+          }
+        }
+      });
     }
   }
 }

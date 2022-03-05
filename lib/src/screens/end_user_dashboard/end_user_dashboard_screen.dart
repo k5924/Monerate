@@ -84,6 +84,7 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
+          unselectedItemColor: Theme.of(context).unselectedWidgetColor,
           currentIndex: _currentIndex,
           onTap: (value) {
             _currentIndex = value;

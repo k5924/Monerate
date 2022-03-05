@@ -55,6 +55,7 @@ class _SearchInvestmentScreenState extends State<SearchInvestmentScreen> {
               onSubmitted: (search) async {
                 searchController.text = search;
                 if (Validator().presenceDetection(searchController.text)) {
+                  investments.clear();
                   await getInvestment();
                 }
               },
