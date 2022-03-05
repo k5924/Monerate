@@ -106,6 +106,7 @@ class AuthProvider {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
     }
+    return null;
   }
 
   Future<String?> updateFinancialAdvisorProfile(
@@ -130,6 +131,7 @@ class AuthProvider {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
     }
+    return null;
   }
 
   Future<String?> logout() async {
@@ -139,6 +141,7 @@ class AuthProvider {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
     }
+    return null;
   }
 
   Future<Object> getProfile() async {
@@ -169,6 +172,7 @@ class AuthProvider {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
     }
+    return null;
   }
 
   Future<String?> changePassword(String oldPassword, String newPassword) async {
@@ -187,6 +191,7 @@ class AuthProvider {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
     }
+    return null;
   }
 
   Future<String?> getUserType() async {
@@ -222,6 +227,7 @@ class AuthProvider {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
     }
+    return null;
   }
 
   Future<String> getUID() async {

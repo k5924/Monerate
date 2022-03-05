@@ -8,5 +8,6 @@ class AmountValidator extends Validator {
     if (!RegExp(r'^[0-9]\d*(\.\d+)?$').hasMatch(value!)) {
       return "Enter a valid amount";
     }
+    return null;
   }
 }

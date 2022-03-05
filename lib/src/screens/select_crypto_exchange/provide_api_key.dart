@@ -66,6 +66,7 @@ class _ProvideAPIKeyState extends State<ProvideAPIKey> {
                       if (Validator().presenceDetection(value) == false) {
                         return 'An API Key is required';
                       }
+                      return null;
                     },
                     onSaved: (value) {
                       apiKeyController.text = value!;
@@ -83,6 +84,7 @@ class _ProvideAPIKeyState extends State<ProvideAPIKey> {
                       if (Validator().presenceDetection(value) == false) {
                         return 'A Secret Key is required';
                       }
+                      return null;
                     },
                     onSaved: (value) {
                       secretKeyController.text = value!;
