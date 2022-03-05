@@ -62,6 +62,7 @@ class _SupportManagerDashboardScreenState
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
+          unselectedItemColor: Theme.of(context).unselectedWidgetColor,
           currentIndex: _currentIndex,
           onTap: (value) {
             _currentIndex = value;

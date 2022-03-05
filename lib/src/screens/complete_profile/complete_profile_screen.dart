@@ -43,6 +43,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Theme.of(context).unselectedWidgetColor,
         currentIndex: _currentIndex,
         onTap: (value) {
           _currentIndex = value;
