@@ -5,6 +5,7 @@ export 'end_user_dashboard/export.dart';
 export 'financial_advisor_dashboard/export.dart';
 export 'forgot_password/export.dart';
 export 'login/export.dart';
+export 'manual_account/export.dart';
 export 'profile/export.dart';
 export 'search_investment/export.dart';
 export 'select_crypto_exchange/export.dart';

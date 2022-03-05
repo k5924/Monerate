@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/cupertino.dart';
 import 'package:monerate/src/screens/export.dart';
 
@@ -25,4 +27,5 @@ Map<String, Widget Function(BuildContext)> kRoutes = {
   SearchInvestmentScreen.kID: (context) => const SearchInvestmentScreen(),
   SelectCryptoExchangeScreen.kID: (context) =>
       const SelectCryptoExchangeScreen(),
+  ManualAccountScreen.kID: (context) => const ManualAccountScreen(),
 };

@@ -205,7 +205,7 @@ class AuthProvider {
     }
   }
 
-  Future<String?> addInvestment({
+  Future<String?> addFinanceAccount({
     required String name,
     required String symbol,
     required String type,

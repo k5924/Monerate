@@ -1,62 +1,42 @@
-// ignore_for_file: must_be_immutable, use_build_context_synchronously
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
-import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
-class ProvideInvestmentDetails extends StatefulWidget {
-  TickerModel investment;
-  ProvideInvestmentDetails({
-    Key? key,
-    required this.investment,
-  }) : super(key: key);
+class ManualAccountScreen extends StatefulWidget {
+  static const kID = 'manual_account_screen';
+  const ManualAccountScreen({Key? key}) : super(key: key);
 
   @override
-  _ProvideInvestmentDetailsState createState() =>
-      _ProvideInvestmentDetailsState();
+  State<ManualAccountScreen> createState() => _ManualAccountScreenState();
 }
 
-class _ProvideInvestmentDetailsState extends State<ProvideInvestmentDetails> {
-  final TextEditingController amountOwnedController = TextEditingController();
+class _ManualAccountScreenState extends State<ManualAccountScreen> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController valueController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final YahooFinanceProvider yahooFinanceProvider = YahooFinanceProvider();
-  final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
+    final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
-  @override
-  void dispose() {
-    amountOwnedController.dispose();
-    super.dispose();
-  }
 
-  Future<bool> _addInvestment() async {
+  _addAccount() async {
     EasyLoading.show(status: 'loading...');
-    final result =
-        await yahooFinanceProvider.getPrice(widget.investment.symbol);
-    if (result.toString() == "error") {
-      EasyLoading.showError(
-        "An error was encountered, investment information has not been fetched",
-      );
-      return false;
-    } else {
+    
       final result2 = await authProvider.addFinanceAccount(
-        name: widget.investment.longName,
-        symbol: widget.investment.symbol,
-        type: "Stock",
-        amount: amountOwnedController.text,
-        price: result.toString(),
+        name: nameController.text,
+        symbol: '',
+        type: "Manual",
+        amount: '1',
+        price: valueController.text,
       );
       if (result2 != null) {
         EasyLoading.showError(result2);
         return false;
       } else {
-        EasyLoading.showSuccess("Investment added to portfolio");
+        EasyLoading.showSuccess("Account to portfolio");
         return true;
-      }
+      
     }
   }
 
@@ -65,7 +45,7 @@ class _ProvideInvestmentDetailsState extends State<ProvideInvestmentDetails> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Investment Details"),
+        title: const Text("Account Details"),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -74,13 +54,31 @@ class _ProvideInvestmentDetailsState extends State<ProvideInvestmentDetails> {
             child: Column(
               children: [
                 TextFormField(
-                  controller: amountOwnedController,
-                  validator: AmountValidator().validateAmount,
+                  controller: nameController,
+                  validator: (value) {
+                    if (Validator().presenceDetection(value) == false) {
+                      return 'You must provide a name for this account';
+                    }
+                    return null;
+                  },
                   onSaved: (value) {
-                    amountOwnedController.text = value!;
+                    valueController.text = value!;
                   },
                   decoration: const InputDecoration(
-                    hintText: 'Enter Amount Owned',
+                    hintText: 'Enter Account name',
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  controller: valueController,
+                  validator: AmountValidator().validateAmount,
+                  onSaved: (value) {
+                    valueController.text = value!;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Enter Current Value',
                   ),
                 ),
                 const SizedBox(
@@ -89,8 +87,9 @@ class _ProvideInvestmentDetailsState extends State<ProvideInvestmentDetails> {
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      final opResult = await _addInvestment();
+                      final opResult = await _addAccount();
                       if (opResult == true) {
+                        // ignore: use_build_context_synchronously
                         Navigator.popUntil(
                           context,
                           ModalRoute.withName(EndUserDashboardScreen.kID),
@@ -105,7 +104,7 @@ class _ProvideInvestmentDetailsState extends State<ProvideInvestmentDetails> {
                     ),
                   ),
                   child: const Text(
-                    "Add Investment",
+                    "Add Account",
                     style: TextStyle(
                       fontSize: 18,
                     ),

@@ -69,9 +69,13 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
                           trailing: Text(
                             "Price £${(double.parse(balances[index].amount) * double.parse(balances[index].price)).toStringAsFixed(2)}",
                           ),
-                          subtitle: Text(
-                            'Ticker: ${balances[index].symbol} Type: ${balances[index].type} Holdings: ${balances[index].amount}',
-                          ),
+                          subtitle: balances[index].type == 'Stock'
+                              ? Text(
+                                  'Ticker: ${balances[index].symbol} Type: ${balances[index].type} Holdings: ${balances[index].amount}',
+                                )
+                              : Text(
+                                  'Type: ${balances[index].type}',
+                                ),
                           onTap: () {},
                         ),
                       );
@@ -118,7 +122,12 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
           SpeedDialChild(
             child: const Icon(Icons.account_balance),
             label: 'Manual Accounts',
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                ManualAccountScreen.kID,
+              );
+            },
           ),
         ],
       ),
