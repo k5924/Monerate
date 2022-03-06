@@ -25,4 +25,5 @@ Map<String, Widget Function(BuildContext)> kRoutes = {
   SearchInvestmentScreen.kID: (context) => const SearchInvestmentScreen(),
   SelectCryptoExchangeScreen.kID: (context) =>
       const SelectCryptoExchangeScreen(),
+  ManualAccountScreen.kID: (context) => const ManualAccountScreen(),
 };

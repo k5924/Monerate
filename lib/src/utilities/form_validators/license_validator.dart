@@ -8,5 +8,6 @@ class LicenseValidator extends Validator {
     if (!RegExp(r'^.{6,}$').hasMatch(value!)) {
       return "Enter a valid License ID (Minimum 6 chararacters)";
     }
+    return null;
   }
 }

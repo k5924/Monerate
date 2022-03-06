@@ -26,6 +26,7 @@ class RemoteConfigProvider {
       );
       print(exception);
     }
+    return null;
   }
 
   Future<String> getYahooFinanceAPIKey() async {

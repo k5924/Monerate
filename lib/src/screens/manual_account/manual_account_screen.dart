@@ -1,59 +1,50 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:monerate/src/providers/binance_exchange_provider.dart';
+import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
-class ProvideAPIKey extends StatefulWidget {
-  final String exchangeName;
-  const ProvideAPIKey({Key? key, required this.exchangeName}) : super(key: key);
+class ManualAccountScreen extends StatefulWidget {
+  static const kID = 'manual_account_screen';
+  const ManualAccountScreen({Key? key}) : super(key: key);
 
   @override
-  _ProvideAPIKeyState createState() => _ProvideAPIKeyState();
+  State<ManualAccountScreen> createState() => _ManualAccountScreenState();
 }
 
-class _ProvideAPIKeyState extends State<ProvideAPIKey> {
-  final TextEditingController apiKeyController = TextEditingController();
-  final TextEditingController secretKeyController = TextEditingController();
+class _ManualAccountScreenState extends State<ManualAccountScreen> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController valueController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  late BinanceExchangeProvider binanceExchangeProvider =
-      BinanceExchangeProvider();
+  final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
-  @override
-  void dispose() {
-    apiKeyController.dispose();
-    secretKeyController.dispose();
-    super.dispose();
-  }
-
-  Future<bool?> connectToExchange() async {
+  _addAccount() async {
     EasyLoading.show(status: 'loading...');
-    if (widget.exchangeName == 'binance') {
-      final result = await binanceExchangeProvider.getBalances(
-        secretKeyController.text,
-        apiKeyController.text,
-      );
-      if (result.runtimeType == String) {
-        if (result == "error") {
-          EasyLoading.showError(
-            "An error was encountered, investments have not been fetched",
-          );
-        } else {
-          EasyLoading.showError(result.toString());
-        }
-        return false;
-      } else {
-        EasyLoading.showSuccess("Cryptocurrency Exchange added to portfolio");
-        return true;
-      }
+
+    final result2 = await authProvider.addFinanceAccount(
+      name: nameController.text,
+      symbol: '',
+      type: "Manual",
+      amount: '1',
+      price: valueController.text,
+    );
+    if (result2 != null) {
+      EasyLoading.showError(result2);
+      return false;
+    } else {
+      EasyLoading.showSuccess("Account to portfolio");
+      return true;
     }
-    return null;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text("Account Details"),
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Form(
@@ -62,43 +53,32 @@ class _ProvideAPIKeyState extends State<ProvideAPIKey> {
               padding: const EdgeInsets.all(25.0),
               child: Column(
                 children: [
-                  const Text(
-                    'Only enable read permissions for the API key, do not provide an API key with write conditions',
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   TextFormField(
-                    controller: apiKeyController,
+                    controller: nameController,
                     validator: (value) {
                       if (Validator().presenceDetection(value) == false) {
-                        return 'An API Key is required';
+                        return 'You must provide a name for this account';
                       }
                       return null;
                     },
                     onSaved: (value) {
-                      apiKeyController.text = value!;
+                      valueController.text = value!;
                     },
                     decoration: const InputDecoration(
-                      hintText: 'Enter API Key',
+                      hintText: 'Enter Account name',
                     ),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
-                    controller: secretKeyController,
-                    validator: (value) {
-                      if (Validator().presenceDetection(value) == false) {
-                        return 'A Secret Key is required';
-                      }
-                      return null;
-                    },
+                    controller: valueController,
+                    validator: AmountValidator().validateAmount,
                     onSaved: (value) {
-                      secretKeyController.text = value!;
+                      valueController.text = value!;
                     },
                     decoration: const InputDecoration(
-                      hintText: 'Enter Secret Key',
+                      hintText: 'Enter Current Value',
                     ),
                   ),
                   const SizedBox(
@@ -107,7 +87,7 @@ class _ProvideAPIKeyState extends State<ProvideAPIKey> {
                   ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        final opResult = await connectToExchange();
+                        final opResult = await _addAccount();
                         if (opResult == true) {
                           // ignore: use_build_context_synchronously
                           Navigator.popUntil(
@@ -124,7 +104,7 @@ class _ProvideAPIKeyState extends State<ProvideAPIKey> {
                       ),
                     ),
                     child: const Text(
-                      "Add Crypto Account",
+                      "Add Account",
                       style: TextStyle(
                         fontSize: 18,
                       ),

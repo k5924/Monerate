@@ -33,54 +33,68 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            StreamBuilder<QuerySnapshot>(
-              stream: balanceStream,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                } else {
-                  final balancesDB = snapshot.data!.docs;
-                  final List<BalanceModel> balances = <BalanceModel>[];
-                  for (final item in balancesDB) {
-                    final balance = BalanceModel(
-                      amount: item['amount'].toString(),
-                      name: item['name'].toString(),
-                      price: item['price'].toString(),
-                      symbol: item['symbol'].toString(),
-                      type: item['type'].toString(),
-                      userID: item['userID'].toString(),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              StreamBuilder<QuerySnapshot>(
+                stream: balanceStream,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    final balancesDB = snapshot.data!.docs;
+                    balancesDB.sort(
+                      (a, b) =>
+                          a['type'].toString().compareTo(b['type'].toString()),
                     );
-                    balances.add(balance);
-                  }
-                  return ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: balances.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        elevation: 4,
-                        child: ListTile(
-                          title: Text(
-                            balances[index].name,
-                          ),
-                          trailing: Text(
-                            "Price £${(double.parse(balances[index].amount) * double.parse(balances[index].price)).toStringAsFixed(2)}",
-                          ),
-                          subtitle: Text(
-                            'Ticker: ${balances[index].symbol} Type: ${balances[index].type} Holdings: ${balances[index].amount}',
-                          ),
-                          onTap: () {},
-                        ),
+                    final List<BalanceModel> balances = <BalanceModel>[];
+                    for (final item in balancesDB) {
+                      final balance = BalanceModel(
+                        amount: item['amount'].toString(),
+                        name: item['name'].toString(),
+                        price: item['price'].toString(),
+                        symbol: item['symbol'].toString(),
+                        type: item['type'].toString(),
+                        userID: item['userID'].toString(),
                       );
-                    },
-                  );
-                }
-              },
-            )
-          ],
+                      balances.add(balance);
+                    }
+                    return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: balances.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          elevation: 4,
+                          child: ListTile(
+                            title: Text(
+                              balances[index].name,
+                            ),
+                            trailing: balances[index].type == 'Cryptocurrency'
+                                ? Text(
+                                    'Holdings: ${balances[index].amount}',
+                                  )
+                                : Text(
+                                    "Price £${(double.parse(balances[index].amount) * double.parse(balances[index].price)).toStringAsFixed(2)}",
+                                  ),
+                            subtitle: balances[index].type == 'Stock'
+                                ? Text(
+                                    'Ticker: ${balances[index].symbol} Type: ${balances[index].type} Holdings: ${balances[index].amount}',
+                                  )
+                                : Text(
+                                    'Type: ${balances[index].type}',
+                                  ),
+                            onTap: () {},
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
+              )
+            ],
+          ),
         ),
       ),
       floatingActionButton: SpeedDial(
@@ -118,7 +132,12 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
           SpeedDialChild(
             child: const Icon(Icons.account_balance),
             label: 'Manual Accounts',
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                ManualAccountScreen.kID,
+              );
+            },
           ),
         ],
       ),

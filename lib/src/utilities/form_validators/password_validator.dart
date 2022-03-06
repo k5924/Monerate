@@ -8,6 +8,7 @@ class PasswordValidator extends Validator {
     if (!RegExp(r'^.{6,}$').hasMatch(value!)) {
       return "Enter a valid password (Minimum 6 chararacters)";
     }
+    return null;
   }
 
   String? confirmPassword(String? value1, String? value2) {
