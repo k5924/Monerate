@@ -2,10 +2,15 @@
 
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
 
 class BinanceExchangeProvider {
   final String url = "api.binance.com";
+  final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
   String _hmacSha256(String query, String secret) {
     final key = utf8.encode(secret);
@@ -34,14 +39,35 @@ class BinanceExchangeProvider {
     if (cryptoBalances.runtimeType == int) {
       return "error";
     } else {
-      cryptoBalances['balances'].forEach((element) {
+      final box = BoxProvider.getKeys();
+      final keys = LocalKeyModel(
+        provider: 'binance',
+        keys: [
+          apiKey,
+          secret,
+        ],
+      );
+      box.add(keys);
+      box.close();
+      cryptoBalances['balances'].forEach((element) async {
         if (element['free'] != null &&
             element['locked'] != null &&
             element['asset'] != null) {
           if (0 <
               (double.parse(element['free'].toString()) +
                   double.parse(element['locked'].toString()))) {
-            print(element['asset'] + element['free'] + element['locked']);
+            final result2 = await authProvider.addFinanceAccount(
+              name: element['asset'].toString(),
+              symbol: element['asset'].toString(),
+              type: "Cryptocurrency",
+              amount: (double.parse(element['free'].toString()) +
+                      double.parse(element['locked'].toString()))
+                  .toString(),
+              price: '',
+            );
+            if (result2 != null) {
+              return result2;
+            }
           }
         }
       });

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/providers/binance_exchange_provider.dart';
+import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
 class ProvideAPIKey extends StatefulWidget {
@@ -25,7 +26,7 @@ class _ProvideAPIKeyState extends State<ProvideAPIKey> {
     super.dispose();
   }
 
-  Future<void> connectToExchange() async {
+  Future<bool?> connectToExchange() async {
     EasyLoading.show(status: 'loading...');
     if (widget.exchangeName == 'binance') {
       final result = await binanceExchangeProvider.getBalances(
@@ -33,13 +34,20 @@ class _ProvideAPIKeyState extends State<ProvideAPIKey> {
         apiKeyController.text,
       );
       if (result.runtimeType == String) {
-        EasyLoading.showError(
-          "An error was encountered, investments have not been fetched",
-        );
+        if (result == "error") {
+          EasyLoading.showError(
+            "An error was encountered, investments have not been fetched",
+          );
+        } else {
+          EasyLoading.showError(result.toString());
+        }
+        return false;
       } else {
-        EasyLoading.dismiss();
+        EasyLoading.showSuccess("Cryptocurrency Exchange added to portfolio");
+        return true;
       }
     }
+    return null;
   }
 
   @override
@@ -99,7 +107,14 @@ class _ProvideAPIKeyState extends State<ProvideAPIKey> {
                   ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        await connectToExchange();
+                        final opResult = await connectToExchange();
+                        if (opResult == true) {
+                          // ignore: use_build_context_synchronously
+                          Navigator.popUntil(
+                            context,
+                            ModalRoute.withName(EndUserDashboardScreen.kID),
+                          );
+                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(

@@ -19,7 +19,7 @@ Future<void> main() async {
   );
   await Hive.initFlutter();
   Hive.registerAdapter(LocalKeyModelAdapter());
-  await Hive.openBox('local_keys');
+  await Hive.openBox<LocalKeyModel>('local_keys');
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
   configLoading();

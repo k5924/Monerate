@@ -67,51 +67,54 @@ class _ProvideInvestmentDetailsState extends State<ProvideInvestmentDetails> {
         centerTitle: true,
         title: const Text("Investment Details"),
       ),
-      body: SingleChildScrollView(
-        child: Center(
+      body: Center(
+        child: SingleChildScrollView(
           child: Form(
             key: _formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: amountOwnedController,
-                  validator: AmountValidator().validateAmount,
-                  onSaved: (value) {
-                    amountOwnedController.text = value!;
-                  },
-                  decoration: const InputDecoration(
-                    hintText: 'Enter Amount Owned',
+            child: Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: amountOwnedController,
+                    validator: AmountValidator().validateAmount,
+                    onSaved: (value) {
+                      amountOwnedController.text = value!;
+                    },
+                    decoration: const InputDecoration(
+                      hintText: 'Enter Amount Owned',
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      final opResult = await _addInvestment();
-                      if (opResult == true) {
-                        Navigator.popUntil(
-                          context,
-                          ModalRoute.withName(EndUserDashboardScreen.kID),
-                        );
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        final opResult = await _addInvestment();
+                        if (opResult == true) {
+                          Navigator.popUntil(
+                            context,
+                            ModalRoute.withName(EndUserDashboardScreen.kID),
+                          );
+                        }
                       }
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 40,
-                      vertical: 10,
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 40,
+                        vertical: 10,
+                      ),
+                    ),
+                    child: const Text(
+                      "Add Investment",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
                     ),
                   ),
-                  child: const Text(
-                    "Add Investment",
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

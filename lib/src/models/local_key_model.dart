@@ -3,13 +3,12 @@ import 'package:hive/hive.dart';
 part 'local_key_model.g.dart';
 
 @HiveType(typeId: 0)
-class LocalKeyModel extends HiveObject{
+class LocalKeyModel extends HiveObject {
   @HiveField(0)
-  late String provider;
+  String provider;
 
   @HiveField(1)
-  late String keyName;
+  List<String> keys;
 
-  @HiveField(2)
-  late String value;
+  LocalKeyModel({required this.provider, required this.keys});
 }

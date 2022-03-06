@@ -16,22 +16,20 @@ class LocalKeyModelAdapter extends TypeAdapter<LocalKeyModel> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return LocalKeyModel()
-      ..provider = fields[0] as String
-      ..keyName = fields[1] as String
-      ..value = fields[2] as String;
+    return LocalKeyModel(
+      provider: fields[0] as String,
+      keys: (fields[1] as List).cast<String>(),
+    );
   }
 
   @override
   void write(BinaryWriter writer, LocalKeyModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(2)
       ..writeByte(0)
       ..write(obj.provider)
       ..writeByte(1)
-      ..write(obj.keyName)
-      ..writeByte(2)
-      ..write(obj.value);
+      ..write(obj.keys);
   }
 
   @override
