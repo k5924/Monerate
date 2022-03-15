@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:monerate/firebase_options.dart';
 import 'package:monerate/src/app.dart';
@@ -18,12 +19,15 @@ Future<void> main() async {
   await FirebaseAppCheck.instance.activate(
     webRecaptchaSiteKey: 'recaptcha-v3-site-key',
   );
-  final secureStorageProvider = SecureStorageProvider();
+  final secureStorageProvider =
+      SecureStorageProvider(secureStorage: const FlutterSecureStorage());
   final encryptionKey = await secureStorageProvider.getEncryptionKey();
   await Hive.initFlutter();
   Hive.registerAdapter(LocalKeyModelAdapter());
-  await Hive.openBox<LocalKeyModel>('local_keys',
-      encryptionCipher: HiveAesCipher(encryptionKey));
+  await Hive.openBox<LocalKeyModel>(
+    'local_keys',
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
   configLoading();

@@ -3,8 +3,6 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
 
@@ -34,6 +32,7 @@ class BinanceExchangeProvider {
       headers: {
         'X-MBX-APIKEY': apiKey,
       },
+      body: null,
     );
     final cryptoBalances = await externalAPIProvider.getData();
     if (cryptoBalances.runtimeType == int) {

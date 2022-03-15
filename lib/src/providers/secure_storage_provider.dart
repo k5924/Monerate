@@ -5,7 +5,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 
 class SecureStorageProvider {
-  static const secureStorage = FlutterSecureStorage();
+  final FlutterSecureStorage secureStorage;
+
+  SecureStorageProvider({required this.secureStorage});
 
   Future<void> generateEncryptionKey() async {
     final key = Hive.generateSecureKey();
