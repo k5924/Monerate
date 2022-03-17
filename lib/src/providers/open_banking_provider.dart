@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:monerate/src/providers/export.dart';
 
@@ -25,13 +24,13 @@ class OpenBankingProvider {
         'Content-Type': 'application/json',
       },
       body:
-          '{ "client_id": "${apiKeys[2]}", "secret": "${apiKeys[2]}", "user": { "client_user_id": "$userID" },"client_name": "Monerate", "products": ["auth"], "country_codes": ["GB"], "language": "en", "webhook": "https://sample-web-hook.com", "account_filters": { "depository": { "account_subtypes": ["checking"] } } }',
+          '{ "client_id": "${apiKeys[2]}", "secret": "${apiKeys[1]}", "user": { "client_user_id": "$userID" },"client_name": "Monerate", "products": ["auth", "assets", "transactions"], "country_codes": ["GB"], "language": "en", "webhook": "https://sample-web-hook.com", "account_filters": { "depository": { "account_subtypes": ["all"] }, "credit": { "account_subtypes": ["all"] }, "loan": { "account_subtypes": ["all"] }, "investment": { "account_subtypes": ["all"] } } }',
     );
     final data = await externalAPIProvider.postData();
     if (data.runtimeType == int) {
       return "error";
     } else {
-      return data["link_token"];
+      return data["link_token"].toString();
     }
   }
 }
