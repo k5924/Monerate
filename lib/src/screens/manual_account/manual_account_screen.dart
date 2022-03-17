@@ -19,7 +19,7 @@ class _ManualAccountScreenState extends State<ManualAccountScreen> {
   final _formKey = GlobalKey<FormState>();
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
-  _addAccount() async {
+  Future<bool> _addAccount() async {
     EasyLoading.show(status: 'loading...');
 
     final result2 = await authProvider.addFinanceAccount(

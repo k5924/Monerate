@@ -33,4 +33,12 @@ class RemoteConfigProvider {
     final remoteConfig = await _initialise();
     return remoteConfig!.getString('yahoo_finance_api_key');
   }
+
+  Future<List<String>> getPlaidKeys() async {
+    final remoteConfig = await _initialise();
+    final devKey = remoteConfig!.getString('plaid_dev_key');
+    final sandboxKey = remoteConfig.getString('plaid_sandbox_key');
+    final clientId = remoteConfig.getString('plaid_client_id');
+    return [devKey, sandboxKey, clientId];
+  }
 }

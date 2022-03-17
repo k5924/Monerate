@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:monerate/src/models/export.dart';
-import 'package:monerate/src/providers/auth_provider.dart';
-import 'package:monerate/src/providers/database_provider.dart';
+import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
+import 'package:plaid_flutter/plaid_flutter.dart';
 
 class AccountBalancesTab extends StatefulWidget {
   final String uid;
@@ -24,9 +25,50 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
       .where('userID', isEqualTo: widget.uid)
       .snapshots();
 
+  final OpenBankingProvider openBankingProvider = OpenBankingProvider();
+  late LinkTokenConfiguration linkTokenConfiguration;
+
   @override
   void initState() {
     super.initState();
+  }
+
+  void _onSuccessCallback(String publicToken, LinkSuccessMetadata metadata) {
+    // iterate through accounts and store name and subtype
+    print("onSuccess: $publicToken, metadata: ${metadata.description()}");
+  }
+
+  void _onExitCallback(LinkError? error, LinkExitMetadata metadata) {
+    print("onExit metadata: ${metadata.description()}");
+
+    if (error != null) {
+      EasyLoading.showError(
+        error.message,
+      );
+    }
+  }
+
+  Future<void> _connectToPlaid() async {
+    final result = await openBankingProvider.getLinkToken();
+    print(result);
+    if (result.runtimeType == String) {
+      if (result != "error") {
+        PlaidLink.open(
+          configuration: LinkTokenConfiguration(
+            token: result.toString(),
+          ),
+        );
+        PlaidLink.onSuccess(_onSuccessCallback);
+        PlaidLink.onExit(_onExitCallback);
+      } else {
+        EasyLoading.showError(
+          'Unable to retrieve API keys, please try again later',
+        );
+      }
+    } else {
+      EasyLoading.showError(
+          'Unable to access Plaid Endpoint, please try again later');
+    }
   }
 
   @override
@@ -127,7 +169,9 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
           SpeedDialChild(
             child: const Icon(Icons.account_balance),
             label: 'Bank Accounts',
-            onTap: () {},
+            onTap: () async {
+              await _connectToPlaid();
+            },
           ),
           SpeedDialChild(
             child: const Icon(Icons.account_balance),

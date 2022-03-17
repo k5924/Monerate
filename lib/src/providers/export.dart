@@ -4,5 +4,7 @@ export 'binance_exchange_provider.dart';
 export 'box_provider.dart';
 export 'database_provider.dart';
 export 'external_api_provider.dart';
+export 'open_banking_provider.dart';
 export 'remote_config_provider.dart';
+export 'secure_storage_provider.dart';
 export 'yahoo_finance_provider.dart';

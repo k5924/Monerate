@@ -33,6 +33,7 @@ class YahooFinanceProvider {
         'x-rapidapi-host': url,
         'x-rapidapi-key': apiKey,
       },
+      body: null,
     );
     final newsArticles = await externalAPIProvider.postData();
     if (newsArticles.runtimeType == int) {
@@ -70,6 +71,7 @@ class YahooFinanceProvider {
         'x-rapidapi-host': url,
         'x-rapidapi-key': apiKey,
       },
+      body: null,
     );
     final tickerList = await externalAPIProvider.getData();
     if (tickerList.runtimeType == int) {
@@ -104,6 +106,7 @@ class YahooFinanceProvider {
         'x-rapidapi-host': url,
         'x-rapidapi-key': apiKey,
       },
+      body: null,
     );
     final stockSummary = await externalAPIProvider.getData();
     if (stockSummary.runtimeType == int) {
