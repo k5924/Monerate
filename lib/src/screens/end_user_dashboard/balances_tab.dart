@@ -33,9 +33,40 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
     super.initState();
   }
 
-  void _onSuccessCallback(String publicToken, LinkSuccessMetadata metadata) {
+  getBalances(String accessToken) async {
+    final result = await openBankingProvider.getAccessToken(accessToken);
+    if (result.runtimeType == String) {
+      if (result != "error") {
+        print(result.toString());
+      } else {
+        EasyLoading.showError(
+          'Unable to retrieve account balances, please try again later',
+        );
+      }
+    } else {
+      EasyLoading.showError(
+        'Unable to access Plaid Endpoint, please try again later',
+      );
+    }
+  }
+
+  void _onSuccessCallback(
+      String publicToken, LinkSuccessMetadata metadata) async {
     // iterate through accounts and store name and subtype
-    print("onSuccess: $publicToken, metadata: ${metadata.description()}");
+    final result = await openBankingProvider.getAccessToken(publicToken);
+    if (result.runtimeType == String) {
+      if (result != "error") {
+        await getBalances(result.toString());
+      } else {
+        EasyLoading.showError(
+          'Unable to retrieve access token, please try again later',
+        );
+      }
+    } else {
+      EasyLoading.showError(
+        'Unable to access Plaid Endpoint, please try again later',
+      );
+    }
   }
 
   void _onExitCallback(LinkError? error, LinkExitMetadata metadata) {
