@@ -1,0 +1,37 @@
+@startuml
+set namespaceSeparator ::
+
+class "monerate::src::widgets::components::app_icon.dart::AppIcon" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "monerate::src::widgets::components::app_icon.dart::AppIcon"
+
+class "monerate::src::widgets::layouts::centered_scroll_view.dart::CenteredScrollView" {
+  +List<Widget> children
+  +_CenteredScrollViewState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::widgets::layouts::centered_scroll_view.dart::CenteredScrollView"
+
+class "monerate::src::widgets::layouts::centered_scroll_view.dart::_CenteredScrollViewState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::widgets::layouts::centered_scroll_view.dart::_CenteredScrollViewState"
+
+class "monerate::src::widgets::layouts::screen_header.dart::ScreenHeader" {
+  +String screenName
+  +_ScreenHeaderState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::widgets::layouts::screen_header.dart::ScreenHeader"
+
+class "monerate::src::widgets::layouts::screen_header.dart::_ScreenHeaderState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::widgets::layouts::screen_header.dart::_ScreenHeaderState"
+
+
+@enduml

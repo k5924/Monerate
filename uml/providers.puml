@@ -1,0 +1,123 @@
+@startuml
+set namespaceSeparator ::
+
+class "monerate::src::providers::auth_provider.dart::AuthProvider" {
+  +FirebaseAuth auth
+  +DatabaseProvider databaseProvider
+  +UserCredential userCredential
+  +User? user
+  +ExceptionsFactory exceptionsFactory
+  +UserModel userModel
+  +Future<String> verifyEmail()
+  +Future<String?> registerUser()
+  +Future<String?> signIn()
+  +Future<String?> forgotPassword()
+  +Future<Object> checkProfile()
+  +Future<String?> updateUserProfile()
+  +Future<String?> updateFinancialAdvisorProfile()
+  +Future<String?> logout()
+  +Future<Object> getProfile()
+  +Future<String?> changeEmail()
+  +Future<String?> changePassword()
+  +Future<String?> getUserType()
+  +Future<String?> addFinanceAccount()
+  +Future<String> getUID()
+}
+
+"monerate::src::providers::auth_provider.dart::AuthProvider" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
+"monerate::src::providers::auth_provider.dart::AuthProvider" o-- "monerate::src::providers::database_provider.dart::DatabaseProvider"
+"monerate::src::providers::auth_provider.dart::AuthProvider" o-- "firebase_auth::firebase_auth.dart::UserCredential"
+"monerate::src::providers::auth_provider.dart::AuthProvider" o-- "firebase_auth::firebase_auth.dart::User"
+"monerate::src::providers::auth_provider.dart::AuthProvider" o-- "monerate::src::utilities::firebase::exceptions_factory.dart::ExceptionsFactory"
+"monerate::src::providers::auth_provider.dart::AuthProvider" o-- "monerate::src::models::user_model.dart::UserModel"
+
+class "monerate::src::providers::binance_exchange_provider.dart::BinanceExchangeProvider" {
+  +String url
+  +AuthProvider authProvider
+  -String _hmacSha256()
+  +Future<dynamic> getBalances()
+}
+
+"monerate::src::providers::binance_exchange_provider.dart::BinanceExchangeProvider" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+
+class "monerate::src::providers::box_provider.dart::BoxProvider" {
+  {static} +Box<LocalKeyModel> getKeys()
+}
+
+class "monerate::src::providers::database_provider.dart::DatabaseProvider" {
+  +FirebaseFirestore db
+  +ExceptionsFactory exceptionsFactory
+  +UserModel userModel
+  +BalanceModel balanceModel
+  +CollectionReference<Object?> usersCollection
+  +CollectionReference<Object?> balanceCollection
+  +Future<void> createNewUser()
+  +Future<UserModel> getProfile()
+  +Future<void> updateProfile()
+  +Future<void> addBalance()
+  +CollectionReference<Object?> getBalanceCollection()
+}
+
+"monerate::src::providers::database_provider.dart::DatabaseProvider" o-- "cloud_firestore::cloud_firestore.dart::FirebaseFirestore"
+"monerate::src::providers::database_provider.dart::DatabaseProvider" o-- "monerate::src::utilities::firebase::exceptions_factory.dart::ExceptionsFactory"
+"monerate::src::providers::database_provider.dart::DatabaseProvider" o-- "monerate::src::models::user_model.dart::UserModel"
+"monerate::src::providers::database_provider.dart::DatabaseProvider" o-- "monerate::src::models::balance_model.dart::BalanceModel"
+"monerate::src::providers::database_provider.dart::DatabaseProvider" o-- "cloud_firestore::cloud_firestore.dart::CollectionReference<Object>"
+
+class "monerate::src::providers::external_api_provider.dart::ExternalAPIProvider" {
+  +String url
+  +String endPoint
+  +Map<String, String>? headers
+  +Map<String, String>? parameters
+  +String? body
+  +Future<dynamic> postData()
+  +Future<dynamic> getData()
+}
+
+class "monerate::src::providers::open_banking_provider.dart::OpenBankingProvider" {
+  +RemoteConfigProvider remoteConfigProvider
+  +AuthProvider authProvider
+  +String url
+  +List<String> apiKeys
+  +Future<void> getAPIKeys()
+  +Future<dynamic> getLinkToken()
+  +Future<dynamic> getAccessToken()
+  +Future<dynamic> getAccounts()
+}
+
+"monerate::src::providers::open_banking_provider.dart::OpenBankingProvider" o-- "monerate::src::providers::remote_config_provider.dart::RemoteConfigProvider"
+"monerate::src::providers::open_banking_provider.dart::OpenBankingProvider" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+
+class "monerate::src::providers::remote_config_provider.dart::RemoteConfigProvider" {
+  +FirebaseRemoteConfig remoteConfig
+  -Future<FirebaseRemoteConfig?> _initialise()
+  +Future<String> getYahooFinanceAPIKey()
+  +Future<List<String>> getPlaidKeys()
+}
+
+"monerate::src::providers::remote_config_provider.dart::RemoteConfigProvider" o-- "firebase_remote_config::firebase_remote_config.dart::FirebaseRemoteConfig"
+
+class "monerate::src::providers::secure_storage_provider.dart::SecureStorageProvider" {
+  +FlutterSecureStorage secureStorage
+  +Future<void> generateEncryptionKey()
+  +Future<Uint8List> getEncryptionKey()
+}
+
+"monerate::src::providers::secure_storage_provider.dart::SecureStorageProvider" o-- "flutter_secure_storage::flutter_secure_storage.dart::FlutterSecureStorage"
+
+class "monerate::src::providers::yahoo_finance_provider.dart::YahooFinanceProvider" {
+  +RemoteConfigProvider remoteConfigProvider
+  +String url
+  +String apiKey
+  +List<ArticleModel> news
+  +List<TickerModel> tickers
+  +Future<void> getAPIKey()
+  +Future<Object> getNewsArticles()
+  +Future<Object> getTickerSymbol()
+  +Future<Object> getPrice()
+}
+
+"monerate::src::providers::yahoo_finance_provider.dart::YahooFinanceProvider" o-- "monerate::src::providers::remote_config_provider.dart::RemoteConfigProvider"
+
+
+@enduml

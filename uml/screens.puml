@@ -1,0 +1,575 @@
+@startuml
+set namespaceSeparator ::
+
+class "monerate::src::screens::change_email::change_email_screen.dart::ChangeEmailScreen" {
+  {static} +String kID
+  +_ChangeEmailScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::change_email::change_email_screen.dart::ChangeEmailScreen"
+
+class "monerate::src::screens::change_email::change_email_screen.dart::_ChangeEmailScreenState" {
+  +TextEditingController newEmailController
+  +TextEditingController confirmEmailController
+  +TextEditingController passwordController
+  -GlobalKey<FormState> _formKey
+  -bool _showPassword
+  +AuthProvider authProvider
+  +void dispose()
+  -void _closeDialogBox()
+  -Future<String?> _updateEmail()
+  -Future<String?> _displayConfirmationDialog()
+  +Widget build()
+}
+
+"monerate::src::screens::change_email::change_email_screen.dart::_ChangeEmailScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"monerate::src::screens::change_email::change_email_screen.dart::_ChangeEmailScreenState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"monerate::src::screens::change_email::change_email_screen.dart::_ChangeEmailScreenState" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::change_email::change_email_screen.dart::_ChangeEmailScreenState"
+
+class "monerate::src::screens::change_password::change_password_screen.dart::ChangePasswordScreen" {
+  {static} +String kID
+  +_ChangePasswordScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::change_password::change_password_screen.dart::ChangePasswordScreen"
+
+class "monerate::src::screens::change_password::change_password_screen.dart::_ChangePasswordScreenState" {
+  +TextEditingController oldPasswordController
+  +TextEditingController newPasswordController
+  +TextEditingController confirmNewPasswordController
+  -GlobalKey<FormState> _formKey
+  -bool _showPassword
+  +AuthProvider authProvider
+  +void dispose()
+  -void _closeDialogBox()
+  -Future<String?> _updatePassword()
+  -Future<String?> _displayConfirmationDialog()
+  +Widget build()
+}
+
+"monerate::src::screens::change_password::change_password_screen.dart::_ChangePasswordScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"monerate::src::screens::change_password::change_password_screen.dart::_ChangePasswordScreenState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"monerate::src::screens::change_password::change_password_screen.dart::_ChangePasswordScreenState" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::change_password::change_password_screen.dart::_ChangePasswordScreenState"
+
+class "monerate::src::screens::complete_profile::complete_profile_screen.dart::CompleteProfileScreen" {
+  {static} +String kID
+  +_CompleteProfileScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::complete_profile::complete_profile_screen.dart::CompleteProfileScreen"
+
+class "monerate::src::screens::complete_profile::complete_profile_screen.dart::_CompleteProfileScreenState" {
+  -int _currentIndex
+  -PageController _pageController
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"monerate::src::screens::complete_profile::complete_profile_screen.dart::_CompleteProfileScreenState" o-- "flutter::src::widgets::page_view.dart::PageController"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::complete_profile::complete_profile_screen.dart::_CompleteProfileScreenState"
+
+class "monerate::src::screens::complete_profile::end_user::complete_end_user_profile.dart::CompleteEndUserProfile" {
+  {static} +String kID
+  +_CompleteEndUserProfileState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::complete_profile::end_user::complete_end_user_profile.dart::CompleteEndUserProfile"
+
+class "monerate::src::screens::complete_profile::end_user::complete_end_user_profile.dart::_CompleteEndUserProfileState" {
+  +TextEditingController firstNameController
+  +TextEditingController lastNameController
+  -GlobalKey<FormState> _formKey
+  +AuthProvider authProvider
+  +void dispose()
+  +Widget build()
+  -Future<String?> _updateProfile()
+}
+
+"monerate::src::screens::complete_profile::end_user::complete_end_user_profile.dart::_CompleteEndUserProfileState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"monerate::src::screens::complete_profile::end_user::complete_end_user_profile.dart::_CompleteEndUserProfileState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"monerate::src::screens::complete_profile::end_user::complete_end_user_profile.dart::_CompleteEndUserProfileState" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::complete_profile::end_user::complete_end_user_profile.dart::_CompleteEndUserProfileState"
+
+class "monerate::src::screens::complete_profile::end_user::end_user_tab.dart::EndUserTab" {
+  +_EndUserTabState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::complete_profile::end_user::end_user_tab.dart::EndUserTab"
+
+class "monerate::src::screens::complete_profile::end_user::end_user_tab.dart::_EndUserTabState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::complete_profile::end_user::end_user_tab.dart::_EndUserTabState"
+
+class "monerate::src::screens::complete_profile::financial_advisor::complete_financial_advisor_profile.dart::CompleteFinancialAdvisorProfile" {
+  {static} +String kID
+  +_CompleteFinancialAdvisorProfileState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::complete_profile::financial_advisor::complete_financial_advisor_profile.dart::CompleteFinancialAdvisorProfile"
+
+class "monerate::src::screens::complete_profile::financial_advisor::complete_financial_advisor_profile.dart::_CompleteFinancialAdvisorProfileState" {
+  +TextEditingController firstNameController
+  +TextEditingController lastNameController
+  +TextEditingController licenseIDController
+  -GlobalKey<FormState> _formKey
+  +AuthProvider authProvider
+  +void dispose()
+  +Widget build()
+  -Future<String?> _updateProfile()
+}
+
+"monerate::src::screens::complete_profile::financial_advisor::complete_financial_advisor_profile.dart::_CompleteFinancialAdvisorProfileState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"monerate::src::screens::complete_profile::financial_advisor::complete_financial_advisor_profile.dart::_CompleteFinancialAdvisorProfileState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"monerate::src::screens::complete_profile::financial_advisor::complete_financial_advisor_profile.dart::_CompleteFinancialAdvisorProfileState" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::complete_profile::financial_advisor::complete_financial_advisor_profile.dart::_CompleteFinancialAdvisorProfileState"
+
+class "monerate::src::screens::complete_profile::financial_advisor::financial_advisor_tab.dart::FinancialAdvisorTab" {
+  +_FinancialAdvisorTabState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::complete_profile::financial_advisor::financial_advisor_tab.dart::FinancialAdvisorTab"
+
+class "monerate::src::screens::complete_profile::financial_advisor::financial_advisor_tab.dart::_FinancialAdvisorTabState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::complete_profile::financial_advisor::financial_advisor_tab.dart::_FinancialAdvisorTabState"
+
+class "monerate::src::screens::complete_profile::support_manager::complete_support_manager_profile.dart::CompleteSupportManagerProfile" {
+  {static} +String kID
+  +_CompleteSupportManagerProfileState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::complete_profile::support_manager::complete_support_manager_profile.dart::CompleteSupportManagerProfile"
+
+class "monerate::src::screens::complete_profile::support_manager::complete_support_manager_profile.dart::_CompleteSupportManagerProfileState" {
+  +TextEditingController firstNameController
+  +TextEditingController lastNameController
+  -GlobalKey<FormState> _formKey
+  +AuthProvider authProvider
+  +void dispose()
+  +Widget build()
+  -Future<String?> _updateProfile()
+}
+
+"monerate::src::screens::complete_profile::support_manager::complete_support_manager_profile.dart::_CompleteSupportManagerProfileState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"monerate::src::screens::complete_profile::support_manager::complete_support_manager_profile.dart::_CompleteSupportManagerProfileState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"monerate::src::screens::complete_profile::support_manager::complete_support_manager_profile.dart::_CompleteSupportManagerProfileState" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::complete_profile::support_manager::complete_support_manager_profile.dart::_CompleteSupportManagerProfileState"
+
+class "monerate::src::screens::complete_profile::support_manager::support_manager_tab.dart::SupportManagerTab" {
+  +_SupportManagerTabState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::complete_profile::support_manager::support_manager_tab.dart::SupportManagerTab"
+
+class "monerate::src::screens::complete_profile::support_manager::support_manager_tab.dart::_SupportManagerTabState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::complete_profile::support_manager::support_manager_tab.dart::_SupportManagerTabState"
+
+class "monerate::src::screens::end_user_dashboard::balances_tab.dart::AccountBalancesTab" {
+  +String uid
+  +_AccountBalancesTabState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::end_user_dashboard::balances_tab.dart::AccountBalancesTab"
+
+class "monerate::src::screens::end_user_dashboard::balances_tab.dart::_AccountBalancesTabState" {
+  +AuthProvider authProvider
+  +DatabaseProvider databaseProvider
+  +Stream<QuerySnapshot<Object?>> balanceStream
+  +OpenBankingProvider openBankingProvider
+  +LinkTokenConfiguration linkTokenConfiguration
+  +void initState()
+  +dynamic getBalances()
+  -void _onSuccessCallback()
+  -void _onExitCallback()
+  -Future<void> _connectToPlaid()
+  +Widget build()
+}
+
+"monerate::src::screens::end_user_dashboard::balances_tab.dart::_AccountBalancesTabState" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"monerate::src::screens::end_user_dashboard::balances_tab.dart::_AccountBalancesTabState" o-- "monerate::src::providers::database_provider.dart::DatabaseProvider"
+"monerate::src::screens::end_user_dashboard::balances_tab.dart::_AccountBalancesTabState" o-- "dart::async::Stream<QuerySnapshot<Object>>"
+"monerate::src::screens::end_user_dashboard::balances_tab.dart::_AccountBalancesTabState" o-- "monerate::src::providers::open_banking_provider.dart::OpenBankingProvider"
+"monerate::src::screens::end_user_dashboard::balances_tab.dart::_AccountBalancesTabState" o-- "plaid_flutter::src::core::link_configuration.dart::LinkTokenConfiguration"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::end_user_dashboard::balances_tab.dart::_AccountBalancesTabState"
+
+class "monerate::src::screens::end_user_dashboard::end_user_dashboard_screen.dart::EndUserDashboardScreen" {
+  {static} +String kID
+  +_EndUserDashboardScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::end_user_dashboard::end_user_dashboard_screen.dart::EndUserDashboardScreen"
+
+class "monerate::src::screens::end_user_dashboard::end_user_dashboard_screen.dart::_EndUserDashboardScreenState" {
+  -int _currentIndex
+  +String uid
+  -PageController _pageController
+  +AuthProvider authProvider
+  +DatabaseProvider databaseProvider
+  +void initState()
+  +void dispose()
+  +Future<void> getCurrentUser()
+  +Widget build()
+}
+
+"monerate::src::screens::end_user_dashboard::end_user_dashboard_screen.dart::_EndUserDashboardScreenState" o-- "flutter::src::widgets::page_view.dart::PageController"
+"monerate::src::screens::end_user_dashboard::end_user_dashboard_screen.dart::_EndUserDashboardScreenState" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"monerate::src::screens::end_user_dashboard::end_user_dashboard_screen.dart::_EndUserDashboardScreenState" o-- "monerate::src::providers::database_provider.dart::DatabaseProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::end_user_dashboard::end_user_dashboard_screen.dart::_EndUserDashboardScreenState"
+
+class "monerate::src::screens::end_user_dashboard::news::news_article_screen.dart::NewsArticleScreen" {
+  +String url
+  +_NewsArticleScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::end_user_dashboard::news::news_article_screen.dart::NewsArticleScreen"
+
+class "monerate::src::screens::end_user_dashboard::news::news_article_screen.dart::_NewsArticleScreenState" {
+  -Completer<WebViewController> _completer
+  +void initState()
+  +Widget build()
+}
+
+"monerate::src::screens::end_user_dashboard::news::news_article_screen.dart::_NewsArticleScreenState" o-- "dart::async::Completer<WebViewController>"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::end_user_dashboard::news::news_article_screen.dart::_NewsArticleScreenState"
+
+class "monerate::src::screens::end_user_dashboard::news::news_tab.dart::NewsTab" {
+  +_NewsTabState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::end_user_dashboard::news::news_tab.dart::NewsTab"
+
+class "monerate::src::screens::end_user_dashboard::news::news_tab.dart::_NewsTabState" {
+  +List<ArticleModel> articles
+  +YahooFinanceProvider yahooFinanceProvider
+  +Future<Object> articleData
+  +void initState()
+  -Future<void> _refresh()
+  +Widget build()
+}
+
+"monerate::src::screens::end_user_dashboard::news::news_tab.dart::_NewsTabState" o-- "monerate::src::providers::yahoo_finance_provider.dart::YahooFinanceProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::end_user_dashboard::news::news_tab.dart::_NewsTabState"
+
+class "monerate::src::screens::financial_advisor_dashboard::financial_advisor_dashboard.dart::FinancialAdvisorDashboardScreen" {
+  {static} +String kID
+  +_FinancialAdvisorDashboardScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::financial_advisor_dashboard::financial_advisor_dashboard.dart::FinancialAdvisorDashboardScreen"
+
+class "monerate::src::screens::financial_advisor_dashboard::financial_advisor_dashboard.dart::_FinancialAdvisorDashboardScreenState" {
+  -int _currentIndex
+  -PageController _pageController
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"monerate::src::screens::financial_advisor_dashboard::financial_advisor_dashboard.dart::_FinancialAdvisorDashboardScreenState" o-- "flutter::src::widgets::page_view.dart::PageController"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::financial_advisor_dashboard::financial_advisor_dashboard.dart::_FinancialAdvisorDashboardScreenState"
+
+class "monerate::src::screens::forgot_password::forgot_password_form.dart::ForgotPasswordForm" {
+  +_ForgotPasswordFormState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::forgot_password::forgot_password_form.dart::ForgotPasswordForm"
+
+class "monerate::src::screens::forgot_password::forgot_password_form.dart::_ForgotPasswordFormState" {
+  +TextEditingController emailController
+  -GlobalKey<FormState> _formKey
+  +AuthProvider authProvider
+  +String result
+  +void dispose()
+  -void _closeDialogBox()
+  -Future<String?> _sendPasswordResetEmail()
+  -Future<String?> _displayConfirmationDialog()
+  +Widget build()
+}
+
+"monerate::src::screens::forgot_password::forgot_password_form.dart::_ForgotPasswordFormState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"monerate::src::screens::forgot_password::forgot_password_form.dart::_ForgotPasswordFormState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"monerate::src::screens::forgot_password::forgot_password_form.dart::_ForgotPasswordFormState" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::forgot_password::forgot_password_form.dart::_ForgotPasswordFormState"
+
+class "monerate::src::screens::forgot_password::forgot_password_screen.dart::ForgotPasswordScreen" {
+  {static} +String kID
+  +_ForgotPasswordScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::forgot_password::forgot_password_screen.dart::ForgotPasswordScreen"
+
+class "monerate::src::screens::forgot_password::forgot_password_screen.dart::_ForgotPasswordScreenState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::forgot_password::forgot_password_screen.dart::_ForgotPasswordScreenState"
+
+class "monerate::src::screens::login::login_form.dart::LoginForm" {
+  +_LoginFormState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::login::login_form.dart::LoginForm"
+
+class "monerate::src::screens::login::login_form.dart::_LoginFormState" {
+  +TextEditingController emailController
+  +TextEditingController passwordController
+  -GlobalKey<FormState> _formKey
+  -bool _showPassword
+  +AuthProvider authProvider
+  +String verified
+  +Object completeProfile
+  +void dispose()
+  -Future<String?> _checkCredentials()
+  -Future<String?> _getUserType()
+  -Future<Object> _isProfileComplete()
+  +Widget build()
+}
+
+"monerate::src::screens::login::login_form.dart::_LoginFormState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"monerate::src::screens::login::login_form.dart::_LoginFormState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"monerate::src::screens::login::login_form.dart::_LoginFormState" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::login::login_form.dart::_LoginFormState"
+
+class "monerate::src::screens::login::login_screen.dart::LoginScreen" {
+  {static} +String kID
+  +_LoginScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::login::login_screen.dart::LoginScreen"
+
+class "monerate::src::screens::login::login_screen.dart::_LoginScreenState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::login::login_screen.dart::_LoginScreenState"
+
+class "monerate::src::screens::manual_account::manual_account_screen.dart::ManualAccountScreen" {
+  {static} +String kID
+  +State<ManualAccountScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::manual_account::manual_account_screen.dart::ManualAccountScreen"
+
+class "monerate::src::screens::manual_account::manual_account_screen.dart::_ManualAccountScreenState" {
+  +TextEditingController nameController
+  +TextEditingController valueController
+  -GlobalKey<FormState> _formKey
+  +AuthProvider authProvider
+  -Future<bool> _addAccount()
+  +Widget build()
+}
+
+"monerate::src::screens::manual_account::manual_account_screen.dart::_ManualAccountScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"monerate::src::screens::manual_account::manual_account_screen.dart::_ManualAccountScreenState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"monerate::src::screens::manual_account::manual_account_screen.dart::_ManualAccountScreenState" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::manual_account::manual_account_screen.dart::_ManualAccountScreenState"
+
+class "monerate::src::screens::profile::view_profile_screen.dart::ViewProfileScreen" {
+  {static} +String kID
+  +_ViewProfileScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::profile::view_profile_screen.dart::ViewProfileScreen"
+
+class "monerate::src::screens::profile::view_profile_screen.dart::_ViewProfileScreenState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::profile::view_profile_screen.dart::_ViewProfileScreenState"
+
+class "monerate::src::screens::search_investment::provide_investment_details.dart::ProvideInvestmentDetails" {
+  +TickerModel investment
+  +_ProvideInvestmentDetailsState createState()
+}
+
+"monerate::src::screens::search_investment::provide_investment_details.dart::ProvideInvestmentDetails" o-- "monerate::src::models::ticker_model.dart::TickerModel"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::search_investment::provide_investment_details.dart::ProvideInvestmentDetails"
+
+class "monerate::src::screens::search_investment::provide_investment_details.dart::_ProvideInvestmentDetailsState" {
+  +TextEditingController amountOwnedController
+  -GlobalKey<FormState> _formKey
+  +YahooFinanceProvider yahooFinanceProvider
+  +AuthProvider authProvider
+  +void dispose()
+  -Future<bool> _addInvestment()
+  +Widget build()
+}
+
+"monerate::src::screens::search_investment::provide_investment_details.dart::_ProvideInvestmentDetailsState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"monerate::src::screens::search_investment::provide_investment_details.dart::_ProvideInvestmentDetailsState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"monerate::src::screens::search_investment::provide_investment_details.dart::_ProvideInvestmentDetailsState" o-- "monerate::src::providers::yahoo_finance_provider.dart::YahooFinanceProvider"
+"monerate::src::screens::search_investment::provide_investment_details.dart::_ProvideInvestmentDetailsState" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::search_investment::provide_investment_details.dart::_ProvideInvestmentDetailsState"
+
+class "monerate::src::screens::search_investment::search_investment_screen.dart::SearchInvestmentScreen" {
+  {static} +String kID
+  +_SearchInvestmentScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::search_investment::search_investment_screen.dart::SearchInvestmentScreen"
+
+class "monerate::src::screens::search_investment::search_investment_screen.dart::_SearchInvestmentScreenState" {
+  +TextEditingController searchController
+  +List<TickerModel> investments
+  +YahooFinanceProvider yahooFinanceProvider
+  +void dispose()
+  +Future<void> getInvestment()
+  +Widget build()
+}
+
+"monerate::src::screens::search_investment::search_investment_screen.dart::_SearchInvestmentScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"monerate::src::screens::search_investment::search_investment_screen.dart::_SearchInvestmentScreenState" o-- "monerate::src::providers::yahoo_finance_provider.dart::YahooFinanceProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::search_investment::search_investment_screen.dart::_SearchInvestmentScreenState"
+
+class "monerate::src::screens::select_crypto_exchange::provide_api_key.dart::ProvideAPIKey" {
+  +String exchangeName
+  +_ProvideAPIKeyState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::select_crypto_exchange::provide_api_key.dart::ProvideAPIKey"
+
+class "monerate::src::screens::select_crypto_exchange::provide_api_key.dart::_ProvideAPIKeyState" {
+  +TextEditingController apiKeyController
+  +TextEditingController secretKeyController
+  -GlobalKey<FormState> _formKey
+  +BinanceExchangeProvider binanceExchangeProvider
+  +void dispose()
+  +Future<bool?> connectToExchange()
+  +Widget build()
+}
+
+"monerate::src::screens::select_crypto_exchange::provide_api_key.dart::_ProvideAPIKeyState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"monerate::src::screens::select_crypto_exchange::provide_api_key.dart::_ProvideAPIKeyState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"monerate::src::screens::select_crypto_exchange::provide_api_key.dart::_ProvideAPIKeyState" o-- "monerate::src::providers::binance_exchange_provider.dart::BinanceExchangeProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::select_crypto_exchange::provide_api_key.dart::_ProvideAPIKeyState"
+
+class "monerate::src::screens::select_crypto_exchange::select_crypto_exchange_screen.dart::SelectCryptoExchangeScreen" {
+  {static} +String kID
+  +_SelectCryptoExchangeScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::select_crypto_exchange::select_crypto_exchange_screen.dart::SelectCryptoExchangeScreen"
+
+class "monerate::src::screens::select_crypto_exchange::select_crypto_exchange_screen.dart::_SelectCryptoExchangeScreenState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::select_crypto_exchange::select_crypto_exchange_screen.dart::_SelectCryptoExchangeScreenState"
+
+class "monerate::src::screens::settings_without_help_option::settings_without_help_option.dart::SettingsWithoutHelpOption" {
+  +_SettingsWithoutHelpOptionState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::settings_without_help_option::settings_without_help_option.dart::SettingsWithoutHelpOption"
+
+class "monerate::src::screens::settings_without_help_option::settings_without_help_option.dart::_SettingsWithoutHelpOptionState" {
+  +AuthProvider authProvider
+  -Future<String?>? _signOut()
+  -Future<Object> _viewPersonalDetails()
+  +Widget build()
+}
+
+"monerate::src::screens::settings_without_help_option::settings_without_help_option.dart::_SettingsWithoutHelpOptionState" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::settings_without_help_option::settings_without_help_option.dart::_SettingsWithoutHelpOptionState"
+
+class "monerate::src::screens::settings_with_help::settings_with_help_option.dart::SettingsWithHelpOption" {
+  +_SettingsWithHelpOptionState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::settings_with_help::settings_with_help_option.dart::SettingsWithHelpOption"
+
+class "monerate::src::screens::settings_with_help::settings_with_help_option.dart::_SettingsWithHelpOptionState" {
+  +AuthProvider authProvider
+  -Future<String?>? _signOut()
+  -Future<Object> _viewPersonalDetails()
+  +Widget build()
+}
+
+"monerate::src::screens::settings_with_help::settings_with_help_option.dart::_SettingsWithHelpOptionState" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::settings_with_help::settings_with_help_option.dart::_SettingsWithHelpOptionState"
+
+class "monerate::src::screens::sign_up::sign_up_form.dart::SignUpForm" {
+  +_SignUpFormState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::sign_up::sign_up_form.dart::SignUpForm"
+
+class "monerate::src::screens::sign_up::sign_up_form.dart::_SignUpFormState" {
+  +TextEditingController emailController
+  +TextEditingController confirmEmailController
+  +TextEditingController passwordController
+  +TextEditingController confirmPasswordController
+  -GlobalKey<FormState> _formKey
+  +AuthProvider authProvider
+  +String result
+  -bool _showPassword
+  +void dispose()
+  -Future<String?> _checkCredentials()
+  -void _closeDialogBox()
+  -Future<String?> _displayConfirmationDialog()
+  +Widget build()
+}
+
+"monerate::src::screens::sign_up::sign_up_form.dart::_SignUpFormState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"monerate::src::screens::sign_up::sign_up_form.dart::_SignUpFormState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"monerate::src::screens::sign_up::sign_up_form.dart::_SignUpFormState" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::sign_up::sign_up_form.dart::_SignUpFormState"
+
+class "monerate::src::screens::sign_up::sign_up_screen.dart::SignUpScreen" {
+  {static} +String kID
+  +_SignUpScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::sign_up::sign_up_screen.dart::SignUpScreen"
+
+class "monerate::src::screens::sign_up::sign_up_screen.dart::_SignUpScreenState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::sign_up::sign_up_screen.dart::_SignUpScreenState"
+
+class "monerate::src::screens::splash_screen::splash_screen.dart::SplashScreen" {
+  {static} +String kID
+  +State<SplashScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::splash_screen::splash_screen.dart::SplashScreen"
+
+class "monerate::src::screens::splash_screen::splash_screen.dart::_SplashScreenState" {
+  +void initState()
+  -Future<void> _navigateToLoginScreen()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::splash_screen::splash_screen.dart::_SplashScreenState"
+
+class "monerate::src::screens::support_manager_dashboard::support_manager_dashboard_screen.dart::SupportManagerDashboardScreen" {
+  {static} +String kID
+  +_SupportManagerDashboardScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::screens::support_manager_dashboard::support_manager_dashboard_screen.dart::SupportManagerDashboardScreen"
+
+class "monerate::src::screens::support_manager_dashboard::support_manager_dashboard_screen.dart::_SupportManagerDashboardScreenState" {
+  -int _currentIndex
+  -PageController _pageController
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"monerate::src::screens::support_manager_dashboard::support_manager_dashboard_screen.dart::_SupportManagerDashboardScreenState" o-- "flutter::src::widgets::page_view.dart::PageController"
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::screens::support_manager_dashboard::support_manager_dashboard_screen.dart::_SupportManagerDashboardScreenState"
+
+
+@enduml
