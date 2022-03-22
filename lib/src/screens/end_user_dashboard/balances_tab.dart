@@ -27,13 +27,20 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
 
   final OpenBankingProvider openBankingProvider = OpenBankingProvider();
   late LinkTokenConfiguration linkTokenConfiguration;
+  final BinanceExchangeProvider binanceExchangeProvider =
+      BinanceExchangeProvider();
 
   @override
   void initState() {
     super.initState();
   }
 
-  getBalances(String accessToken) async {
+  Future<void> updateBalances() async {
+    final keys = await binanceExchangeProvider.getKeys();
+    print(keys);
+  }
+
+  Future<void> getBalances(String accessToken) async {
     final result = await openBankingProvider.getAccessToken(accessToken);
     if (result.runtimeType == String) {
       if (result != "error") {
@@ -105,68 +112,78 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              StreamBuilder<QuerySnapshot>(
-                stream: balanceStream,
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else {
-                    final balancesDB = snapshot.data!.docs;
-                    balancesDB.sort(
-                      (a, b) =>
-                          a['type'].toString().compareTo(b['type'].toString()),
-                    );
-                    final List<BalanceModel> balances = <BalanceModel>[];
-                    for (final item in balancesDB) {
-                      final balance = BalanceModel(
-                        amount: item['amount'].toString(),
-                        name: item['name'].toString(),
-                        price: item['price'].toString(),
-                        symbol: item['symbol'].toString(),
-                        type: item['type'].toString(),
-                        userID: item['userID'].toString(),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await updateBalances();
+        },
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                StreamBuilder<QuerySnapshot>(
+                  stream: balanceStream,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else {
+                      final balancesDB = snapshot.data!.docs;
+                      balancesDB.sort(
+                        (a, b) => a['type']
+                            .toString()
+                            .compareTo(b['type'].toString()),
                       );
-                      balances.add(balance);
-                    }
-                    return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: balances.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 4,
-                          child: ListTile(
-                            title: Text(
-                              balances[index].name,
-                            ),
-                            trailing: balances[index].type == 'Cryptocurrency'
-                                ? Text(
-                                    'Holdings: ${balances[index].amount}',
-                                  )
-                                : Text(
-                                    "Price £${(double.parse(balances[index].amount) * double.parse(balances[index].price)).toStringAsFixed(2)}",
-                                  ),
-                            subtitle: balances[index].type == 'Stock'
-                                ? Text(
-                                    'Ticker: ${balances[index].symbol} Type: ${balances[index].type} Holdings: ${balances[index].amount}',
-                                  )
-                                : Text(
-                                    'Type: ${balances[index].type}',
-                                  ),
-                            onTap: () {},
-                          ),
+                      final List<BalanceModel> balances = <BalanceModel>[];
+                      for (final item in balancesDB) {
+                        final balance = BalanceModel(
+                          amount: item['amount'].toString(),
+                          name: item['name'].toString(),
+                          price: item['price'].toString(),
+                          symbol: item['symbol'].toString(),
+                          type: item['type'].toString(),
+                          userID: item['userID'].toString(),
                         );
-                      },
-                    );
-                  }
-                },
-              )
-            ],
+                        balances.add(balance);
+                      }
+                      return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: balances.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            elevation: 4,
+                            child: ListTile(
+                              title: Text(
+                                balances[index].name,
+                              ),
+                              trailing: balances[index].type == 'Cryptocurrency'
+                                  ? Text(
+                                      'Holdings: ${balances[index].amount}',
+                                    )
+                                  : Text(
+                                      "Price £${(double.parse(balances[index].amount) * double.parse(balances[index].price)).toStringAsFixed(2)}",
+                                    ),
+                              subtitle: balances[index].type == 'Stock'
+                                  ? Text(
+                                      'Ticker: ${balances[index].symbol} Type: ${balances[index].type} Holdings: ${balances[index].amount}',
+                                    )
+                                  : Text(
+                                      'Type: ${balances[index].type}',
+                                    ),
+                              onTap: () {
+                                if(balances[index].type == "Stock"){
+                                  
+                                }
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),

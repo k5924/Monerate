@@ -29,7 +29,7 @@ class _ProvideAPIKeyState extends State<ProvideAPIKey> {
   Future<bool?> connectToExchange() async {
     EasyLoading.show(status: 'loading...');
     if (widget.exchangeName == 'binance') {
-      final result = await binanceExchangeProvider.getBalances(
+      final result = await binanceExchangeProvider.writeKeys(
         secretKeyController.text,
         apiKeyController.text,
       );

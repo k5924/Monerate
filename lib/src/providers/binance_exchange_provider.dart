@@ -9,6 +9,7 @@ import 'package:monerate/src/providers/export.dart';
 class BinanceExchangeProvider {
   final String url = "api.binance.com";
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
+  final BoxProvider boxProvider = BoxProvider();
 
   String _hmacSha256(String query, String secret) {
     final key = utf8.encode(secret);
@@ -17,6 +18,29 @@ class BinanceExchangeProvider {
     final signature = hmac.convert(msg).toString();
 
     return signature;
+  }
+
+  Future writeKeys(String secret, String apiKey) async {
+    final result = await getBalances(secret, apiKey);
+    if (result != "error") {
+      final box = await boxProvider.getKeys();
+      final keys = LocalKeyModel(
+        provider: 'binance',
+        keys: [
+          apiKey,
+          secret,
+        ],
+      );
+      box.add(keys);
+      box.close();
+    }
+    return result;
+  }
+
+  Future<LocalKeyModel?>? getKeys() async {
+    final box = await boxProvider.getKeys();
+    final keys = box.get('binance');
+    return keys;
   }
 
   Future getBalances(String secret, String apiKey) async {
@@ -38,16 +62,6 @@ class BinanceExchangeProvider {
     if (cryptoBalances.runtimeType == int) {
       return "error";
     } else {
-      final box = BoxProvider.getKeys();
-      final keys = LocalKeyModel(
-        provider: 'binance',
-        keys: [
-          apiKey,
-          secret,
-        ],
-      );
-      box.add(keys);
-      box.close();
       cryptoBalances['balances'].forEach((element) async {
         if (element['free'] != null &&
             element['locked'] != null &&
