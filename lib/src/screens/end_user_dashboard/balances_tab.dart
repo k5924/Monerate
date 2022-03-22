@@ -171,8 +171,16 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
                                       'Type: ${balances[index].type}',
                                     ),
                               onTap: () {
-                                if(balances[index].type == "Stock"){
-                                  
+                                if (balances[index].type == "Stock") {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ViewInvestmentScreen(
+                                        balance: balances[index],
+                                      ),
+                                    ),
+                                  );
                                 }
                               },
                             ),

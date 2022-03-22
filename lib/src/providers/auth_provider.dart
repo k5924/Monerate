@@ -230,6 +230,32 @@ class AuthProvider {
     return null;
   }
 
+  Future<String?> updateFinanceAccount({
+    required String name,
+    required String symbol,
+    required String type,
+    required String oldAmount,
+    required String oldPrice,
+    required String newAmount,
+    required String newPrice,
+    required String userID
+  }) async {
+    try {
+      await databaseProvider.getBalance(
+        name: name,
+        symbol: symbol,
+        type: type,
+        amount: oldAmount,
+        price: oldPrice,
+        uid: userID,
+      );
+    } on FirebaseAuthException catch (e) {
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
+    }
+    return null;
+  }
+
   Future<String> getUID() async {
     try {
       user = auth.currentUser;

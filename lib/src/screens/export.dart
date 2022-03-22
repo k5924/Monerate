@@ -14,3 +14,4 @@ export 'settings_without_help_option/export.dart';
 export 'sign_up/export.dart';
 export 'splash_screen/export.dart';
 export 'support_manager_dashboard/export.dart';
+export 'view_investment/export.dart';

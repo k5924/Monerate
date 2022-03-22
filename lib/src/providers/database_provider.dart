@@ -56,6 +56,44 @@ class DatabaseProvider {
     await balanceCollection.add(balanceModel.toMap());
   }
 
+  getBalance({
+    required String name,
+    required String symbol,
+    required String type,
+    required String amount,
+    required String price,
+    required String uid,
+  }) async {
+    balanceModel = BalanceModel(
+      amount: amount,
+      name: name,
+      price: price,
+      symbol: symbol,
+      type: type,
+      userID: uid,
+    );
+    
+  }
+
+  Future<void> updateBalance({
+    required String name,
+    required String symbol,
+    required String type,
+    required String amount,
+    required String price,
+    required String uid,
+  }) async {
+    balanceModel = BalanceModel(
+      amount: amount,
+      name: name,
+      price: price,
+      symbol: symbol,
+      type: type,
+      userID: uid,
+    );
+    await balanceCollection.doc();
+  }
+
   CollectionReference<Object?> getBalanceCollection() {
     return balanceCollection;
   }
