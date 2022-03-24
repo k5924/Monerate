@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:monerate/src/models/export.dart';
@@ -271,7 +269,9 @@ class AuthProvider {
     return null;
   }
 
-  Future<String?>? removeMultipleFinanceAccounts({required BalanceModel balanceModel}) async {
+  Future<String?>? removeMultipleFinanceAccounts({
+    required BalanceModel balanceModel,
+  }) async {
     try {
       final documentIDs = await databaseProvider.getMultipleBalanceIDs(
         balanceModel: balanceModel,
@@ -286,10 +286,6 @@ class AuthProvider {
       return exceptionsFactory.exceptionCaught()!;
     }
     return null;
-  }
-
-  updateMultipleFinanceAccounts(){
-    
   }
 
   Future<String> getUID() async {

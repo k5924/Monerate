@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/utilities/export.dart';

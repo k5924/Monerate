@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:monerate/src/providers/binance_exchange_provider.dart';
 import 'package:monerate/src/screens/export.dart';
-import 'package:monerate/src/utilities/export.dart';
 
 class ProvideAPIKey extends StatefulWidget {
   final String exchangeName;

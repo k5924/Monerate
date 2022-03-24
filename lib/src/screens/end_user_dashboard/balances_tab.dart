@@ -58,7 +58,9 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
   }
 
   void _onSuccessCallback(
-      String publicToken, LinkSuccessMetadata metadata) async {
+    String publicToken,
+    LinkSuccessMetadata metadata,
+  ) async {
     // iterate through accounts and store name and subtype
     final result = await openBankingProvider.getAccessToken(publicToken);
     if (result.runtimeType == String) {
@@ -105,7 +107,8 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
       }
     } else {
       EasyLoading.showError(
-          'Unable to access Plaid Endpoint, please try again later');
+        'Unable to access Plaid Endpoint, please try again later',
+      );
     }
   }
 
@@ -114,11 +117,12 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
       return Text(
         'Ticker: ${balance.symbol} Type: ${balance.type} Holdings: ${balance.amount}',
       );
-    } else if( (balance.type == 'Cryptocurrency') | (balance.type == 'Openbanking')) {
+    } else if ((balance.type == 'Cryptocurrency') |
+        (balance.type == 'Openbanking')) {
       return Text(
         'Provider: ${balance.symbol} Type: ${balance.type}',
       );
-    } else{
+    } else {
       return Text(
         'Type: ${balance.type}',
       );

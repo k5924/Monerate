@@ -1,9 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
-import 'package:monerate/src/utilities/export.dart';
 
 class ManualAccountScreen extends StatefulWidget {
   static const kID = 'manual_account_screen';

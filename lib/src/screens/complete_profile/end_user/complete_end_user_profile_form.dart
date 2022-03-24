@@ -6,7 +6,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
-import 'package:monerate/src/widgets/export.dart';
 
 class CompleteEndUserProfileForm extends StatefulWidget {
   const CompleteEndUserProfileForm({Key? key}) : super(key: key);

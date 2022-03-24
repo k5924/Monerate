@@ -1,11 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
-import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
 class CompleteSupportManagerProfile extends StatefulWidget {
