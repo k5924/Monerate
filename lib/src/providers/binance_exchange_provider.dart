@@ -71,7 +71,7 @@ class BinanceExchangeProvider {
                   double.parse(element['locked'].toString()))) {
             final result2 = await authProvider.addFinanceAccount(
               name: element['asset'].toString(),
-              symbol: element['asset'].toString(),
+              symbol: 'Binance',
               type: "Cryptocurrency",
               amount: (double.parse(element['free'].toString()) +
                       double.parse(element['locked'].toString()))

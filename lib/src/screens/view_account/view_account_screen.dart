@@ -32,7 +32,7 @@ class _ViewAccountScreenState extends State<ViewAccountScreen> {
     }
   }
 
-  _removeAccount() {
+  Future<String?> _removeAccount() {
     if ((widget.balance.type == "Stock") | (widget.balance.type == "Manual")) {
       return _displayConfirmationDialog(
         'Are you sure you want to delete this account balance?',
@@ -69,11 +69,36 @@ class _ViewAccountScreenState extends State<ViewAccountScreen> {
             EasyLoading.show(status: 'loading...');
             if ((widget.balance.type == "Stock") |
                 (widget.balance.type == "Manual")) {
-                  
-            } else if (widget.balance.type == "Cryptocurrency") {
-            } else {}
+              final result = await authProvider.removeFinanceAccount(
+                balanceModel: widget.balance,
+              );
+              if (result != null) {
+                _closeDialogBox();
+                EasyLoading.showError(result);
+              } else {
+                Navigator.popAndPushNamed(
+                  context,
+                  EndUserDashboardScreen.kID,
+                );
+                EasyLoading.showSuccess("Account Deleted");
+              }
+            } else {
+              final result = await authProvider.removeMultipleFinanceAccounts(
+                balanceModel: widget.balance,
+              );
+              if (result != null) {
+                _closeDialogBox();
+                EasyLoading.showError(result);
+              } else {
+                Navigator.popAndPushNamed(
+                  context,
+                  EndUserDashboardScreen.kID,
+                );
+                EasyLoading.showSuccess("Accounts Deleted");
+              }
+            }
           },
-          child: const Text("Agree and Continue"),
+          child: const Text("Delete Account"),
         ),
       ],
     );

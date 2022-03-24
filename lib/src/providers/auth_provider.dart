@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:monerate/src/models/export.dart';
@@ -250,6 +252,44 @@ class AuthProvider {
       return exceptionsFactory.exceptionCaught()!;
     }
     return null;
+  }
+
+  Future<String?>? removeFinanceAccount({
+    required BalanceModel balanceModel,
+  }) async {
+    try {
+      final String documentID = await databaseProvider.getBalanceID(
+        balanceModel: balanceModel,
+      );
+      await databaseProvider.removeBalance(
+        documentID: documentID,
+      );
+    } on FirebaseAuthException catch (e) {
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
+    }
+    return null;
+  }
+
+  Future<String?>? removeMultipleFinanceAccounts({required BalanceModel balanceModel}) async {
+    try {
+      final documentIDs = await databaseProvider.getMultipleBalanceIDs(
+        balanceModel: balanceModel,
+      );
+      for (final String documentID in documentIDs) {
+        await databaseProvider.removeBalance(
+          documentID: documentID,
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
+    }
+    return null;
+  }
+
+  updateMultipleFinanceAccounts(){
+    
   }
 
   Future<String> getUID() async {

@@ -109,6 +109,22 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
     }
   }
 
+  Widget displayingSubtitle(BalanceModel balance) {
+    if (balance.type == 'Stock') {
+      return Text(
+        'Ticker: ${balance.symbol} Type: ${balance.type} Holdings: ${balance.amount}',
+      );
+    } else if( (balance.type == 'Cryptocurrency') | (balance.type == 'Openbanking')) {
+      return Text(
+        'Provider: ${balance.symbol} Type: ${balance.type}',
+      );
+    } else{
+      return Text(
+        'Type: ${balance.type}',
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,13 +179,7 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
                                   : Text(
                                       "Price £${(double.parse(balances[index].amount) * double.parse(balances[index].price)).toStringAsFixed(2)}",
                                     ),
-                              subtitle: balances[index].type == 'Stock'
-                                  ? Text(
-                                      'Ticker: ${balances[index].symbol} Type: ${balances[index].type} Holdings: ${balances[index].amount}',
-                                    )
-                                  : Text(
-                                      'Type: ${balances[index].type}',
-                                    ),
+                              subtitle: displayingSubtitle(balances[index]),
                               onTap: () {
                                 Navigator.push(
                                   context,

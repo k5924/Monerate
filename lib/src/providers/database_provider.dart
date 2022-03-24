@@ -74,6 +74,22 @@ class DatabaseProvider {
     return documentReference.id;
   }
 
+  Future<List<String>> getMultipleBalanceIDs({
+    required BalanceModel balanceModel,
+  }) async {
+    final QuerySnapshot query = await balanceCollection
+        .where('userID', isEqualTo: balanceModel.userID)
+        .where('type', isEqualTo: balanceModel.type)
+        .where('symbol', isEqualTo: balanceModel.symbol)
+        .get();
+    final documentSnapshots = query.docs;
+    final List<String> documentIDs = [];
+    for (final QueryDocumentSnapshot document in documentSnapshots) {
+      documentIDs.add(document.reference.id);
+    }
+    return documentIDs;
+  }
+
   Future<void> updateBalance({
     required String documentID,
     required BalanceModel oldBalance,
@@ -89,6 +105,12 @@ class DatabaseProvider {
       userID: oldBalance.userID,
     );
     await balanceCollection.doc(documentID).update(balanceModel.toMap());
+  }
+
+  Future<void> removeBalance({
+    required String documentID,
+  }) async {
+    await balanceCollection.doc(documentID).delete();
   }
 
   CollectionReference<Object?> getBalanceCollection() {
