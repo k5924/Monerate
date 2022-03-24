@@ -238,15 +238,24 @@ class AuthProvider {
     required String oldPrice,
     required String newAmount,
     required String newPrice,
-    required String userID
+    required String userID,
   }) async {
     try {
-      await databaseProvider.getBalance(
+      final String documentID = await databaseProvider.getBalanceID(
         name: name,
         symbol: symbol,
         type: type,
         amount: oldAmount,
         price: oldPrice,
+        uid: userID,
+      );
+      await databaseProvider.updateBalance(
+        documentID: documentID,
+        name: name,
+        symbol: symbol,
+        type: type,
+        amount: newAmount,
+        price: newPrice,
         uid: userID,
       );
     } on FirebaseAuthException catch (e) {

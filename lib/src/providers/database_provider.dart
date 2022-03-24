@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/utilities/export.dart';
@@ -56,7 +58,7 @@ class DatabaseProvider {
     await balanceCollection.add(balanceModel.toMap());
   }
 
-  getBalance({
+  Future<String> getBalanceID({
     required String name,
     required String symbol,
     required String type,
@@ -64,18 +66,21 @@ class DatabaseProvider {
     required String price,
     required String uid,
   }) async {
-    balanceModel = BalanceModel(
-      amount: amount,
-      name: name,
-      price: price,
-      symbol: symbol,
-      type: type,
-      userID: uid,
-    );
-    
+    final QuerySnapshot query = await balanceCollection
+        .where('userID', isEqualTo: uid)
+        .where('type', isEqualTo: type)
+        .where('symbol', isEqualTo: symbol)
+        .where('price', isEqualTo: price)
+        .where('name', isEqualTo: name)
+        .where('amount', isEqualTo: amount)
+        .get();
+    final QueryDocumentSnapshot documentSnapshot = query.docs[0];
+    final DocumentReference documentReference = documentSnapshot.reference;
+    return documentReference.id;
   }
 
   Future<void> updateBalance({
+    required String documentID,
     required String name,
     required String symbol,
     required String type,
@@ -91,7 +96,7 @@ class DatabaseProvider {
       type: type,
       userID: uid,
     );
-    await balanceCollection.doc();
+    await balanceCollection.doc(documentID).update(balanceModel.toMap());
   }
 
   CollectionReference<Object?> getBalanceCollection() {
