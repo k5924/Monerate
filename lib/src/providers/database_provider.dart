@@ -59,20 +59,15 @@ class DatabaseProvider {
   }
 
   Future<String> getBalanceID({
-    required String name,
-    required String symbol,
-    required String type,
-    required String amount,
-    required String price,
-    required String uid,
+    required BalanceModel balanceModel,
   }) async {
     final QuerySnapshot query = await balanceCollection
-        .where('userID', isEqualTo: uid)
-        .where('type', isEqualTo: type)
-        .where('symbol', isEqualTo: symbol)
-        .where('price', isEqualTo: price)
-        .where('name', isEqualTo: name)
-        .where('amount', isEqualTo: amount)
+        .where('userID', isEqualTo: balanceModel.userID)
+        .where('type', isEqualTo: balanceModel.type)
+        .where('symbol', isEqualTo: balanceModel.symbol)
+        .where('price', isEqualTo: balanceModel.price)
+        .where('name', isEqualTo: balanceModel.name)
+        .where('amount', isEqualTo: balanceModel.amount)
         .get();
     final QueryDocumentSnapshot documentSnapshot = query.docs[0];
     final DocumentReference documentReference = documentSnapshot.reference;
@@ -81,20 +76,17 @@ class DatabaseProvider {
 
   Future<void> updateBalance({
     required String documentID,
-    required String name,
-    required String symbol,
-    required String type,
+    required BalanceModel oldBalance,
     required String amount,
     required String price,
-    required String uid,
   }) async {
     balanceModel = BalanceModel(
       amount: amount,
-      name: name,
+      name: oldBalance.name,
       price: price,
-      symbol: symbol,
-      type: type,
-      userID: uid,
+      symbol: oldBalance.symbol,
+      type: oldBalance.type,
+      userID: oldBalance.userID,
     );
     await balanceCollection.doc(documentID).update(balanceModel.toMap());
   }

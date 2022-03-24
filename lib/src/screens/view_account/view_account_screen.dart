@@ -2,32 +2,81 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/auth_provider.dart';
 import 'package:monerate/src/screens/export.dart';
+import 'package:monerate/src/widgets/export.dart';
 
-class ViewInvestmentScreen extends StatefulWidget {
+class ViewAccountScreen extends StatefulWidget {
   BalanceModel balance;
-  ViewInvestmentScreen({
+  ViewAccountScreen({
     Key? key,
     required this.balance,
   }) : super(key: key);
 
   @override
-  State<ViewInvestmentScreen> createState() => _ViewInvestmentScreenState();
+  State<ViewAccountScreen> createState() => _ViewAccountScreenState();
 }
 
-class _ViewInvestmentScreenState extends State<ViewInvestmentScreen> {
+class _ViewAccountScreenState extends State<ViewAccountScreen> {
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
   Widget updateStockAmount() {
-    if (widget.balance.type == "Stock") {
-      return ViewInvestmentForm(
+    if ((widget.balance.type == "Stock") | (widget.balance.type == "Manual")) {
+      return ViewAccountForm(
         balance: widget.balance,
       );
     } else {
       return Container();
     }
+  }
+
+  _removeAccount() {
+    if ((widget.balance.type == "Stock") | (widget.balance.type == "Manual")) {
+      return _displayConfirmationDialog(
+        'Are you sure you want to delete this account balance?',
+      );
+    } else if (widget.balance.type == "Cryptocurrency") {
+      return _displayConfirmationDialog(
+        "Deleting this account will delete all Cryptocurrency accounts and they're API keys. Are you sure you want to delete this account balance?",
+      );
+    } else {
+      return _displayConfirmationDialog(
+        "Deleting this account will delete all Openbanking accounts and they're API keys. Are you sure you want to delete this account balance?",
+      );
+    }
+  }
+
+  void _closeDialogBox() {
+    return Navigator.pop(context);
+  }
+
+  Future<String?> _displayConfirmationDialog(String content) {
+    return customAlertDialog(
+      context: context,
+      title: "Confirm Delete Account",
+      content: content,
+      actions: [
+        OutlinedButton(
+          onPressed: () => _closeDialogBox(),
+          child: const Text(
+            "Cancel",
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            EasyLoading.show(status: 'loading...');
+            if ((widget.balance.type == "Stock") |
+                (widget.balance.type == "Manual")) {
+                  
+            } else if (widget.balance.type == "Cryptocurrency") {
+            } else {}
+          },
+          child: const Text("Agree and Continue"),
+        ),
+      ],
+    );
   }
 
   @override
@@ -68,7 +117,9 @@ class _ViewInvestmentScreenState extends State<ViewInvestmentScreen> {
                 height: 20,
               ),
               OutlinedButton(
-                onPressed: () async {},
+                onPressed: () async {
+                  await _removeAccount();
+                },
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 30,

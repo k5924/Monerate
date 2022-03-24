@@ -174,7 +174,7 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewInvestmentScreen(
+                                    builder: (context) => ViewAccountScreen(
                                       balance: balances[index],
                                     ),
                                   ),

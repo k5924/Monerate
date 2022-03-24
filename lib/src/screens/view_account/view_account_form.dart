@@ -1,0 +1,133 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+
+import 'package:monerate/src/models/balance_model.dart';
+import 'package:monerate/src/providers/export.dart';
+import 'package:monerate/src/screens/export.dart';
+import 'package:monerate/src/utilities/export.dart';
+
+// ignore: must_be_immutable
+class ViewAccountForm extends StatefulWidget {
+  BalanceModel balance;
+  ViewAccountForm({
+    Key? key,
+    required this.balance,
+  }) : super(key: key);
+
+  @override
+  State<ViewAccountForm> createState() => _ViewAccountFormState();
+}
+
+class _ViewAccountFormState extends State<ViewAccountForm> {
+  final TextEditingController amountOwnedController = TextEditingController();
+  final TextEditingController valueController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final YahooFinanceProvider yahooFinanceProvider = YahooFinanceProvider();
+  final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
+
+  Future<bool> _updateAccount() async {
+    EasyLoading.show(status: 'loading...');
+    if (widget.balance.type == "Stock") {
+      final result = await yahooFinanceProvider.getPrice(widget.balance.symbol);
+      if (result.toString() == "error") {
+        EasyLoading.showError(
+          "An error was encountered, investment information has not been fetched",
+        );
+        return false;
+      } else {
+        final result2 = await authProvider.updateFinanceAccount(
+          balanceModel: widget.balance,
+          newAmount: amountOwnedController.text,
+          newPrice: result.toString(),
+        );
+        if (result2 != null) {
+          EasyLoading.showError(result2);
+          return false;
+        } else {
+          EasyLoading.showSuccess("Account updated");
+          return true;
+        }
+      }
+    } else {
+      final result2 = await authProvider.updateFinanceAccount(
+        balanceModel: widget.balance,
+        newAmount: widget.balance.amount,
+        newPrice: valueController.text,
+      );
+      if (result2 != null) {
+        EasyLoading.showError(result2);
+        return false;
+      } else {
+        EasyLoading.showSuccess("Account updated");
+        return true;
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: Column(
+          children: [
+            if (widget.balance.type == "Stock")
+              TextFormField(
+                controller: amountOwnedController,
+                validator: AmountValidator().validateAmount,
+                onSaved: (value) {
+                  amountOwnedController.text = value!;
+                },
+                decoration: const InputDecoration(
+                  hintText: 'Enter Amount Owned',
+                ),
+              )
+            else
+              TextFormField(
+                controller: valueController,
+                validator: AmountValidator().validateAmount,
+                onSaved: (value) {
+                  valueController.text = value!;
+                },
+                decoration: const InputDecoration(
+                  hintText: 'Enter Current Value',
+                ),
+              ),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  final opResult = await _updateAccount();
+                  if (opResult == true) {
+                    Navigator.popUntil(
+                      context,
+                      ModalRoute.withName(EndUserDashboardScreen.kID),
+                    );
+                  }
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 10,
+                ),
+              ),
+              child: const Text(
+                "Update Account",
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
