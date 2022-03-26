@@ -16,7 +16,8 @@ class ViewFinanceAccountScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ViewFinanceAccountScreen> createState() => _ViewFinanceAccountScreenState();
+  State<ViewFinanceAccountScreen> createState() =>
+      _ViewFinanceAccountScreenState();
 }
 
 class _ViewFinanceAccountScreenState extends State<ViewFinanceAccountScreen> {
@@ -141,7 +142,7 @@ class _ViewFinanceAccountScreenState extends State<ViewFinanceAccountScreen> {
               const SizedBox(
                 height: 20,
               ),
-              OutlinedButton(
+              OutlinedButton.icon(
                 onPressed: () async {
                   await _removeAccount();
                 },
@@ -151,7 +152,8 @@ class _ViewFinanceAccountScreenState extends State<ViewFinanceAccountScreen> {
                     vertical: 10,
                   ),
                 ),
-                child: const Text(
+                icon: const Icon(Icons.delete_forever),
+                label: const Text(
                   "Remove Account",
                   style: TextStyle(
                     fontSize: 24,
