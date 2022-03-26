@@ -296,4 +296,21 @@ class AuthProvider {
       rethrow;
     }
   }
+
+  Future<String?> deleteUserAccount() async {
+    try {
+      final userID = await getUID();
+      final balanceIDs = await databaseProvider.getBalanceIDsForOneUser(userID);
+      for (final String balanceID in balanceIDs) {
+        await databaseProvider.removeBalance(
+          documentID: balanceID,
+        );
+      }
+      await databaseProvider.deleteUser(userID);
+    } on FirebaseAuthException catch (e) {
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
+    }
+    return null;
+  }
 }

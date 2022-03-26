@@ -114,4 +114,19 @@ class DatabaseProvider {
   CollectionReference<Object?> getBalanceCollection() {
     return balanceCollection;
   }
+
+  Future<List<String>> getBalanceIDsForOneUser(String userID) async {
+    final QuerySnapshot querySnapshot =
+        await balanceCollection.where('userID', isEqualTo: userID).get();
+    final documentSnapshots = querySnapshot.docs;
+    final List<String> documentIDs = [];
+    for (final QueryDocumentSnapshot document in documentSnapshots) {
+      documentIDs.add(document.reference.id);
+    }
+    return documentIDs;
+  }
+
+  Future<void> deleteUser(String userID) async {
+    await usersCollection.doc(userID).delete();
+  }
 }
