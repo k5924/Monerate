@@ -41,23 +41,9 @@ class _SupportManagerDashboardScreenState
             onPageChanged: (index) {
               setState(() => _currentIndex = index);
             },
-            children: [
-              Center(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(25),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          "Support Manager HomePage",
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const SettingsWithoutHelpOption(),
+            children: const [
+              SupportManagerHomepageTab(),
+              SettingsWithoutHelpOption(),
             ],
           ),
         ),

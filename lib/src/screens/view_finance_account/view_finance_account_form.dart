@@ -10,18 +10,18 @@ import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
 // ignore: must_be_immutable
-class ViewAccountForm extends StatefulWidget {
+class ViewFinanceAccountForm extends StatefulWidget {
   BalanceModel balance;
-  ViewAccountForm({
+  ViewFinanceAccountForm({
     Key? key,
     required this.balance,
   }) : super(key: key);
 
   @override
-  State<ViewAccountForm> createState() => _ViewAccountFormState();
+  State<ViewFinanceAccountForm> createState() => _ViewFinanceAccountFormState();
 }
 
-class _ViewAccountFormState extends State<ViewAccountForm> {
+class _ViewFinanceAccountFormState extends State<ViewFinanceAccountForm> {
   final TextEditingController amountOwnedController = TextEditingController();
   final TextEditingController valueController = TextEditingController();
   final _formKey = GlobalKey<FormState>();

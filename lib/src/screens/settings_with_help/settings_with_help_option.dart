@@ -7,7 +7,9 @@ import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 
 class SettingsWithHelpOption extends StatefulWidget {
-  const SettingsWithHelpOption({Key? key}) : super(key: key);
+  final String userType;
+  const SettingsWithHelpOption({Key? key, required this.userType})
+      : super(key: key);
 
   @override
   _SettingsWithHelpOptionState createState() => _SettingsWithHelpOptionState();
@@ -97,7 +99,14 @@ class _SettingsWithHelpOptionState extends State<SettingsWithHelpOption> {
                 child: ListTile(
                   leading: const Icon(Icons.support),
                   title: const Text("Contact Support"),
-                  onTap: () {},
+                  onTap: () {
+                    if (widget.userType == 'End-User') {
+                      Navigator.pushNamed(
+                        context,
+                        ChooseSupportScreen.kID,
+                      );
+                    }
+                  },
                 ),
               ),
               const SizedBox(

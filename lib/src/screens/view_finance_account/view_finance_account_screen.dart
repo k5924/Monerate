@@ -8,23 +8,23 @@ import 'package:monerate/src/providers/auth_provider.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
-class ViewAccountScreen extends StatefulWidget {
+class ViewFinanceAccountScreen extends StatefulWidget {
   BalanceModel balance;
-  ViewAccountScreen({
+  ViewFinanceAccountScreen({
     Key? key,
     required this.balance,
   }) : super(key: key);
 
   @override
-  State<ViewAccountScreen> createState() => _ViewAccountScreenState();
+  State<ViewFinanceAccountScreen> createState() => _ViewFinanceAccountScreenState();
 }
 
-class _ViewAccountScreenState extends State<ViewAccountScreen> {
+class _ViewFinanceAccountScreenState extends State<ViewFinanceAccountScreen> {
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
   Widget updateStockAmount() {
     if ((widget.balance.type == "Stock") | (widget.balance.type == "Manual")) {
-      return ViewAccountForm(
+      return ViewFinanceAccountForm(
         balance: widget.balance,
       );
     } else {

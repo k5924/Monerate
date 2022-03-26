@@ -59,27 +59,14 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
               setState(() => _currentIndex = index);
             },
             children: [
-              Center(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(25),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "End User HomePage",
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              const EndUserHomepageTab(),
               const NewsTab(),
               AccountBalancesTab(
                 uid: uid,
               ),
-              const SettingsWithHelpOption(),
+              const SettingsWithHelpOption(
+                userType: "End-User",
+              ),
             ],
           ),
         ),
