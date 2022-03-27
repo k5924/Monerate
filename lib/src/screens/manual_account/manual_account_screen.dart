@@ -10,8 +10,6 @@ class ManualAccountScreen extends StatefulWidget {
 }
 
 class _ManualAccountScreenState extends State<ManualAccountScreen> {
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +19,7 @@ class _ManualAccountScreenState extends State<ManualAccountScreen> {
       ),
       body: const Center(
         child: SingleChildScrollView(
-          child: ManualAccountForm()
+          child: ManualAccountForm(),
         ),
       ),
     );

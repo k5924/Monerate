@@ -14,6 +14,8 @@ class DatabaseProvider {
 
   late CollectionReference balanceCollection = db.collection('balances');
 
+  late CollectionReference chatCollection = db.collection('chats');
+
   Future<void> createNewUser({required String uid}) async {
     userModel = UserModel();
     await usersCollection.doc(uid).set(

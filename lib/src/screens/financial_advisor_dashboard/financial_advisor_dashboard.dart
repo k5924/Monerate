@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
-import 'package:monerate/src/screens/settings_with_help/export.dart';
 
 class FinancialAdvisorDashboardScreen extends StatefulWidget {
   static const String kID = 'financial_advisor_dashboard_screen';
