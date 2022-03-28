@@ -5,7 +5,7 @@ void main() {
   group('Chat Model:', () {
     final DateTime time = DateTime(2000);
     final MessageModel message = MessageModel(
-      userID: 'userID',
+      senderID: 'userID',
       firstName: 'firstName',
       lastName: 'lastName',
       message: 'message',

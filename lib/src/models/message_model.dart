@@ -1,13 +1,13 @@
 
 class MessageModel {
-  String userID;
+  String senderID;
   String firstName;
   String lastName;
   String message;
   DateTime createdAt;
 
   MessageModel({
-    required this.userID,
+    required this.senderID,
     required this.firstName,
     required this.lastName,
     required this.message,
@@ -16,7 +16,7 @@ class MessageModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'userID': userID,
+      'senderID': senderID,
       'firstName': firstName,
       'lastName': lastName,
       'message': message,
@@ -27,7 +27,7 @@ class MessageModel {
   @override
   factory MessageModel.fromMap(Map<String, dynamic> map) {
     return MessageModel(
-      userID: map['userID'] as String,
+      senderID: map['senderID'] as String,
       firstName: map['firstName'] as String,
       lastName: map['lastName'] as String,
       message: map['message'] as String,

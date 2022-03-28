@@ -7,7 +7,7 @@ void main() {
     test('Populated Message.toMap() returns supplied values for each field',
         () {
       final MessageModel message = MessageModel(
-        userID: 'userID',
+        senderID: 'senderID',
         firstName: 'firstName',
         lastName: 'lastName',
         message: 'message',
@@ -16,7 +16,7 @@ void main() {
       expect(
         message.toMap(),
         {
-          'userID': 'userID',
+          'senderID': 'senderID',
           'firstName': 'firstName',
           'lastName': 'lastName',
           'message': 'message',
@@ -28,7 +28,7 @@ void main() {
     test('MessageModel.fromMap(map) returns map values in MessageModel format',
         () {
       final MessageModel message = MessageModel.fromMap({
-        'userID': 'userID',
+        'senderID': 'senderID',
         'firstName': 'firstName',
         'lastName': 'lastName',
         'message': 'message',
@@ -38,7 +38,7 @@ void main() {
       expect(
         message.toMap(),
         {
-          'userID': 'userID',
+          'senderID': 'senderID',
           'firstName': 'firstName',
           'lastName': 'lastName',
           'message': 'message',

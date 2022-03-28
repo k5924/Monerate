@@ -132,8 +132,38 @@ class DatabaseProvider {
     await usersCollection.doc(userID).delete();
   }
 
-   Future<String> makeNewChat(ChatModel chatModel) async {
-    final DocumentReference documentReference = await chatCollection.add(chatModel.toMap());
+  Future<String> makeNewChat(ChatModel chatModel) async {
+    final DocumentReference documentReference =
+        await chatCollection.add(chatModel.toMap());
+    return documentReference.id;
+  }
+
+  Future<void> sendMessage(
+    String documentReferenceID,
+    MessageModel messageModel,
+  ) async {
+    await chatCollection
+        .doc(documentReferenceID)
+        .collection('messages')
+        .add(messageModel.toMap());
+    await chatCollection.doc(documentReferenceID).update(
+      {
+        'latestMessage': messageModel.createdAt,
+      },
+    );
+  }
+
+  Future<String> getChat(ChatModel chatModel) async {
+    final QuerySnapshot querySnapshot = await chatCollection
+        .where('userID', isEqualTo: chatModel.userID)
+        .where('chatType', isEqualTo: chatModel.chatType)
+        .where('latestMessage', isEqualTo: chatModel.latestMessage)
+        .where('firstName', isEqualTo: chatModel.firstName)
+        .where('lastName', isEqualTo: chatModel.lastName)
+        .where('messages', isEqualTo: chatModel.messages)
+        .get();
+    final QueryDocumentSnapshot documentSnapshot = querySnapshot.docs[0];
+    final DocumentReference documentReference = documentSnapshot.reference;
     return documentReference.id;
   }
 }

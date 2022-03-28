@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_void_async
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,7 +46,24 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ChatScreen(documentReferenceID: result),
+          builder: (context) =>
+              ChatScreen(documentReferenceID: result, userID: userID),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      final exceptionsFactory = ExceptionsFactory(e.code);
+      EasyLoading.showError(exceptionsFactory.exceptionCaught()!);
+    }
+  }
+
+  Future<void> getChat(ChatModel chatModel) async {
+    try {
+      final result = await authProvider.getChat(chatModel);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              ChatScreen(documentReferenceID: result, userID: userID),
         ),
       );
     } on FirebaseAuthException catch (e) {
@@ -99,9 +116,11 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
                             elevation: 4,
                             child: ListTile(
                               title: Text(
-                                'Last Message: ${chats[index].latestMessage.toString()}',
+                                'Last Message: ${chats[index].latestMessage.toUtc().toString()}',
                               ),
-                              onTap: () {},
+                              onTap: () async {
+                                await getChat(chats[index]);
+                              },
                             ),
                           );
                         },

@@ -1,7 +1,13 @@
+// ignore_for_file: use_build_context_synchronously, avoid_void_async
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
+import 'package:monerate/src/screens/export.dart';
+import 'package:monerate/src/utilities/export.dart';
 
 class FinancialAdvisorHomepageTab extends StatefulWidget {
   const FinancialAdvisorHomepageTab({Key? key}) : super(key: key);
@@ -11,15 +17,44 @@ class FinancialAdvisorHomepageTab extends StatefulWidget {
       _FinancialAdvisorHomepageTabState();
 }
 
-class _FinancialAdvisorHomepageTabState extends State<FinancialAdvisorHomepageTab> {
+class _FinancialAdvisorHomepageTabState
+    extends State<FinancialAdvisorHomepageTab> {
   final DatabaseProvider databaseProvider =
       DatabaseProvider(db: FirebaseFirestore.instance);
+  late String userID;
+  final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
   late Stream<QuerySnapshot<Object?>> chatStream = databaseProvider
       .chatCollection
       .where('chatType', isEqualTo: 'finance')
       .orderBy('latestMessage', descending: true)
       .snapshots();
-  
+
+  @override
+  void initState() async {
+    super.initState();
+    await getUserID();
+  }
+
+  Future<void> getUserID() async {
+    userID = await authProvider.getUID();
+  }
+
+  Future<void> getChat(ChatModel chatModel) async {
+    try {
+      final result = await authProvider.getChat(chatModel);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              ChatScreen(documentReferenceID: result, userID: userID),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      final exceptionsFactory = ExceptionsFactory(e.code);
+      EasyLoading.showError(exceptionsFactory.exceptionCaught()!);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -61,9 +96,12 @@ class _FinancialAdvisorHomepageTabState extends State<FinancialAdvisorHomepageTa
                             title: Text(
                               '${chats[index].firstName} ${chats[index].lastName}',
                             ),
-                            subtitle:
-                                Text(chats[index].latestMessage.toString()),
-                            onTap: () {},
+                            subtitle: Text(
+                              chats[index].latestMessage.toUtc().toString(),
+                            ),
+                            onTap: () async {
+                              await getChat(chats[index]);
+                            },
                           ),
                         );
                       },

@@ -314,7 +314,7 @@ class AuthProvider {
     return null;
   }
 
-   Future<String> makeNewChat(String chatType) async {
+  Future<String> makeNewChat(String chatType) async {
     try {
       final userID = await getUID();
       final Map<String, dynamic>? userDetails =
@@ -324,11 +324,44 @@ class AuthProvider {
         firstName: userDetails!['firstName'].toString(),
         lastName: userDetails['lastName'].toString(),
         chatType: chatType,
-        latestMessage: DateTime.now(),
+        latestMessage: DateTime.now().toUtc(),
         messages: null,
       );
       return await databaseProvider.makeNewChat(chatModel);
+    } on FirebaseAuthException {
+      rethrow;
+    }
+  }
+
+  Future<String?> sendNewMessage(
+    String documentReferenceID,
+    String message,
+  ) async {
+    try {
+      final userID = await getUID();
+      final Map<String, dynamic>? userDetails =
+          await getProfile() as Map<String, dynamic>?;
+      final MessageModel messageModel = MessageModel(
+        senderID: userID,
+        firstName: userDetails!['firstName'].toString(),
+        lastName: userDetails['lastName'].toString(),
+        message: message,
+        createdAt: DateTime.now().toUtc(),
+      );
+      await databaseProvider.sendMessage(documentReferenceID, messageModel);
     } on FirebaseAuthException catch (e) {
+      exceptionsFactory = ExceptionsFactory(e.code);
+      return exceptionsFactory.exceptionCaught()!;
+    }
+    return null;
+  }
+
+  Future<String> getChat(ChatModel chatModel) async {
+    try {
+      final String documentReferenceID =
+          await databaseProvider.getChat(chatModel);
+      return documentReferenceID;
+    } on FirebaseAuthException {
       rethrow;
     }
   }
