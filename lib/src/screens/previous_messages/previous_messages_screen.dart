@@ -31,13 +31,20 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
       .snapshots();
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    await getUserID();
+    getUserID().whenComplete(() {
+      setState(() {});
+    });
   }
 
   Future<void> getUserID() async {
-    userID = await authProvider.getUID();
+    try {
+      userID = await authProvider.getUID();
+    } on FirebaseAuthException catch (e) {
+      final exceptionsFactory = ExceptionsFactory(e.code);
+      EasyLoading.showError(exceptionsFactory.exceptionCaught()!);
+    }
   }
 
   Future<void> makeNewChat() async {
@@ -90,9 +97,17 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
                   stream: chatStream,
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      if (snapshot.connectionState != ConnectionState.done) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return const Center(
+                          child: Text(
+                            'An error was encountered, chats were not fetched',
+                          ),
+                        );
+                      }
                     } else {
                       final chatsDB = snapshot.data!.docs;
                       final List<ChatModel> chats = <ChatModel>[];
@@ -100,8 +115,10 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
                         final chat = ChatModel(
                           userID: item['userID'].toString(),
                           chatType: item['chatType'].toString(),
-                          latestMessage: item['latestMessage'] as DateTime,
-                          messages: item['messages'] as List<MessageModel>,
+                          latestMessage:
+                              (item['latestMessage'] as Timestamp).toDate(),
+                          messages: List<MessageModel>.from(
+                              item['messages'] as Iterable<dynamic>),
                           firstName: item['firstName'] as String,
                           lastName: item['lastName'] as String,
                         );

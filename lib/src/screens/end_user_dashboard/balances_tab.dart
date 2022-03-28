@@ -147,7 +147,16 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
                   stream: balanceStream,
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
-                      return const Center(child: CircularProgressIndicator());
+                      if (snapshot.connectionState != ConnectionState.done) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return const Center(
+                          child: Text(
+                              'An error was encountered, balances were not fetched'),
+                        );
+                      }
                     } else {
                       final balancesDB = snapshot.data!.docs;
                       balancesDB.sort(
@@ -190,7 +199,8 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewFinanceAccountScreen(
+                                    builder: (context) =>
+                                        ViewFinanceAccountScreen(
                                       balance: balances[index],
                                     ),
                                   ),

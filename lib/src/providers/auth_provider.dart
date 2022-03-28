@@ -325,7 +325,7 @@ class AuthProvider {
         lastName: userDetails['lastName'].toString(),
         chatType: chatType,
         latestMessage: DateTime.now().toUtc(),
-        messages: null,
+        messages: [],
       );
       return await databaseProvider.makeNewChat(chatModel);
     } on FirebaseAuthException {
