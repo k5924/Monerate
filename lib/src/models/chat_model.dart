@@ -6,7 +6,7 @@ class ChatModel {
   String lastName;
   String chatType;
   DateTime latestMessage;
-  List<MessageModel> messages;
+  List<MessageModel>? messages;
 
   ChatModel({
     required this.userID,

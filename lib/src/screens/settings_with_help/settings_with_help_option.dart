@@ -105,6 +105,13 @@ class _SettingsWithHelpOptionState extends State<SettingsWithHelpOption> {
                         context,
                         ChooseSupportScreen.kID,
                       );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PreviousMessagesScreen(chatType: 'support'),
+                        ),
+                      );
                     }
                   },
                 ),

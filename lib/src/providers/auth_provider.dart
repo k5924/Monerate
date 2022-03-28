@@ -313,4 +313,23 @@ class AuthProvider {
     }
     return null;
   }
+
+   Future<String> makeNewChat(String chatType) async {
+    try {
+      final userID = await getUID();
+      final Map<String, dynamic>? userDetails =
+          await getProfile() as Map<String, dynamic>?;
+      final ChatModel chatModel = ChatModel(
+        userID: userID,
+        firstName: userDetails!['firstName'].toString(),
+        lastName: userDetails['lastName'].toString(),
+        chatType: chatType,
+        latestMessage: DateTime.now(),
+        messages: null,
+      );
+      return await databaseProvider.makeNewChat(chatModel);
+    } on FirebaseAuthException catch (e) {
+      rethrow;
+    }
+  }
 }

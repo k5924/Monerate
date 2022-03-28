@@ -1,13 +1,14 @@
 export 'change_email/export.dart';
 export 'change_password/export.dart';
+export 'chat_screen/export.dart';
 export 'choose_support/export.dart';
 export 'complete_profile/export.dart';
-export 'contact_support/export.dart';
 export 'end_user_dashboard/export.dart';
 export 'financial_advisor_dashboard/export.dart';
 export 'forgot_password/export.dart';
 export 'login/export.dart';
 export 'manual_account/export.dart';
+export 'previous_messages/export.dart';
 export 'profile/export.dart';
 export 'search_investment/export.dart';
 export 'select_crypto_exchange/export.dart';

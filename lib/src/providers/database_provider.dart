@@ -131,4 +131,9 @@ class DatabaseProvider {
   Future<void> deleteUser(String userID) async {
     await usersCollection.doc(userID).delete();
   }
+
+   Future<String> makeNewChat(ChatModel chatModel) async {
+    final DocumentReference documentReference = await chatCollection.add(chatModel.toMap());
+    return documentReference.id;
+  }
 }
