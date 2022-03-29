@@ -118,7 +118,8 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
                           latestMessage:
                               (item['latestMessage'] as Timestamp).toDate(),
                           messages: List<MessageModel>.from(
-                              item['messages'] as Iterable<dynamic>),
+                            item['messages'] as Iterable<dynamic>,
+                          ),
                           firstName: item['firstName'] as String,
                           lastName: item['lastName'] as String,
                         );

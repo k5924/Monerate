@@ -81,6 +81,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   return ListView.builder(
                     physics: const BouncingScrollPhysics(),
                     reverse: true,
+                    shrinkWrap: true,
                     itemCount: messages.length,
                     itemBuilder: (context, index) {
                       return Row(
@@ -152,7 +153,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.grey,
-                      labelText: 'Type your message here',
+                      hintText: 'Type your message here',
                       border: OutlineInputBorder(
                         borderSide: const BorderSide(width: 0),
                         gapPadding: 10,
