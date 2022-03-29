@@ -4,13 +4,6 @@ import 'package:monerate/src/models/export.dart';
 void main() {
   group('Chat Model:', () {
     final DateTime time = DateTime(2000);
-    final MessageModel message = MessageModel(
-      senderID: 'userID',
-      firstName: 'firstName',
-      lastName: 'lastName',
-      message: 'message',
-      createdAt: time,
-    );
 
     test('Populated ChatModel.toMap() returns supplied values for each field',
         () {
@@ -20,7 +13,6 @@ void main() {
         lastName: 'lastName',
         chatType: 'chatType',
         latestMessage: time,
-        messages: [message],
       );
 
       expect(
@@ -31,7 +23,6 @@ void main() {
           'lastName': 'lastName',
           'chatType': 'chatType',
           'latestMessage': time.toUtc(),
-          'messages': [message]
         },
       );
     });
@@ -44,7 +35,6 @@ void main() {
           'lastName': 'lastName',
           'chatType': 'chatType',
           'latestMessage': time,
-          'messages': [message]
         },
       );
       expect(
@@ -55,7 +45,6 @@ void main() {
           'lastName': 'lastName',
           'chatType': 'chatType',
           'latestMessage': time.toUtc(),
-          'messages': [message]
         },
       );
     });

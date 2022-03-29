@@ -32,11 +32,13 @@ class _ChatScreenState extends State<ChatScreen> {
       .snapshots();
 
   Future<void> sendMessage() async {
+    textController.clear();
     FocusScope.of(context).unfocus();
     final result = await authProvider.sendNewMessage(
       widget.documentReferenceID,
       messageText,
     );
+
     if (result != null) {
       EasyLoading.showError(result);
     }
@@ -74,72 +76,74 @@ class _ChatScreenState extends State<ChatScreen> {
                       firstName: item['firstName'] as String,
                       lastName: item['lastName'] as String,
                       message: item['message'] as String,
-                      createdAt: item['createdAt'] as DateTime,
+                      createdAt: (item['createdAt'] as Timestamp).toDate(),
                     );
                     messages.add(individualMessage);
                   }
-                  return ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    reverse: true,
-                    shrinkWrap: true,
-                    itemCount: messages.length,
-                    itemBuilder: (context, index) {
-                      return Row(
-                        mainAxisAlignment:
-                            messages[index].senderID == widget.userID
-                                ? MainAxisAlignment.end
-                                : MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            margin: const EdgeInsets.all(16),
-                            constraints: const BoxConstraints(maxWidth: 140),
-                            decoration: BoxDecoration(
-                              color: messages[index].senderID == widget.userID
-                                  ? Colors.grey
-                                  : Theme.of(context).colorScheme.secondary,
-                              borderRadius:
-                                  messages[index].senderID == widget.userID
-                                      ? const BorderRadius.all(
-                                          Radius.circular(12),
-                                        ).subtract(
-                                          const BorderRadius.only(
-                                            bottomRight: Radius.circular(12),
+                  return Expanded(
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      reverse: true,
+                      shrinkWrap: true,
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        return Row(
+                          mainAxisAlignment:
+                              messages[index].senderID == widget.userID
+                                  ? MainAxisAlignment.end
+                                  : MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              margin: const EdgeInsets.all(16),
+                              constraints: const BoxConstraints(maxWidth: 140),
+                              decoration: BoxDecoration(
+                                color: messages[index].senderID == widget.userID
+                                    ? Colors.grey
+                                    : Theme.of(context).colorScheme.secondary,
+                                borderRadius:
+                                    messages[index].senderID == widget.userID
+                                        ? const BorderRadius.all(
+                                            Radius.circular(12),
+                                          ).subtract(
+                                            const BorderRadius.only(
+                                              bottomRight: Radius.circular(12),
+                                            ),
+                                          )
+                                        : const BorderRadius.all(
+                                            Radius.circular(12),
+                                          ).subtract(
+                                            const BorderRadius.only(
+                                              bottomLeft: Radius.circular(12),
+                                            ),
                                           ),
-                                        )
-                                      : const BorderRadius.all(
-                                          Radius.circular(12),
-                                        ).subtract(
-                                          const BorderRadius.only(
-                                            bottomLeft: Radius.circular(12),
-                                          ),
-                                        ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment:
-                                  messages[index].senderID == widget.userID
-                                      ? CrossAxisAlignment.end
-                                      : CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${messages[index].message}\n${messages[index].createdAt.toUtc().toString()}',
-                                  style: TextStyle(
-                                    color: messages[index].senderID ==
+                              ),
+                              child: Column(
+                                crossAxisAlignment:
+                                    messages[index].senderID == widget.userID
+                                        ? CrossAxisAlignment.end
+                                        : CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${messages[index].message}\n${messages[index].createdAt.toLocal().toString()}',
+                                    style: TextStyle(
+                                      color: messages[index].senderID ==
+                                              widget.userID
+                                          ? Colors.black
+                                          : Colors.white,
+                                    ),
+                                    textAlign: messages[index].senderID ==
                                             widget.userID
-                                        ? Colors.black
-                                        : Colors.white,
+                                        ? TextAlign.end
+                                        : TextAlign.start,
                                   ),
-                                  textAlign:
-                                      messages[index].senderID == widget.userID
-                                          ? TextAlign.end
-                                          : TextAlign.start,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      );
-                    },
+                                ],
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                    ),
                   );
                 }
               },
@@ -168,6 +172,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 GestureDetector(
                   onTap: messageText.trim().isEmpty ? null : sendMessage,
                   child: Container(
+                    padding: const EdgeInsets.all(8),
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.blue,

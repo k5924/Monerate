@@ -160,7 +160,6 @@ class DatabaseProvider {
         .where('latestMessage', isEqualTo: chatModel.latestMessage)
         .where('firstName', isEqualTo: chatModel.firstName)
         .where('lastName', isEqualTo: chatModel.lastName)
-        .where('messages', isEqualTo: chatModel.messages)
         .get();
     final QueryDocumentSnapshot documentSnapshot = querySnapshot.docs[0];
     final DocumentReference documentReference = documentSnapshot.reference;

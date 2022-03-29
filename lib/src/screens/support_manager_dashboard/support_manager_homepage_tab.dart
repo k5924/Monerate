@@ -91,8 +91,8 @@ class _SupportManagerHomepageTabState extends State<SupportManagerHomepageTab> {
                       final chat = ChatModel(
                         userID: item['userID'].toString(),
                         chatType: item['chatType'].toString(),
-                        latestMessage: item['latestMessage'] as DateTime,
-                        messages: item['messages'] as List<MessageModel>?,
+                        latestMessage:
+                            (item['latestMessage'] as Timestamp).toDate(),
                         firstName: item['firstName'] as String,
                         lastName: item['lastName'] as String,
                       );
@@ -110,7 +110,7 @@ class _SupportManagerHomepageTabState extends State<SupportManagerHomepageTab> {
                               '${chats[index].firstName} ${chats[index].lastName}',
                             ),
                             subtitle: Text(
-                              chats[index].latestMessage.toUtc().toString(),
+                              chats[index].latestMessage.toLocal().toString(),
                             ),
                             onTap: () async {
                               await getChat(chats[index]);

@@ -6,7 +6,6 @@ class ChatModel {
   String lastName;
   String chatType;
   DateTime latestMessage;
-  List<MessageModel>? messages;
 
   ChatModel({
     required this.userID,
@@ -14,7 +13,6 @@ class ChatModel {
     required this.lastName,
     required this.chatType,
     required this.latestMessage,
-    required this.messages,
   });
 
   Map<String, dynamic> toMap() {
@@ -24,7 +22,6 @@ class ChatModel {
       'lastName': lastName,
       'chatType': chatType,
       'latestMessage': latestMessage.toUtc(),
-      'messages': messages,
     };
   }
 
@@ -34,7 +31,6 @@ class ChatModel {
       userID: map['userID'] as String,
       chatType: map['chatType'] as String,
       latestMessage: map['latestMessage'] as DateTime,
-      messages: map['messages'] as List<MessageModel>,
       firstName: map['firstName'] as String,
       lastName: map['lastName'] as String,
     );

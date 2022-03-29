@@ -75,16 +75,16 @@ class _FinancialAdvisorHomepageTabState
                 stream: chatStream,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                   if (snapshot.connectionState != ConnectionState.done) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        return const Center(
-                          child: Text(
-                              'An error was encountered, chats were not fetched'),
-                        );
-                      }
+                    if (snapshot.connectionState != ConnectionState.done) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return const Center(
+                        child: Text(
+                            'An error was encountered, chats were not fetched'),
+                      );
+                    }
                   } else {
                     final chatsDB = snapshot.data!.docs;
                     final List<ChatModel> chats = <ChatModel>[];
@@ -92,8 +92,8 @@ class _FinancialAdvisorHomepageTabState
                       final chat = ChatModel(
                         userID: item['userID'].toString(),
                         chatType: item['chatType'].toString(),
-                        latestMessage: item['latestMessage'] as DateTime,
-                        messages: item['messages'] as List<MessageModel>?,
+                        latestMessage:
+                            (item['latestMessage'] as Timestamp).toDate(),
                         firstName: item['firstName'] as String,
                         lastName: item['lastName'] as String,
                       );
@@ -111,7 +111,7 @@ class _FinancialAdvisorHomepageTabState
                               '${chats[index].firstName} ${chats[index].lastName}',
                             ),
                             subtitle: Text(
-                              chats[index].latestMessage.toUtc().toString(),
+                              chats[index].latestMessage.toLocal().toString(),
                             ),
                             onTap: () async {
                               await getChat(chats[index]);

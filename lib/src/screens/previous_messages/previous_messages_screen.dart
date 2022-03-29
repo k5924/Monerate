@@ -117,9 +117,6 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
                           chatType: item['chatType'].toString(),
                           latestMessage:
                               (item['latestMessage'] as Timestamp).toDate(),
-                          messages: List<MessageModel>.from(
-                            item['messages'] as Iterable<dynamic>,
-                          ),
                           firstName: item['firstName'] as String,
                           lastName: item['lastName'] as String,
                         );
@@ -134,7 +131,7 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
                             elevation: 4,
                             child: ListTile(
                               title: Text(
-                                'Last Message: ${chats[index].latestMessage.toUtc().toString()}',
+                                'Last Message: ${chats[index].latestMessage.toLocal().toString()}',
                               ),
                               onTap: () async {
                                 await getChat(chats[index]);
