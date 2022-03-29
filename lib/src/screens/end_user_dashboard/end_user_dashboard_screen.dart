@@ -40,9 +40,7 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
 
   Future<void> getCurrentUser() async {
     try {
-      EasyLoading.show(status: 'loading...');
       uid = await authProvider.getUID();
-      EasyLoading.dismiss();
     } on FirebaseAuthException catch (e) {
       final exceptionsFactory = ExceptionsFactory(e.code);
       EasyLoading.showError(exceptionsFactory.exceptionCaught()!);

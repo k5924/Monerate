@@ -38,9 +38,7 @@ class _SupportManagerHomepageTabState extends State<SupportManagerHomepageTab> {
 
   Future<void> getUserID() async {
     try {
-      EasyLoading.show(status: 'loading...');
       userID = await authProvider.getUID();
-      EasyLoading.dismiss();
     } on FirebaseAuthException catch (e) {
       final exceptionsFactory = ExceptionsFactory(e.code);
       EasyLoading.showError(exceptionsFactory.exceptionCaught()!);
