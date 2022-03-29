@@ -34,11 +34,12 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<void> sendMessage() async {
     textController.clear();
     FocusScope.of(context).unfocus();
+    EasyLoading.show(status: 'loading...');
     final result = await authProvider.sendNewMessage(
       widget.documentReferenceID,
       messageText,
     );
-
+    EasyLoading.dismiss();
     if (result != null) {
       EasyLoading.showError(result);
     }

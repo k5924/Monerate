@@ -38,7 +38,9 @@ class _SupportManagerHomepageTabState extends State<SupportManagerHomepageTab> {
 
   Future<void> getUserID() async {
     try {
+      EasyLoading.show(status: 'loading...');
       userID = await authProvider.getUID();
+      EasyLoading.dismiss();
     } on FirebaseAuthException catch (e) {
       final exceptionsFactory = ExceptionsFactory(e.code);
       EasyLoading.showError(exceptionsFactory.exceptionCaught()!);
@@ -47,6 +49,7 @@ class _SupportManagerHomepageTabState extends State<SupportManagerHomepageTab> {
 
   Future<void> getChat(ChatModel chatModel) async {
     try {
+      EasyLoading.show(status: 'loading...');
       final result = await authProvider.getChat(chatModel);
       Navigator.push(
         context,
@@ -55,6 +58,7 @@ class _SupportManagerHomepageTabState extends State<SupportManagerHomepageTab> {
               ChatScreen(documentReferenceID: result, userID: userID),
         ),
       );
+      EasyLoading.dismiss();
     } on FirebaseAuthException catch (e) {
       final exceptionsFactory = ExceptionsFactory(e.code);
       EasyLoading.showError(exceptionsFactory.exceptionCaught()!);

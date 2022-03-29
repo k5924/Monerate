@@ -40,7 +40,9 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
 
   Future<void> getUserID() async {
     try {
+      EasyLoading.show(status: 'loading...');
       userID = await authProvider.getUID();
+      EasyLoading.dismiss();
     } on FirebaseAuthException catch (e) {
       final exceptionsFactory = ExceptionsFactory(e.code);
       EasyLoading.showError(exceptionsFactory.exceptionCaught()!);
@@ -49,6 +51,7 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
 
   Future<void> makeNewChat() async {
     try {
+      EasyLoading.show(status: 'loading...');
       final String result = await authProvider.makeNewChat(widget.chatType);
       Navigator.push(
         context,
@@ -57,6 +60,7 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
               ChatScreen(documentReferenceID: result, userID: userID),
         ),
       );
+      EasyLoading.dismiss();
     } on FirebaseAuthException catch (e) {
       final exceptionsFactory = ExceptionsFactory(e.code);
       EasyLoading.showError(exceptionsFactory.exceptionCaught()!);
@@ -65,6 +69,7 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
 
   Future<void> getChat(ChatModel chatModel) async {
     try {
+      EasyLoading.show(status: 'loading...');
       final result = await authProvider.getChat(chatModel);
       Navigator.push(
         context,
@@ -73,6 +78,7 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
               ChatScreen(documentReferenceID: result, userID: userID),
         ),
       );
+      EasyLoading.dismiss();
     } on FirebaseAuthException catch (e) {
       final exceptionsFactory = ExceptionsFactory(e.code);
       EasyLoading.showError(exceptionsFactory.exceptionCaught()!);
