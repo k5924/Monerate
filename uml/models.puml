@@ -1,0 +1,60 @@
+@startuml
+set namespaceSeparator ::
+
+class "monerate::src::models::article_model.dart::ArticleModel" {
+  +String title
+  +String thumbnailURL
+  +String provider
+  +String url
+}
+
+class "monerate::src::models::balance_model.dart::BalanceModel" {
+  +String amount
+  +String name
+  +String price
+  +String symbol
+  +String type
+  +String userID
+  +Map<String, dynamic> toMap()
+}
+
+class "monerate::src::models::financial_advisor_model.dart::FinancialAdvisorModel" {
+  +String? licenseID
+  +Map<String, dynamic> toMap()
+}
+
+"monerate::src::models::user_model.dart::UserModel" <|-- "monerate::src::models::financial_advisor_model.dart::FinancialAdvisorModel"
+
+class "monerate::src::models::local_key_model.dart::LocalKeyModel" {
+  +String provider
+  +List<String> keys
+}
+
+"hive::src::object::hive_object.dart::HiveObject" <|-- "monerate::src::models::local_key_model.dart::LocalKeyModel"
+
+class "monerate::src::models::local_key_model.dart::LocalKeyModelAdapter" {
+  +int typeId
+  +int hashCode
+  +LocalKeyModel read()
+  +void write()
+  +bool ==()
+}
+
+"hive::hive.dart::TypeAdapter" <|-- "monerate::src::models::local_key_model.dart::LocalKeyModelAdapter"
+
+class "monerate::src::models::ticker_model.dart::TickerModel" {
+  +String longName
+  +String symbol
+  +String exchange
+}
+
+class "monerate::src::models::user_model.dart::UserModel" {
+  +String? firstName
+  +String? lastName
+  +String? userType
+  +Map<String, dynamic> toMap()
+  +String? getUserType()
+}
+
+
+@enduml

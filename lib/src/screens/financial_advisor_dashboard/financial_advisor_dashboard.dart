@@ -2,10 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
-import 'package:monerate/src/screens/settings_with_help/export.dart';
 
+/// This is where all of the tabs a financial advisor would see after they login are populated
 class FinancialAdvisorDashboardScreen extends StatefulWidget {
+  /// This is the variable which stores the named route for this dashboard screen
   static const String kID = 'financial_advisor_dashboard_screen';
+
+  /// This is the constructor for this screen
   const FinancialAdvisorDashboardScreen({Key? key}) : super(key: key);
 
   @override
@@ -42,23 +45,11 @@ class _FinancialAdvisorDashboardScreenState
             onPageChanged: (index) {
               setState(() => _currentIndex = index);
             },
-            children: [
-              Center(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(25),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          "Financial Advisor HomePage",
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+            children: const [
+              FinancialAdvisorHomepageTab(),
+              SettingsWithHelpOption(
+                userType: 'Financial Advisor',
               ),
-              const SettingsWithHelpOption(),
             ],
           ),
         ),

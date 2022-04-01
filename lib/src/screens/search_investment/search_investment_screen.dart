@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
-import 'package:monerate/src/screens/search_investment/provide_investment_details.dart';
+import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
+/// This screen will be displayed when an end-user chooses to search for a stock investment to add to their portfolio
 class SearchInvestmentScreen extends StatefulWidget {
+  /// This variable stores the named route for this screen
   static const String kID = 'search_investment_screen';
+
+  /// This is the constructor for this screen
   const SearchInvestmentScreen({Key? key}) : super(key: key);
 
   @override
@@ -24,10 +28,11 @@ class _SearchInvestmentScreenState extends State<SearchInvestmentScreen> {
     super.dispose();
   }
 
-  Future<void> getInvestment() async {
+  Future<void> _getInvestment() async {
     EasyLoading.show(status: 'loading...');
-    final result =
-        await yahooFinanceProvider.getTickerSymbol(searchController.text);
+    final result = await yahooFinanceProvider.getTickerSymbol(
+      searchParameter: searchController.text,
+    );
     if (result.runtimeType == String) {
       EasyLoading.showError(
         "An error was encountered, investments have not been fetched",
@@ -56,7 +61,7 @@ class _SearchInvestmentScreenState extends State<SearchInvestmentScreen> {
                 searchController.text = search;
                 if (Validator().presenceDetection(searchController.text)) {
                   investments.clear();
-                  await getInvestment();
+                  await _getInvestment();
                 }
               },
               decoration: const InputDecoration(

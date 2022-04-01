@@ -7,7 +7,9 @@ import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
+/// This is the login form which would be displayed on the login screen
 class LoginForm extends StatefulWidget {
+  /// This is the constructor for the login form
   const LoginForm({Key? key}) : super(key: key);
 
   @override
@@ -24,7 +26,7 @@ class _LoginFormState extends State<LoginForm> {
 
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
-  late String verified;
+  late String verified = '';
   late Object completeProfile;
 
   @override
@@ -37,8 +39,8 @@ class _LoginFormState extends State<LoginForm> {
 
   Future<String?> _checkCredentials() async {
     return authProvider.signIn(
-      emailController.text,
-      passwordController.text,
+      email: emailController.text,
+      password: passwordController.text,
     );
   }
 
@@ -105,28 +107,25 @@ class _LoginFormState extends State<LoginForm> {
                     completeProfile = await _isProfileComplete();
                     if (completeProfile == true) {
                       final userType = await _getUserType();
-                      if(userType == "End-User"){
+                      if (userType == "End-User") {
                         Navigator.pushReplacementNamed(
                           context,
                           EndUserDashboardScreen.kID,
                         );
                         EasyLoading.dismiss();
-                      }
-                      else if(userType == "Financial Advisor"){
+                      } else if (userType == "Financial Advisor") {
                         Navigator.pushReplacementNamed(
                           context,
                           FinancialAdvisorDashboardScreen.kID,
                         );
                         EasyLoading.dismiss();
-                      }
-                      else if(userType == "Support Manager"){
+                      } else if (userType == "Support Manager") {
                         Navigator.pushReplacementNamed(
                           context,
                           SupportManagerDashboardScreen.kID,
                         );
                         EasyLoading.dismiss();
-                      }
-                      else{
+                      } else {
                         EasyLoading.showError(userType.toString());
                       }
                       EasyLoading.dismiss();

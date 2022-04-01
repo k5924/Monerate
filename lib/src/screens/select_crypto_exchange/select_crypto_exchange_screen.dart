@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 
+/// This is the screen an end-user would see when selecting their cryptocurrency exchange
 class SelectCryptoExchangeScreen extends StatefulWidget {
+  /// This variable stores the named route of the select cryptocurrency exchange screen
   static const kID = 'select_crypto_exchange_screen';
+
+  /// This is the constructor for this widget
   const SelectCryptoExchangeScreen({Key? key}) : super(key: key);
 
   @override

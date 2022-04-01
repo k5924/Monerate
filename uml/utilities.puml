@@ -1,0 +1,46 @@
+@startuml
+set namespaceSeparator ::
+
+class "monerate::src::utilities::firebase::exceptions_factory.dart::ExceptionsFactory" {
+  +String exception
+  +String? exceptionCaught()
+}
+
+class "monerate::src::utilities::form_validators::amount_validator.dart::AmountValidator" {
+  +String? validateAmount()
+}
+
+"monerate::src::utilities::form_validators::validator.dart::Validator" <|-- "monerate::src::utilities::form_validators::amount_validator.dart::AmountValidator"
+
+class "monerate::src::utilities::form_validators::email_validator.dart::EmailValidator" {
+  +String? validateEmail()
+  +String? confirmEmail()
+}
+
+"monerate::src::utilities::form_validators::validator.dart::Validator" <|-- "monerate::src::utilities::form_validators::email_validator.dart::EmailValidator"
+
+class "monerate::src::utilities::form_validators::license_validator.dart::LicenseValidator" {
+  +String? validateLicense()
+}
+
+"monerate::src::utilities::form_validators::validator.dart::Validator" <|-- "monerate::src::utilities::form_validators::license_validator.dart::LicenseValidator"
+
+class "monerate::src::utilities::form_validators::name_validator.dart::NameValidator" {
+  +String? validateName()
+}
+
+"monerate::src::utilities::form_validators::validator.dart::Validator" <|-- "monerate::src::utilities::form_validators::name_validator.dart::NameValidator"
+
+class "monerate::src::utilities::form_validators::password_validator.dart::PasswordValidator" {
+  +String? validatePassword()
+  +String? confirmPassword()
+}
+
+"monerate::src::utilities::form_validators::validator.dart::Validator" <|-- "monerate::src::utilities::form_validators::password_validator.dart::PasswordValidator"
+
+class "monerate::src::utilities::form_validators::validator.dart::Validator" {
+  +bool presenceDetection()
+}
+
+
+@enduml

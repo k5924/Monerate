@@ -1,6 +1,8 @@
 import 'package:monerate/src/utilities/export.dart';
 
+/// This is the email validator class which extends the validator class
 class EmailValidator extends Validator {
+  /// This method validates an email string for presence and for valid characters
   String? validateEmail(String? value) {
     if (super.presenceDetection(value) == false) {
       return "Please enter your email";
@@ -13,6 +15,7 @@ class EmailValidator extends Validator {
     return null;
   }
 
+  /// This method verifies that 2 email Strings match
   String? confirmEmail(String? value1, String? value2) {
     final String? validationResult1 = validateEmail(value1);
     final String? validationResult2 = validateEmail(value2);

@@ -8,7 +8,9 @@ import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the sign up form which would be displayed on the sign up screen
 class SignUpForm extends StatefulWidget {
+  /// This is the constructor for the signup form
   const SignUpForm({Key? key}) : super(key: key);
 
   @override
@@ -26,7 +28,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
-  late String result;
+  late String result = '';
 
   bool _showPassword = false;
 
@@ -42,13 +44,9 @@ class _SignUpFormState extends State<SignUpForm> {
 
   Future<String?> _checkCredentials() async {
     return authProvider.registerUser(
-      emailController.text,
-      passwordController.text,
+      email: emailController.text,
+      password: passwordController.text,
     );
-  }
-
-  void _closeDialogBox() {
-    return Navigator.pop(context);
   }
 
   Future<String?> _displayConfirmationDialog() {
@@ -58,7 +56,7 @@ class _SignUpFormState extends State<SignUpForm> {
       content: kTermsAndConditions,
       actions: [
         OutlinedButton(
-          onPressed: () => _closeDialogBox(),
+          onPressed: () => closeDialogBox(context),
           child: const Text(
             "Cancel",
           ),
@@ -76,7 +74,7 @@ class _SignUpFormState extends State<SignUpForm> {
               );
               EasyLoading.showSuccess(result);
             } else {
-              _closeDialogBox();
+              closeDialogBox(context);
               EasyLoading.showError(result);
             }
           },

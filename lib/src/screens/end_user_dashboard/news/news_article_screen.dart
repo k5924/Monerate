@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+/// This is the screen which would be rendered after an end-user clicks on a news article to view
 class NewsArticleScreen extends StatefulWidget {
+  /// This variable stores the url for the article
   final String url;
+
+  /// This is the constructor for this screen which assigns the url for the article to the url variable
   const NewsArticleScreen({Key? key, required this.url}) : super(key: key);
 
   @override

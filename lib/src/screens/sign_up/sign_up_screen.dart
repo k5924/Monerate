@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the signup screen for the application
 class SignUpScreen extends StatefulWidget {
+  /// This variable stores the named route for the signup screen
   static const String kID = 'sign_up_screen';
+
+  /// This is the constructor for the signup screen
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override

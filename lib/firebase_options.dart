@@ -15,6 +15,7 @@ import 'package:flutter/foundation.dart'
 /// );
 /// ```
 class DefaultFirebaseOptions {
+  /// Gets current device platform when interacting with Firebase
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       throw UnsupportedError(
@@ -40,6 +41,7 @@ class DefaultFirebaseOptions {
     );
   }
 
+  /// Specifies configuration options for Firebase when using an Android device
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCT1chrS5BHnn1BUjwE5FdT9bWVz6F79LI',
     appId: '1:1095626926654:android:797b5d0f38539461ba3f6f',
@@ -48,6 +50,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'monerate.appspot.com',
   );
 
+  /// Specifies configuration options for Firebase when using an IoS device
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCOHlbk44PUKKwmiA_7s_U4Smp1Myzisfk',
     appId: '1:1095626926654:ios:b798afc0c100e8afba3f6f',

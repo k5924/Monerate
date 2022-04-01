@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:monerate/src/screens/complete_profile/export.dart';
+import 'package:monerate/src/screens/export.dart';
 
+/// This is the screen which would be displayed when a user first logs into the application to choose their user type
 class CompleteProfileScreen extends StatefulWidget {
+  /// This variable stores the named route for this screen
   static const String kID = 'complete_profile_screen';
+
+  /// This is the constructor for this screen
   const CompleteProfileScreen({Key? key}) : super(key: key);
 
   @override

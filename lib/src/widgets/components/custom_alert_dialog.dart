@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// This is a custom widget to display a dialog box with custom titles, messages and dialog box actions
 Future<String?> customAlertDialog({
   required BuildContext context,
   required String title,

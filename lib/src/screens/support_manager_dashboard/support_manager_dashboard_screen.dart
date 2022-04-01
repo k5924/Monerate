@@ -3,8 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 
+/// This is where all the tabs will populate for a support manager after logging into the application
 class SupportManagerDashboardScreen extends StatefulWidget {
+  /// This is the variable which stores the named route for this page
   static const String kID = 'support_manager_dashboard_screen';
+
+  /// This is the constructor for this widget
   const SupportManagerDashboardScreen({Key? key}) : super(key: key);
 
   @override
@@ -41,23 +45,9 @@ class _SupportManagerDashboardScreenState
             onPageChanged: (index) {
               setState(() => _currentIndex = index);
             },
-            children: [
-              Center(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(25),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          "Support Manager HomePage",
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const SettingsWithoutHelpOption(),
+            children: const [
+              SupportManagerHomepageTab(),
+              SettingsWithoutHelpOption(),
             ],
           ),
         ),
