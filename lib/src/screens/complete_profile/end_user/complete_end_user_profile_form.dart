@@ -32,9 +32,9 @@ class _CompleteEndUserProfileFormState
 
   Future<String?> _updateProfile() {
     return authProvider.updateUserProfile(
-      firstNameController.text,
-      lastNameController.text,
-      'End-User',
+      firstName: firstNameController.text,
+      lastName: lastNameController.text,
+      userType: 'End-User',
     );
   }
 

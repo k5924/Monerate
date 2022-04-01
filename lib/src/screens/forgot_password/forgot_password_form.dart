@@ -36,7 +36,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
 
   Future<String?> _sendPasswordResetEmail() async {
     return authProvider.forgotPassword(
-      emailController.text,
+      email: emailController.text,
     );
   }
 

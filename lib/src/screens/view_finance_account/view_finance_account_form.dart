@@ -30,7 +30,9 @@ class _ViewFinanceAccountFormState extends State<ViewFinanceAccountForm> {
   Future<bool> _updateAccount() async {
     EasyLoading.show(status: 'loading...');
     if (widget.balance.type == "Stock") {
-      final result = await yahooFinanceProvider.getPrice(widget.balance.symbol);
+      final result = await yahooFinanceProvider.getPrice(
+        tickerSymbol: widget.balance.symbol,
+      );
       if (result.toString() == "error") {
         EasyLoading.showError(
           "An error was encountered, investment information has not been fetched",

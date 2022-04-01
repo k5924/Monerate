@@ -33,10 +33,10 @@ class _CompleteFinancialAdvisorProfileFormState
 
   Future<String?> _updateProfile() {
     return authProvider.updateFinancialAdvisorProfile(
-      firstNameController.text,
-      lastNameController.text,
-      'Financial Advisor',
-      licenseIDController.text,
+      firstName: firstNameController.text,
+      lastName: lastNameController.text,
+      userType: 'Financial Advisor',
+      licenseID: licenseIDController.text,
     );
   }
 

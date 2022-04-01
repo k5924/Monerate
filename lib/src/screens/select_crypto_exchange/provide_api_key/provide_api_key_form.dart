@@ -31,8 +31,8 @@ class _ProvideAPIKeyFormState extends State<ProvideAPIKeyForm> {
     EasyLoading.show(status: 'loading...');
     if (widget.exchangeName == 'binance') {
       final result = await binanceExchangeProvider.writeKeys(
-        secretKeyController.text,
-        apiKeyController.text,
+        secret: secretKeyController.text,
+        apiKey: apiKeyController.text,
       );
       if (result.runtimeType == String) {
         if (result == "error") {

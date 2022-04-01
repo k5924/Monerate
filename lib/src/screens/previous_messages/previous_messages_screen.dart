@@ -24,12 +24,6 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
       DatabaseProvider(db: FirebaseFirestore.instance);
   late String userID;
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
-  late Stream<QuerySnapshot<Object?>> chatStream = databaseProvider
-      .chatCollection
-      .where('chatType', isEqualTo: widget.chatType)
-      .where('userID', isEqualTo: userID)
-      .orderBy('latestMessage', descending: true)
-      .snapshots();
 
   @override
   void initState() {
@@ -51,7 +45,9 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
   Future<void> makeNewChat() async {
     try {
       EasyLoading.show(status: 'loading...');
-      final String result = await authProvider.makeNewChat(widget.chatType);
+      final String result = await authProvider.makeNewChat(
+        chatType: widget.chatType,
+      );
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -69,7 +65,7 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
   Future<void> getChat(ChatModel chatModel) async {
     try {
       EasyLoading.show(status: 'loading...');
-      final result = await authProvider.getChat(chatModel);
+      final result = await authProvider.getChat(chatModel: chatModel);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -98,7 +94,10 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
       ),
       children: [
         StreamBuilder<QuerySnapshot>(
-          stream: chatStream,
+          stream: databaseProvider.getPreviousChats(
+            chatType: widget.chatType,
+            userID: userID,
+          ),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               if (snapshot.connectionState != ConnectionState.done) {

@@ -42,8 +42,8 @@ class _SignUpFormState extends State<SignUpForm> {
 
   Future<String?> _checkCredentials() async {
     return authProvider.registerUser(
-      emailController.text,
-      passwordController.text,
+      email: emailController.text,
+      password: passwordController.text,
     );
   }
 

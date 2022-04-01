@@ -58,7 +58,9 @@ class YahooFinanceProvider {
     }
   }
 
-  Future<Object> getTickerSymbol(String searchParameter) async {
+  Future<Object> getTickerSymbol({
+    required String searchParameter,
+  }) async {
     await getAPIKey();
     final ExternalAPIProvider externalAPIProvider = ExternalAPIProvider(
       url: url,
@@ -93,7 +95,9 @@ class YahooFinanceProvider {
     }
   }
 
-  Future<Object> getPrice(String tickerSymbol) async {
+  Future<Object> getPrice({
+    required String tickerSymbol,
+  }) async {
     await getAPIKey();
     final ExternalAPIProvider externalAPIProvider = ExternalAPIProvider(
       url: url,

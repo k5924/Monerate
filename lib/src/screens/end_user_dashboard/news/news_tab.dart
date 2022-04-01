@@ -13,7 +13,6 @@ class NewsTab extends StatefulWidget {
 class _NewsTabState extends State<NewsTab> {
   late List<ArticleModel> articles = <ArticleModel>[];
   final YahooFinanceProvider yahooFinanceProvider = YahooFinanceProvider();
-  late Future<Object> articleData = yahooFinanceProvider.getNewsArticles();
 
   @override
   void initState() {
@@ -33,7 +32,7 @@ class _NewsTabState extends State<NewsTab> {
       child: Center(
         child: SingleChildScrollView(
           child: FutureBuilder(
-            future: articleData,
+            future: yahooFinanceProvider.getNewsArticles(),
             builder: (context, snapshot) {
               if (snapshot.hasData &&
                   snapshot.connectionState == ConnectionState.done) {

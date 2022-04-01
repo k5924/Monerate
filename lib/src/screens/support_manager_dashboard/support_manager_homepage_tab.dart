@@ -23,11 +23,6 @@ class _SupportManagerHomepageTabState extends State<SupportManagerHomepageTab> {
       DatabaseProvider(db: FirebaseFirestore.instance);
   late String userID;
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
-  late Stream<QuerySnapshot<Object?>> chatStream = databaseProvider
-      .chatCollection
-      .where('chatType', isEqualTo: 'support')
-      .orderBy('latestMessage', descending: true)
-      .snapshots();
 
   @override
   void initState() {
@@ -49,7 +44,7 @@ class _SupportManagerHomepageTabState extends State<SupportManagerHomepageTab> {
   Future<void> getChat(ChatModel chatModel) async {
     try {
       EasyLoading.show(status: 'loading...');
-      final result = await authProvider.getChat(chatModel);
+      final result = await authProvider.getChat(chatModel: chatModel);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -69,7 +64,7 @@ class _SupportManagerHomepageTabState extends State<SupportManagerHomepageTab> {
     return CenteredScrollView(
       children: [
         StreamBuilder<QuerySnapshot>(
-          stream: chatStream,
+          stream: databaseProvider.getChatsByType(chatType: 'support'),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               if (snapshot.connectionState != ConnectionState.done) {

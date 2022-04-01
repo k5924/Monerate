@@ -39,8 +39,8 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
 
   Future<String?> _updatePassword() async {
     return authProvider.changePassword(
-      oldPasswordController.text,
-      confirmNewPasswordController.text,
+      oldPassword: oldPasswordController.text,
+      newPassword: confirmNewPasswordController.text,
     );
   }
 

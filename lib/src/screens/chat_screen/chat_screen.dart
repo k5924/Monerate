@@ -25,12 +25,6 @@ class _ChatScreenState extends State<ChatScreen> {
   String messageText = '';
   final DatabaseProvider databaseProvider =
       DatabaseProvider(db: FirebaseFirestore.instance);
-  late Stream<QuerySnapshot<Object?>> messageStream = databaseProvider
-      .chatCollection
-      .doc(widget.documentReferenceID)
-      .collection('messages')
-      .orderBy('createdAt', descending: true)
-      .snapshots();
 
   @override
   void dispose() {
@@ -43,8 +37,8 @@ class _ChatScreenState extends State<ChatScreen> {
     FocusScope.of(context).unfocus();
     EasyLoading.show(status: 'loading...');
     final result = await authProvider.sendNewMessage(
-      widget.documentReferenceID,
-      messageText,
+      documentReferenceID: widget.documentReferenceID,
+      message: messageText,
     );
     EasyLoading.dismiss();
     if (result != null) {
@@ -62,7 +56,9 @@ class _ChatScreenState extends State<ChatScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             StreamBuilder<QuerySnapshot>(
-              stream: messageStream,
+              stream: databaseProvider.getMessages(
+                documentReferenceID: widget.documentReferenceID,
+              ),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   if (snapshot.connectionState != ConnectionState.done) {
@@ -72,7 +68,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   } else {
                     return const Center(
                       child: Text(
-                          'An error was encountered, messages were not fetched',),
+                        'An error was encountered, messages were not fetched',
+                      ),
                     );
                   }
                 } else {
@@ -133,11 +130,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                         : CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    messages[index].senderID !=
-                                              widget.userID
-                                          ? '${messages[index].firstName.capitalize()} ${messages[index].lastName.capitalize()}\n${messages[index].message}\n${messages[index].createdAt.toLocal().toString()}'
-                                          :
-                                    '${messages[index].message}\n${messages[index].createdAt.toLocal().toString()}',
+                                    messages[index].senderID != widget.userID
+                                        ? '${messages[index].firstName.capitalize()} ${messages[index].lastName.capitalize()}\n${messages[index].message}\n${messages[index].createdAt.toLocal().toString()}'
+                                        : '${messages[index].message}\n${messages[index].createdAt.toLocal().toString()}',
                                     style: TextStyle(
                                       color: messages[index].senderID ==
                                               widget.userID

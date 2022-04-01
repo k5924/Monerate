@@ -16,7 +16,9 @@ class AuthProvider {
 
   AuthProvider({required this.auth});
 
-  Future<String> verifyEmail(User? user) async {
+  Future<String> verifyEmail({
+    required User? user,
+  }) async {
     try {
       if (user != null && !user.emailVerified) {
         await user.sendEmailVerification();
@@ -29,7 +31,10 @@ class AuthProvider {
     return 'Email Verified';
   }
 
-  Future<String?> registerUser(String email, String password) async {
+  Future<String?> registerUser({
+    required String email,
+    required String password,
+  }) async {
     try {
       userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
@@ -37,28 +42,33 @@ class AuthProvider {
       );
       user = auth.currentUser;
       await databaseProvider.createNewUser(uid: user!.uid);
-      return verifyEmail(user);
+      return verifyEmail(user: user);
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
     }
   }
 
-  Future<String?> signIn(String email, String password) async {
+  Future<String?> signIn({
+    required String email,
+    required String password,
+  }) async {
     try {
       userCredential = await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       user = auth.currentUser;
-      return verifyEmail(user);
+      return verifyEmail(user: user);
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
     }
   }
 
-  Future<String?> forgotPassword(String email) async {
+  Future<String?> forgotPassword({
+    required String email,
+  }) async {
     try {
       await auth.sendPasswordResetEmail(
         email: email,
@@ -86,11 +96,11 @@ class AuthProvider {
     }
   }
 
-  Future<String?> updateUserProfile(
-    String firstName,
-    String lastName,
-    String userType,
-  ) async {
+  Future<String?> updateUserProfile({
+    required String firstName,
+    required String lastName,
+    required String userType,
+  }) async {
     try {
       user = auth.currentUser;
       userModel = UserModel(
@@ -109,12 +119,12 @@ class AuthProvider {
     return null;
   }
 
-  Future<String?> updateFinancialAdvisorProfile(
-    String firstName,
-    String lastName,
-    String userType,
-    String licenseID,
-  ) async {
+  Future<String?> updateFinancialAdvisorProfile({
+    required String firstName,
+    required String lastName,
+    required String userType,
+    required String licenseID,
+  }) async {
     try {
       user = auth.currentUser;
       userModel = FinancialAdvisorModel(
@@ -155,7 +165,10 @@ class AuthProvider {
     }
   }
 
-  Future<String?> changeEmail(String newEmail, String password) async {
+  Future<String?> changeEmail({
+    required String newEmail,
+    required String password,
+  }) async {
     try {
       user = auth.currentUser;
       final currentEmail = user!.email;
@@ -175,7 +188,10 @@ class AuthProvider {
     return null;
   }
 
-  Future<String?> changePassword(String oldPassword, String newPassword) async {
+  Future<String?> changePassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
     try {
       user = auth.currentUser;
       final currentEmail = user!.email;
@@ -300,13 +316,14 @@ class AuthProvider {
   Future<String?> deleteUserAccount() async {
     try {
       final userID = await getUID();
-      final balanceIDs = await databaseProvider.getBalanceIDsForOneUser(userID);
+      final balanceIDs =
+          await databaseProvider.getBalanceIDsForOneUser(userID: userID);
       for (final String balanceID in balanceIDs) {
         await databaseProvider.removeBalance(
           documentID: balanceID,
         );
       }
-      await databaseProvider.deleteUser(userID);
+      await databaseProvider.deleteUser(userID: userID);
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
@@ -314,7 +331,9 @@ class AuthProvider {
     return null;
   }
 
-  Future<String> makeNewChat(String chatType) async {
+  Future<String> makeNewChat({
+    required String chatType,
+  }) async {
     try {
       final userID = await getUID();
       final Map<String, dynamic>? userDetails =
@@ -326,16 +345,16 @@ class AuthProvider {
         chatType: chatType,
         latestMessage: DateTime.now().toUtc(),
       );
-      return await databaseProvider.makeNewChat(chatModel);
+      return await databaseProvider.makeNewChat(chatModel: chatModel);
     } on FirebaseAuthException {
       rethrow;
     }
   }
 
-  Future<String?> sendNewMessage(
-    String documentReferenceID,
-    String message,
-  ) async {
+  Future<String?> sendNewMessage({
+    required String documentReferenceID,
+    required String message,
+  }) async {
     try {
       final userID = await getUID();
       final Map<String, dynamic>? userDetails =
@@ -347,7 +366,10 @@ class AuthProvider {
         message: message,
         createdAt: DateTime.now().toUtc(),
       );
-      await databaseProvider.sendMessage(documentReferenceID, messageModel);
+      await databaseProvider.sendMessage(
+        documentReferenceID: documentReferenceID,
+        messageModel: messageModel,
+      );
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
@@ -355,10 +377,12 @@ class AuthProvider {
     return null;
   }
 
-  Future<String> getChat(ChatModel chatModel) async {
+  Future<String> getChat({
+    required ChatModel chatModel,
+  }) async {
     try {
       final String documentReferenceID =
-          await databaseProvider.getChat(chatModel);
+          await databaseProvider.getChat(chatModel: chatModel);
       return documentReferenceID;
     } on FirebaseAuthException {
       rethrow;

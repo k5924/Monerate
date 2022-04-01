@@ -37,8 +37,8 @@ class _LoginFormState extends State<LoginForm> {
 
   Future<String?> _checkCredentials() async {
     return authProvider.signIn(
-      emailController.text,
-      passwordController.text,
+      email: emailController.text,
+      password: passwordController.text,
     );
   }
 

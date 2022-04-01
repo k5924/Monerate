@@ -35,8 +35,9 @@ class _ProvideInvestmentDetailsFormState
 
   Future<bool> _addInvestment() async {
     EasyLoading.show(status: 'loading...');
-    final result =
-        await yahooFinanceProvider.getPrice(widget.investment.symbol);
+    final result = await yahooFinanceProvider.getPrice(
+      tickerSymbol: widget.investment.symbol,
+    );
     if (result.toString() == "error") {
       EasyLoading.showError(
         "An error was encountered, investment information has not been fetched",

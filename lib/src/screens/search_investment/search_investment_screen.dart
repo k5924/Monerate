@@ -26,8 +26,9 @@ class _SearchInvestmentScreenState extends State<SearchInvestmentScreen> {
 
   Future<void> getInvestment() async {
     EasyLoading.show(status: 'loading...');
-    final result =
-        await yahooFinanceProvider.getTickerSymbol(searchController.text);
+    final result = await yahooFinanceProvider.getTickerSymbol(
+      searchParameter: searchController.text,
+    );
     if (result.runtimeType == String) {
       EasyLoading.showError(
         "An error was encountered, investments have not been fetched",

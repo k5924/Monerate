@@ -32,9 +32,9 @@ class CompleteSupportManagerProfileFormState
 
   Future<String?> _updateProfile() {
     return authProvider.updateUserProfile(
-      firstNameController.text,
-      lastNameController.text,
-      'Support Manager',
+      firstName: firstNameController.text,
+      lastName: lastNameController.text,
+      userType: 'Support Manager',
     );
   }
 

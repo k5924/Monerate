@@ -23,11 +23,6 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
   final DatabaseProvider databaseProvider =
       DatabaseProvider(db: FirebaseFirestore.instance);
-  late Stream<QuerySnapshot<Object?>> balanceStream = databaseProvider
-      .balanceCollection
-      .where('userID', isEqualTo: widget.uid)
-      .snapshots();
-
   final OpenBankingProvider openBankingProvider = OpenBankingProvider();
   late LinkTokenConfiguration linkTokenConfiguration;
   final BinanceExchangeProvider binanceExchangeProvider =
@@ -44,7 +39,7 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
   }
 
   Future<void> getBalances(String accessToken) async {
-    final result = await openBankingProvider.getAccessToken(accessToken);
+    final result = await openBankingProvider.getAccessToken(publicToken: accessToken);
     if (result.runtimeType == String) {
       if (result != "error") {
         print(result.toString());
@@ -65,7 +60,7 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
     LinkSuccessMetadata metadata,
   ) async {
     // iterate through accounts and store name and subtype
-    final result = await openBankingProvider.getAccessToken(publicToken);
+    final result = await openBankingProvider.getAccessToken(publicToken: publicToken);
     if (result.runtimeType == String) {
       if (result != "error") {
         await getBalances(result.toString());
@@ -142,7 +137,7 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
         child: CenteredScrollView(
           children: [
             StreamBuilder<QuerySnapshot>(
-              stream: balanceStream,
+              stream: databaseProvider.getBalances(userID: widget.uid),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   if (snapshot.connectionState != ConnectionState.done) {

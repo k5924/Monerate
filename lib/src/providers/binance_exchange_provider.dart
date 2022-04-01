@@ -11,7 +11,10 @@ class BinanceExchangeProvider {
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
   final BoxProvider boxProvider = BoxProvider();
 
-  String _hmacSha256(String query, String secret) {
+  String _hmacSha256({
+    required String query,
+    required String secret,
+  }) {
     final key = utf8.encode(secret);
     final msg = utf8.encode(query);
     final hmac = Hmac(sha256, key);
@@ -20,8 +23,14 @@ class BinanceExchangeProvider {
     return signature;
   }
 
-  Future writeKeys(String secret, String apiKey) async {
-    final result = await getBalances(secret, apiKey);
+  Future writeKeys({
+    required String secret,
+    required String apiKey,
+  }) async {
+    final result = await getBalances(
+      secret: secret,
+      apiKey: apiKey,
+    );
     if (result != "error") {
       final box = await boxProvider.getKeys();
       final keys = LocalKeyModel(
@@ -43,9 +52,15 @@ class BinanceExchangeProvider {
     return keys;
   }
 
-  Future getBalances(String secret, String apiKey) async {
+  Future getBalances({
+    required String secret,
+    required String apiKey,
+  }) async {
     final String timestamp = "${DateTime.now().millisecondsSinceEpoch}";
-    final String signature = _hmacSha256('timestamp=$timestamp', secret);
+    final String signature = _hmacSha256(
+      query: 'timestamp=$timestamp',
+      secret: secret,
+    );
     final ExternalAPIProvider externalAPIProvider = ExternalAPIProvider(
       url: url,
       endPoint: '/api/v3/account',

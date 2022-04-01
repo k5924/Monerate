@@ -117,7 +117,9 @@ class DatabaseProvider {
     return balanceCollection;
   }
 
-  Future<List<String>> getBalanceIDsForOneUser(String userID) async {
+  Future<List<String>> getBalanceIDsForOneUser({
+    required String userID,
+  }) async {
     final QuerySnapshot querySnapshot =
         await balanceCollection.where('userID', isEqualTo: userID).get();
     final documentSnapshots = querySnapshot.docs;
@@ -128,20 +130,24 @@ class DatabaseProvider {
     return documentIDs;
   }
 
-  Future<void> deleteUser(String userID) async {
+  Future<void> deleteUser({
+    required String userID,
+  }) async {
     await usersCollection.doc(userID).delete();
   }
 
-  Future<String> makeNewChat(ChatModel chatModel) async {
+  Future<String> makeNewChat({
+    required ChatModel chatModel,
+  }) async {
     final DocumentReference documentReference =
         await chatCollection.add(chatModel.toMap());
     return documentReference.id;
   }
 
-  Future<void> sendMessage(
-    String documentReferenceID,
-    MessageModel messageModel,
-  ) async {
+  Future<void> sendMessage({
+    required String documentReferenceID,
+    required MessageModel messageModel,
+  }) async {
     await chatCollection
         .doc(documentReferenceID)
         .collection('messages')
@@ -153,7 +159,9 @@ class DatabaseProvider {
     );
   }
 
-  Future<String> getChat(ChatModel chatModel) async {
+  Future<String> getChat({
+    required ChatModel chatModel,
+  }) async {
     final QuerySnapshot querySnapshot = await chatCollection
         .where('userID', isEqualTo: chatModel.userID)
         .where('chatType', isEqualTo: chatModel.chatType)
@@ -164,5 +172,41 @@ class DatabaseProvider {
     final QueryDocumentSnapshot documentSnapshot = querySnapshot.docs[0];
     final DocumentReference documentReference = documentSnapshot.reference;
     return documentReference.id;
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getMessages({
+    required String documentReferenceID,
+  }) {
+    return chatCollection
+        .doc(documentReferenceID)
+        .collection('messages')
+        .orderBy('createdAt', descending: true)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot<Object?>> getBalances({
+    required String userID,
+  }) {
+    return balanceCollection.where('userID', isEqualTo: userID).snapshots();
+  }
+
+  Stream<QuerySnapshot<Object?>> getChatsByType({
+    required String chatType,
+  }) {
+    return chatCollection
+        .where('chatType', isEqualTo: chatType)
+        .orderBy('latestMessage', descending: true)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot<Object?>> getPreviousChats({
+    required String chatType,
+    required String userID,
+  }) {
+    return chatCollection
+        .where('chatType', isEqualTo: chatType)
+        .where('userID', isEqualTo: userID)
+        .orderBy('latestMessage', descending: true)
+        .snapshots();
   }
 }

@@ -38,8 +38,8 @@ class _ChangeEmailFormState extends State<ChangeEmailForm> {
 
   Future<String?> _updateEmail() async {
     return authProvider.changeEmail(
-      confirmEmailController.text,
-      passwordController.text,
+      newEmail: confirmEmailController.text,
+      password: passwordController.text,
     );
   }
 

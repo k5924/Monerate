@@ -24,11 +24,6 @@ class _FinancialAdvisorHomepageTabState
       DatabaseProvider(db: FirebaseFirestore.instance);
   late String userID;
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
-  late Stream<QuerySnapshot<Object?>> chatStream = databaseProvider
-      .chatCollection
-      .where('chatType', isEqualTo: 'finance')
-      .orderBy('latestMessage', descending: true)
-      .snapshots();
 
   @override
   void initState() {
@@ -50,7 +45,7 @@ class _FinancialAdvisorHomepageTabState
   Future<void> getChat(ChatModel chatModel) async {
     try {
       EasyLoading.show(status: 'loading...');
-      final result = await authProvider.getChat(chatModel);
+      final result = await authProvider.getChat(chatModel: chatModel);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -70,7 +65,7 @@ class _FinancialAdvisorHomepageTabState
     return CenteredScrollView(
       children: [
         StreamBuilder<QuerySnapshot>(
-          stream: chatStream,
+          stream: databaseProvider.getChatsByType(chatType: 'finance'),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               if (snapshot.connectionState != ConnectionState.done) {

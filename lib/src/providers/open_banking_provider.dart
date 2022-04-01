@@ -36,7 +36,9 @@ class OpenBankingProvider {
     }
   }
 
-  Future getAccessToken(String publicToken) async {
+  Future getAccessToken({
+    required String publicToken,
+  }) async {
     await getAPIKeys();
     final ExternalAPIProvider externalAPIProvider = ExternalAPIProvider(
       url: url,
@@ -56,7 +58,9 @@ class OpenBankingProvider {
     }
   }
 
-  Future getAccounts(String accessToken) async {
+  Future getAccounts({
+    required String accessToken,
+  }) async {
     await getAPIKeys();
     final ExternalAPIProvider externalAPIProvider = ExternalAPIProvider(
       url: url,
