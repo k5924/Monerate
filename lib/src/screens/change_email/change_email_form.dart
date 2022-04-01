@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -32,9 +34,7 @@ class _ChangeEmailFormState extends State<ChangeEmailForm> {
     super.dispose();
   }
 
-  void _closeDialogBox() {
-    return Navigator.pop(context);
-  }
+
 
   Future<String?> _updateEmail() async {
     return authProvider.changeEmail(
@@ -51,7 +51,7 @@ class _ChangeEmailFormState extends State<ChangeEmailForm> {
           "By continuing with this action, you will be signed out of the current session. A verification email will be sent to the provided email which must be verified before logging in with your new credentials. Do you wish to continue?",
       actions: [
         OutlinedButton(
-          onPressed: () => _closeDialogBox(),
+          onPressed: () => closeDialogBox(context),
           child: const Text(
             "Cancel",
           ),
@@ -61,7 +61,7 @@ class _ChangeEmailFormState extends State<ChangeEmailForm> {
             EasyLoading.show(status: 'loading...');
             final result = await _updateEmail();
             if (result != null) {
-              _closeDialogBox();
+              closeDialogBox(context);
               EasyLoading.showError(result);
             } else {
               // ignore: use_build_context_synchronously

@@ -20,10 +20,6 @@ class ViewProfileScreen extends StatefulWidget {
 class _ViewProfileScreenState extends State<ViewProfileScreen> {
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
-  void _closeDialogBox() {
-    return Navigator.pop(context);
-  }
-
   Future<String?> _displayConfirmationDialog() {
     return customAlertDialog(
       context: context,
@@ -32,7 +28,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
           "By continuing, you agree to delete your account and your account information. Although your account will be deleted, some metadata related to your account will remain. Do you wish to continue?",
       actions: [
         OutlinedButton(
-          onPressed: () => _closeDialogBox(),
+          onPressed: () => closeDialogBox(context),
           child: const Text(
             "Cancel",
           ),
@@ -48,7 +44,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
               );
               EasyLoading.showSuccess('Account Deleted');
             } else {
-              _closeDialogBox();
+              closeDialogBox(context);
               EasyLoading.showError(result);
             }
           },

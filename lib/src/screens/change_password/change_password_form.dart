@@ -33,10 +33,6 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
     super.dispose();
   }
 
-  void _closeDialogBox() {
-    return Navigator.pop(context);
-  }
-
   Future<String?> _updatePassword() async {
     return authProvider.changePassword(
       oldPassword: oldPasswordController.text,
@@ -52,7 +48,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
           "By continuing with this action, you will be signed out of the current session and will be asked to login with the new credentials you have provided. Do you wish to continue?",
       actions: [
         OutlinedButton(
-          onPressed: () => _closeDialogBox(),
+          onPressed: () => closeDialogBox(context),
           child: const Text(
             "Cancel",
           ),
@@ -62,7 +58,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
             EasyLoading.show(status: 'loading...');
             final result = await _updatePassword();
             if (result != null) {
-              _closeDialogBox();
+              closeDialogBox(context);
               EasyLoading.showError(result);
             } else {
               Navigator.pushReplacementNamed(

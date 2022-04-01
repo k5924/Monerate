@@ -6,6 +6,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
+import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
 class ViewFinanceAccountScreen extends StatefulWidget {
@@ -49,10 +50,6 @@ class _ViewFinanceAccountScreenState extends State<ViewFinanceAccountScreen> {
     }
   }
 
-  void _closeDialogBox() {
-    return Navigator.pop(context);
-  }
-
   Future<String?> _displayConfirmationDialog(String content) {
     return customAlertDialog(
       context: context,
@@ -60,7 +57,7 @@ class _ViewFinanceAccountScreenState extends State<ViewFinanceAccountScreen> {
       content: content,
       actions: [
         OutlinedButton(
-          onPressed: () => _closeDialogBox(),
+          onPressed: () => closeDialogBox(context),
           child: const Text(
             "Cancel",
           ),
@@ -74,7 +71,7 @@ class _ViewFinanceAccountScreenState extends State<ViewFinanceAccountScreen> {
                 balanceModel: widget.balance,
               );
               if (result != null) {
-                _closeDialogBox();
+                closeDialogBox(context);
                 EasyLoading.showError(result);
               } else {
                 Navigator.popAndPushNamed(
@@ -88,7 +85,7 @@ class _ViewFinanceAccountScreenState extends State<ViewFinanceAccountScreen> {
                 balanceModel: widget.balance,
               );
               if (result != null) {
-                _closeDialogBox();
+                closeDialogBox(context);
                 EasyLoading.showError(result);
               } else {
                 Navigator.popAndPushNamed(

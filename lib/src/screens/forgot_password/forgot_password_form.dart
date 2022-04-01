@@ -30,10 +30,6 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
     super.dispose();
   }
 
-  void _closeDialogBox() {
-    return Navigator.pop(context);
-  }
-
   Future<String?> _sendPasswordResetEmail() async {
     return authProvider.forgotPassword(
       email: emailController.text,
@@ -48,7 +44,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
           "By continuing with this action, a password reset email will be sent to the email address provided. Do you wish to continue?",
       actions: [
         OutlinedButton(
-          onPressed: () => _closeDialogBox(),
+          onPressed: () => closeDialogBox(context),
           child: const Text(
             "Cancel",
           ),
@@ -64,7 +60,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
               );
               EasyLoading.showSuccess(result);
             } else {
-              _closeDialogBox();
+              closeDialogBox(context);
               EasyLoading.showError(result);
             }
           },
