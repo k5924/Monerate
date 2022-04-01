@@ -20,6 +20,22 @@ class "monerate::src::widgets::layouts::centered_scroll_view.dart::_CenteredScro
 
 "flutter::src::widgets::framework.dart::State" <|-- "monerate::src::widgets::layouts::centered_scroll_view.dart::_CenteredScrollViewState"
 
+class "monerate::src::widgets::layouts::centered_scroll_view_with_appbar.dart::CenteredScrollViewWithAppBar" {
+  +List<Widget> children
+  +String appBarTitle
+  +FloatingActionButton? floatingActionButton
+  +State<CenteredScrollViewWithAppBar> createState()
+}
+
+"monerate::src::widgets::layouts::centered_scroll_view_with_appbar.dart::CenteredScrollViewWithAppBar" o-- "flutter::src::material::floating_action_button.dart::FloatingActionButton"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "monerate::src::widgets::layouts::centered_scroll_view_with_appbar.dart::CenteredScrollViewWithAppBar"
+
+class "monerate::src::widgets::layouts::centered_scroll_view_with_appbar.dart::_CenteredScrollViewWithAppBarState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "monerate::src::widgets::layouts::centered_scroll_view_with_appbar.dart::_CenteredScrollViewWithAppBarState"
+
 class "monerate::src::widgets::layouts::screen_header.dart::ScreenHeader" {
   +String screenName
   +_ScreenHeaderState createState()

@@ -18,6 +18,15 @@ class "monerate::src::models::balance_model.dart::BalanceModel" {
   +Map<String, dynamic> toMap()
 }
 
+class "monerate::src::models::chat_model.dart::ChatModel" {
+  +String userID
+  +String firstName
+  +String lastName
+  +String chatType
+  +DateTime latestMessage
+  +Map<String, dynamic> toMap()
+}
+
 class "monerate::src::models::financial_advisor_model.dart::FinancialAdvisorModel" {
   +String? licenseID
   +Map<String, dynamic> toMap()
@@ -41,6 +50,15 @@ class "monerate::src::models::local_key_model.dart::LocalKeyModelAdapter" {
 }
 
 "hive::hive.dart::TypeAdapter" <|-- "monerate::src::models::local_key_model.dart::LocalKeyModelAdapter"
+
+class "monerate::src::models::message_model.dart::MessageModel" {
+  +String senderID
+  +String firstName
+  +String lastName
+  +String message
+  +DateTime createdAt
+  +Map<String, dynamic> toMap()
+}
 
 class "monerate::src::models::ticker_model.dart::TickerModel" {
   +String longName

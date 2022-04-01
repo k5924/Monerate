@@ -8,7 +8,7 @@ class "monerate::src::providers::auth_provider.dart::AuthProvider" {
   +User? user
   +ExceptionsFactory exceptionsFactory
   +UserModel userModel
-  +Future<String> verifyEmail()
+  -Future<String> _verifyEmail()
   +Future<String?> registerUser()
   +Future<String?> signIn()
   +Future<String?> forgotPassword()
@@ -21,7 +21,14 @@ class "monerate::src::providers::auth_provider.dart::AuthProvider" {
   +Future<String?> changePassword()
   +Future<String?> getUserType()
   +Future<String?> addFinanceAccount()
+  +Future<String?> updateFinanceAccount()
+  +Future<String?> removeFinanceAccount()
+  +Future<String?> removeMultipleFinanceAccounts()
   +Future<String> getUID()
+  +Future<String?> deleteUserAccount()
+  +Future<String> makeNewChat()
+  +Future<String?> sendNewMessage()
+  +Future<String> getChat()
 }
 
 "monerate::src::providers::auth_provider.dart::AuthProvider" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
@@ -34,15 +41,27 @@ class "monerate::src::providers::auth_provider.dart::AuthProvider" {
 class "monerate::src::providers::binance_exchange_provider.dart::BinanceExchangeProvider" {
   +String url
   +AuthProvider authProvider
+  +BoxProvider boxProvider
   -String _hmacSha256()
+  +Future<dynamic> writeKeys()
+  +Future<LocalKeyModel?>? getKeys()
   +Future<dynamic> getBalances()
 }
 
 "monerate::src::providers::binance_exchange_provider.dart::BinanceExchangeProvider" o-- "monerate::src::providers::auth_provider.dart::AuthProvider"
+"monerate::src::providers::binance_exchange_provider.dart::BinanceExchangeProvider" o-- "monerate::src::providers::box_provider.dart::BoxProvider"
 
 class "monerate::src::providers::box_provider.dart::BoxProvider" {
-  {static} +Box<LocalKeyModel> getKeys()
+  +SecureStorageProvider secureStorageProvider
+  +Uint8List encryptionKey
+  +Box<LocalKeyModel> box
+  -Future<void> _setEncryptionKey()
+  +Future<Box<LocalKeyModel>> getKeys()
 }
+
+"monerate::src::providers::box_provider.dart::BoxProvider" o-- "monerate::src::providers::secure_storage_provider.dart::SecureStorageProvider"
+"monerate::src::providers::box_provider.dart::BoxProvider" o-- "dart::typed_data::Uint8List"
+"monerate::src::providers::box_provider.dart::BoxProvider" o-- "hive::hive.dart::Box<LocalKeyModel>"
 
 class "monerate::src::providers::database_provider.dart::DatabaseProvider" {
   +FirebaseFirestore db
@@ -51,11 +70,24 @@ class "monerate::src::providers::database_provider.dart::DatabaseProvider" {
   +BalanceModel balanceModel
   +CollectionReference<Object?> usersCollection
   +CollectionReference<Object?> balanceCollection
+  +CollectionReference<Object?> chatCollection
   +Future<void> createNewUser()
   +Future<UserModel> getProfile()
   +Future<void> updateProfile()
   +Future<void> addBalance()
-  +CollectionReference<Object?> getBalanceCollection()
+  +Future<String> getBalanceID()
+  +Future<List<String>> getMultipleBalanceIDs()
+  +Future<void> updateBalance()
+  +Future<void> removeBalance()
+  +Future<List<String>> getBalanceIDsForOneUser()
+  +Future<void> deleteUser()
+  +Future<String> makeNewChat()
+  +Future<void> sendMessage()
+  +Future<String> getChat()
+  +Stream<QuerySnapshot<Map<String, dynamic>>> getMessages()
+  +Stream<QuerySnapshot<Object?>> getBalances()
+  +Stream<QuerySnapshot<Object?>> getChatsByType()
+  +Stream<QuerySnapshot<Object?>> getPreviousChats()
 }
 
 "monerate::src::providers::database_provider.dart::DatabaseProvider" o-- "cloud_firestore::cloud_firestore.dart::FirebaseFirestore"
@@ -79,7 +111,7 @@ class "monerate::src::providers::open_banking_provider.dart::OpenBankingProvider
   +AuthProvider authProvider
   +String url
   +List<String> apiKeys
-  +Future<void> getAPIKeys()
+  -Future<void> _getAPIKeys()
   +Future<dynamic> getLinkToken()
   +Future<dynamic> getAccessToken()
   +Future<dynamic> getAccounts()
@@ -99,7 +131,7 @@ class "monerate::src::providers::remote_config_provider.dart::RemoteConfigProvid
 
 class "monerate::src::providers::secure_storage_provider.dart::SecureStorageProvider" {
   +FlutterSecureStorage secureStorage
-  +Future<void> generateEncryptionKey()
+  -Future<void> _generateEncryptionKey()
   +Future<Uint8List> getEncryptionKey()
 }
 
@@ -111,7 +143,7 @@ class "monerate::src::providers::yahoo_finance_provider.dart::YahooFinanceProvid
   +String apiKey
   +List<ArticleModel> news
   +List<TickerModel> tickers
-  +Future<void> getAPIKey()
+  -Future<void> _getAPIKey()
   +Future<Object> getNewsArticles()
   +Future<Object> getTickerSymbol()
   +Future<Object> getPrice()
