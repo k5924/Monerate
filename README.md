@@ -30,12 +30,12 @@
 
 This application works by using the Flutter UI framework in Dart to create the mobile application. We then use Firebase as our database. We will also use Adobe XD to design all of the pages we will make for the application.
 
-Get UML Diagrams:
-dcdg -s "lib/src/models" -o uml/models.puml
-dcdg -s "lib/src/providers" -o uml/providers.puml
-dcdg -s "lib/src/screens" -o uml/screens.puml
-dcdg -s "lib/src/utilities" -o uml/utilities.puml
-dcdg -s "lib/src/widgets" -o uml/widgets.puml
+Get UML Diagrams:</br>
+dcdg -s "lib/src/models" -o uml/models.puml</br>
+dcdg -s "lib/src/providers" -o uml/providers.puml</br>
+dcdg -s "lib/src/screens" -o uml/screens.puml</br>
+dcdg -s "lib/src/utilities" -o uml/utilities.puml</br>
+dcdg -s "lib/src/widgets" -o uml/widgets.puml</br>
 
 
 ## Planned Features
