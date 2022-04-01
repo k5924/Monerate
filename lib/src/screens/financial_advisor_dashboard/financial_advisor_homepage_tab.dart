@@ -28,12 +28,12 @@ class _FinancialAdvisorHomepageTabState
   @override
   void initState() {
     super.initState();
-    getUserID().whenComplete(() {
+    _getUserID().whenComplete(() {
       setState(() {});
     });
   }
 
-  Future<void> getUserID() async {
+  Future<void> _getUserID() async {
     try {
       userID = await authProvider.getUID();
     } on FirebaseAuthException catch (e) {
@@ -42,7 +42,7 @@ class _FinancialAdvisorHomepageTabState
     }
   }
 
-  Future<void> getChat(ChatModel chatModel) async {
+  Future<void> _getChat(ChatModel chatModel) async {
     try {
       EasyLoading.show(status: 'loading...');
       final result = await authProvider.getChat(chatModel: chatModel);
@@ -106,7 +106,7 @@ class _FinancialAdvisorHomepageTabState
                         chats[index].latestMessage.toLocal().toString(),
                       ),
                       onTap: () async {
-                        await getChat(chats[index]);
+                        await _getChat(chats[index]);
                       },
                     ),
                   );

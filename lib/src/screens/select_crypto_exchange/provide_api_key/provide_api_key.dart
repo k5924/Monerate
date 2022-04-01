@@ -10,9 +10,6 @@ class ProvideAPIKey extends StatefulWidget {
 }
 
 class _ProvideAPIKeyState extends State<ProvideAPIKey> {
-
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

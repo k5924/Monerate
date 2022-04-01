@@ -23,7 +23,7 @@ class ViewFinanceAccountScreen extends StatefulWidget {
 class _ViewFinanceAccountScreenState extends State<ViewFinanceAccountScreen> {
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
-  Widget updateStockAmount() {
+  Widget _updateStockAmount() {
     if ((widget.balance.type == "Stock") | (widget.balance.type == "Manual")) {
       return ViewFinanceAccountForm(
         balance: widget.balance,
@@ -133,7 +133,7 @@ class _ViewFinanceAccountScreenState extends State<ViewFinanceAccountScreen> {
         const SizedBox(
           height: 20,
         ),
-        updateStockAmount(),
+        _updateStockAmount(),
         const SizedBox(
           height: 20,
         ),

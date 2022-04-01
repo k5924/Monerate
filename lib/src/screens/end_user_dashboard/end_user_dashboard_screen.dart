@@ -27,7 +27,7 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
+    _getCurrentUser();
     _pageController = PageController();
   }
 
@@ -38,7 +38,7 @@ class _EndUserDashboardScreenState extends State<EndUserDashboardScreen> {
     super.dispose();
   }
 
-  Future<void> getCurrentUser() async {
+  Future<void> _getCurrentUser() async {
     try {
       uid = await authProvider.getUID();
     } on FirebaseAuthException catch (e) {

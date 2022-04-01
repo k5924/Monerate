@@ -24,7 +24,7 @@ class _SearchInvestmentScreenState extends State<SearchInvestmentScreen> {
     super.dispose();
   }
 
-  Future<void> getInvestment() async {
+  Future<void> _getInvestment() async {
     EasyLoading.show(status: 'loading...');
     final result = await yahooFinanceProvider.getTickerSymbol(
       searchParameter: searchController.text,
@@ -57,7 +57,7 @@ class _SearchInvestmentScreenState extends State<SearchInvestmentScreen> {
                 searchController.text = search;
                 if (Validator().presenceDetection(searchController.text)) {
                   investments.clear();
-                  await getInvestment();
+                  await _getInvestment();
                 }
               },
               decoration: const InputDecoration(

@@ -28,12 +28,12 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
   @override
   void initState() {
     super.initState();
-    getUserID().whenComplete(() {
+    _getUserID().whenComplete(() {
       setState(() {});
     });
   }
 
-  Future<void> getUserID() async {
+  Future<void> _getUserID() async {
     try {
       userID = await authProvider.getUID();
     } on FirebaseAuthException catch (e) {
@@ -42,7 +42,7 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
     }
   }
 
-  Future<void> makeNewChat() async {
+  Future<void> _makeNewChat() async {
     try {
       EasyLoading.show(status: 'loading...');
       final String result = await authProvider.makeNewChat(
@@ -62,7 +62,7 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
     }
   }
 
-  Future<void> getChat(ChatModel chatModel) async {
+  Future<void> _getChat(ChatModel chatModel) async {
     try {
       EasyLoading.show(status: 'loading...');
       final result = await authProvider.getChat(chatModel: chatModel);
@@ -86,7 +86,7 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
       appBarTitle: "Previous Messages",
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await makeNewChat();
+          await _makeNewChat();
         },
         child: const Icon(
           Icons.add,
@@ -136,7 +136,7 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
                         'Last Message: ${chats[index].latestMessage.toLocal().toString()}',
                       ),
                       onTap: () async {
-                        await getChat(chats[index]);
+                        await _getChat(chats[index]);
                       },
                     ),
                   );

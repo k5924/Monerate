@@ -33,12 +33,12 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
     super.initState();
   }
 
-  Future<void> updateBalances() async {
+  Future<void> _updateBalances() async {
     final keys = await binanceExchangeProvider.getKeys();
     print(keys);
   }
 
-  Future<void> getBalances(String accessToken) async {
+  Future<void> _getBalances(String accessToken) async {
     final result = await openBankingProvider.getAccessToken(publicToken: accessToken);
     if (result.runtimeType == String) {
       if (result != "error") {
@@ -63,7 +63,7 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
     final result = await openBankingProvider.getAccessToken(publicToken: publicToken);
     if (result.runtimeType == String) {
       if (result != "error") {
-        await getBalances(result.toString());
+        await _getBalances(result.toString());
       } else {
         EasyLoading.showError(
           'Unable to retrieve access token, please try again later',
@@ -110,7 +110,7 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
     }
   }
 
-  Widget displayingSubtitle(BalanceModel balance) {
+  Widget _displayingSubtitle(BalanceModel balance) {
     if (balance.type == 'Stock') {
       return Text(
         'Ticker: ${balance.symbol} Type: ${balance.type} Holdings: ${balance.amount}',
@@ -132,7 +132,7 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
-          await updateBalances();
+          await _updateBalances();
         },
         child: CenteredScrollView(
           children: [
@@ -187,7 +187,7 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
                               : Text(
                                   "Price £${(double.parse(balances[index].amount) * double.parse(balances[index].price)).toStringAsFixed(2)}",
                                 ),
-                          subtitle: displayingSubtitle(balances[index]),
+                          subtitle: _displayingSubtitle(balances[index]),
                           onTap: () {
                             Navigator.push(
                               context,

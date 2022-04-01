@@ -27,7 +27,7 @@ class _ProvideAPIKeyFormState extends State<ProvideAPIKeyForm> {
     super.dispose();
   }
 
-  Future<bool?> connectToExchange() async {
+  Future<bool?> _connectToExchange() async {
     EasyLoading.show(status: 'loading...');
     if (widget.exchangeName == 'binance') {
       final result = await binanceExchangeProvider.writeKeys(
@@ -104,7 +104,7 @@ class _ProvideAPIKeyFormState extends State<ProvideAPIKeyForm> {
             ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  final opResult = await connectToExchange();
+                  final opResult = await _connectToExchange();
                   if (opResult == true) {
                     // ignore: use_build_context_synchronously
                     Navigator.popUntil(

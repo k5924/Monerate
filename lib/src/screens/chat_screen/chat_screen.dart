@@ -32,7 +32,7 @@ class _ChatScreenState extends State<ChatScreen> {
     super.dispose();
   }
 
-  Future<void> sendMessage() async {
+  Future<void> _sendMessage() async {
     textController.clear();
     FocusScope.of(context).unfocus();
     EasyLoading.show(status: 'loading...');
@@ -177,7 +177,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: messageText.trim().isEmpty ? null : sendMessage,
+                  onTap: messageText.trim().isEmpty ? null : _sendMessage,
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: const BoxDecoration(

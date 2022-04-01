@@ -19,15 +19,11 @@ class _NewsTabState extends State<NewsTab> {
     super.initState();
   }
 
-  Future<void> _refresh() async {
-    yahooFinanceProvider.getNewsArticles();
-  }
-
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        _refresh();
+        yahooFinanceProvider.getNewsArticles();
       },
       child: Center(
         child: SingleChildScrollView(

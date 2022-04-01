@@ -20,7 +20,6 @@ class _ManualAccountFormState extends State<ManualAccountForm> {
 
   Future<bool> _addAccount() async {
     EasyLoading.show(status: 'loading...');
-
     final result2 = await authProvider.addFinanceAccount(
       name: nameController.text,
       symbol: '',
