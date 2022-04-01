@@ -1,5 +1,5 @@
 name: monerate
-description: A new Flutter project.
+description: A budget tracking app that lets users manage all of their finances in one place.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
