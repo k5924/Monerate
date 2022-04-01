@@ -8,6 +8,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
+import 'package:monerate/src/widgets/export.dart';
 import 'package:plaid_flutter/plaid_flutter.dart';
 
 class AccountBalancesTab extends StatefulWidget {
@@ -138,84 +139,78 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
         onRefresh: () async {
           await updateBalances();
         },
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                StreamBuilder<QuerySnapshot>(
-                  stream: balanceStream,
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      if (snapshot.connectionState != ConnectionState.done) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        return const Center(
-                          child: Text(
-                              'An error was encountered, balances were not fetched'),
-                        );
-                      }
-                    } else {
-                      final balancesDB = snapshot.data!.docs;
-                      balancesDB.sort(
-                        (a, b) => a['type']
-                            .toString()
-                            .compareTo(b['type'].toString()),
-                      );
-                      final List<BalanceModel> balances = <BalanceModel>[];
-                      for (final item in balancesDB) {
-                        final balance = BalanceModel(
-                          amount: item['amount'].toString(),
-                          name: item['name'].toString(),
-                          price: item['price'].toString(),
-                          symbol: item['symbol'].toString(),
-                          type: item['type'].toString(),
-                          userID: item['userID'].toString(),
-                        );
-                        balances.add(balance);
-                      }
-                      return ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: balances.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            elevation: 4,
-                            child: ListTile(
-                              title: Text(
-                                balances[index].name,
+        child: CenteredScrollView(
+          children: [
+            StreamBuilder<QuerySnapshot>(
+              stream: balanceStream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return const Center(
+                      child: Text(
+                        'An error was encountered, balances were not fetched',
+                      ),
+                    );
+                  }
+                } else {
+                  final balancesDB = snapshot.data!.docs;
+                  balancesDB.sort(
+                    (a, b) =>
+                        a['type'].toString().compareTo(b['type'].toString()),
+                  );
+                  final List<BalanceModel> balances = <BalanceModel>[];
+                  for (final item in balancesDB) {
+                    final balance = BalanceModel(
+                      amount: item['amount'].toString(),
+                      name: item['name'].toString(),
+                      price: item['price'].toString(),
+                      symbol: item['symbol'].toString(),
+                      type: item['type'].toString(),
+                      userID: item['userID'].toString(),
+                    );
+                    balances.add(balance);
+                  }
+                  return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: balances.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 4,
+                        child: ListTile(
+                          title: Text(
+                            balances[index].name,
+                          ),
+                          trailing: balances[index].type == 'Cryptocurrency'
+                              ? Text(
+                                  'Holdings: ${balances[index].amount}',
+                                )
+                              : Text(
+                                  "Price £${(double.parse(balances[index].amount) * double.parse(balances[index].price)).toStringAsFixed(2)}",
+                                ),
+                          subtitle: displayingSubtitle(balances[index]),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ViewFinanceAccountScreen(
+                                  balance: balances[index],
+                                ),
                               ),
-                              trailing: balances[index].type == 'Cryptocurrency'
-                                  ? Text(
-                                      'Holdings: ${balances[index].amount}',
-                                    )
-                                  : Text(
-                                      "Price £${(double.parse(balances[index].amount) * double.parse(balances[index].price)).toStringAsFixed(2)}",
-                                    ),
-                              subtitle: displayingSubtitle(balances[index]),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ViewFinanceAccountScreen(
-                                      balance: balances[index],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       );
-                    }
-                  },
-                )
-              ],
-            ),
-          ),
+                    },
+                  );
+                }
+              },
+            )
+          ],
         ),
       ),
       floatingActionButton: SpeedDial(

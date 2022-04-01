@@ -1,4 +1,4 @@
-import 'package:monerate/src/utilities/form_validators/export.dart';
+import 'package:monerate/src/utilities/export.dart';
 
 class AmountValidator extends Validator {
   String? validateAmount(String? value) {

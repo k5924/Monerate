@@ -62,64 +62,53 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
   Widget build(BuildContext context) {
     final Map<String, dynamic>? profileDetails =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "View Personal Details",
+    return CenteredScrollViewWithAppBar(
+      appBarTitle: "View Personal Details",
+      floatingActionButton: null,
+      children: [
+        Text(
+          'Firstname',
+          style: Theme.of(context).textTheme.headline4,
         ),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Firstname',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                profileDetails!['firstName'].toString().capitalize(),
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Lastname',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                profileDetails['lastName'].toString().capitalize(),
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              OutlinedButton.icon(
-                onPressed: () async {
-                  await _displayConfirmationDialog();
-                },
-                icon: const Icon(Icons.delete_forever),
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(
-                    color: Colors.red,
-                  ),
-                ),
-                label: const Text(
-                  "Delete Account",
-                ),
-              ),
-            ],
+        const SizedBox(
+          height: 20,
+        ),
+        Text(
+          profileDetails!['firstName'].toString().capitalize(),
+          style: Theme.of(context).textTheme.headline5,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Text(
+          'Lastname',
+          style: Theme.of(context).textTheme.headline4,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Text(
+          profileDetails['lastName'].toString().capitalize(),
+          style: Theme.of(context).textTheme.headline5,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        OutlinedButton.icon(
+          onPressed: () async {
+            await _displayConfirmationDialog();
+          },
+          icon: const Icon(Icons.delete_forever),
+          style: OutlinedButton.styleFrom(
+            side: const BorderSide(
+              color: Colors.red,
+            ),
+          ),
+          label: const Text(
+            "Delete Account",
           ),
         ),
-      ),
+      ],
     );
   }
 }

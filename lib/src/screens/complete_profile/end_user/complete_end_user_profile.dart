@@ -17,10 +17,7 @@ class _CompleteEndUserProfileState extends State<CompleteEndUserProfile> {
   Widget build(BuildContext context) {
     return const CenteredScrollView(
       children: [
-        Padding(
-          padding: EdgeInsets.all(25),
-          child: CompleteEndUserProfileForm(),
-        ),
+        CompleteEndUserProfileForm(),
       ],
     );
   }

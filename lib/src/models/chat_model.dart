@@ -1,5 +1,3 @@
-import 'package:monerate/src/models/export.dart';
-
 class ChatModel {
   String userID;
   String firstName;

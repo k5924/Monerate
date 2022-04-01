@@ -8,6 +8,7 @@ import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
+import 'package:monerate/src/widgets/export.dart';
 
 class PreviousMessagesScreen extends StatefulWidget {
   final String chatType;
@@ -85,73 +86,8 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Previous Messages"),
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                StreamBuilder<QuerySnapshot>(
-                  stream: chatStream,
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      if (snapshot.connectionState != ConnectionState.done) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        return const Center(
-                          child: Text(
-                            'An error was encountered, chats were not fetched',
-                          ),
-                        );
-                      }
-                    } else {
-                      final chatsDB = snapshot.data!.docs;
-                      final List<ChatModel> chats = <ChatModel>[];
-                      for (final item in chatsDB) {
-                        final chat = ChatModel(
-                          userID: item['userID'].toString(),
-                          chatType: item['chatType'].toString(),
-                          latestMessage:
-                              (item['latestMessage'] as Timestamp).toDate(),
-                          firstName: item['firstName'] as String,
-                          lastName: item['lastName'] as String,
-                        );
-                        chats.add(chat);
-                      }
-                      return ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: chats.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            elevation: 4,
-                            child: ListTile(
-                              title: Text(
-                                'Last Message: ${chats[index].latestMessage.toLocal().toString()}',
-                              ),
-                              onTap: () async {
-                                await getChat(chats[index]);
-                              },
-                            ),
-                          );
-                        },
-                      );
-                    }
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return CenteredScrollViewWithAppBar(
+      appBarTitle: "Previous Messages",
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await makeNewChat();
@@ -160,6 +96,57 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
           Icons.add,
         ),
       ),
+      children: [
+        StreamBuilder<QuerySnapshot>(
+          stream: chatStream,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return const Center(
+                  child: Text(
+                    'An error was encountered, chats were not fetched',
+                  ),
+                );
+              }
+            } else {
+              final chatsDB = snapshot.data!.docs;
+              final List<ChatModel> chats = <ChatModel>[];
+              for (final item in chatsDB) {
+                final chat = ChatModel(
+                  userID: item['userID'].toString(),
+                  chatType: item['chatType'].toString(),
+                  latestMessage: (item['latestMessage'] as Timestamp).toDate(),
+                  firstName: item['firstName'] as String,
+                  lastName: item['lastName'] as String,
+                );
+                chats.add(chat);
+              }
+              return ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: chats.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    elevation: 4,
+                    child: ListTile(
+                      title: Text(
+                        'Last Message: ${chats[index].latestMessage.toLocal().toString()}',
+                      ),
+                      onTap: () async {
+                        await getChat(chats[index]);
+                      },
+                    ),
+                  );
+                },
+              );
+            }
+          },
+        ),
+      ],
     );
   }
 }

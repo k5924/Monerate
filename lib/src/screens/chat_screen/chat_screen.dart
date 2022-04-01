@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
+import 'package:monerate/src/utilities/export.dart';
 
 class ChatScreen extends StatefulWidget {
   final String userID;
@@ -30,6 +31,12 @@ class _ChatScreenState extends State<ChatScreen> {
       .collection('messages')
       .orderBy('createdAt', descending: true)
       .snapshots();
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
 
   Future<void> sendMessage() async {
     textController.clear();
@@ -65,7 +72,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   } else {
                     return const Center(
                       child: Text(
-                          'An error was encountered, messages were not fetched'),
+                          'An error was encountered, messages were not fetched',),
                     );
                   }
                 } else {
@@ -126,6 +133,10 @@ class _ChatScreenState extends State<ChatScreen> {
                                         : CrossAxisAlignment.start,
                                 children: [
                                   Text(
+                                    messages[index].senderID !=
+                                              widget.userID
+                                          ? '${messages[index].firstName.capitalize()} ${messages[index].lastName.capitalize()}\n${messages[index].message}\n${messages[index].createdAt.toLocal().toString()}'
+                                          :
                                     '${messages[index].message}\n${messages[index].createdAt.toLocal().toString()}',
                                     style: TextStyle(
                                       color: messages[index].senderID ==

@@ -15,9 +15,12 @@ class _CenteredScrollViewState extends State<CenteredScrollView> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: widget.children,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: widget.children,
+            ),
           ),
         ),
       ),

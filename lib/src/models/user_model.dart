@@ -27,7 +27,7 @@ class UserModel {
     );
   }
 
-  String? getUserType(){
+  String? getUserType() {
     return userType;
   }
 }

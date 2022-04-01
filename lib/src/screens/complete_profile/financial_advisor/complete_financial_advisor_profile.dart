@@ -19,10 +19,7 @@ class _CompleteFinancialAdvisorProfileState
   Widget build(BuildContext context) {
     return const CenteredScrollView(
       children: [
-        Padding(
-          padding: EdgeInsets.all(25),
-          child: CompleteFinancialAdvisorProfileForm(),
-        ),
+        CompleteFinancialAdvisorProfileForm(),
       ],
     );
   }

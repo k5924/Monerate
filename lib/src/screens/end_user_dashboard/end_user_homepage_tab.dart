@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:monerate/src/widgets/export.dart';
 
 class EndUserHomepageTab extends StatefulWidget {
   const EndUserHomepageTab({Key? key}) : super(key: key);
@@ -10,21 +11,13 @@ class EndUserHomepageTab extends StatefulWidget {
 class _EndUserHomepageTabState extends State<EndUserHomepageTab> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "End User HomePage",
-                style: Theme.of(context).textTheme.headline5,
-              ),
-            ],
-          ),
+    return CenteredScrollView(
+      children: [
+        Text(
+          "Transactions will display here",
+          style: Theme.of(context).textTheme.headline5,
         ),
-      ),
+      ],
     );
   }
 }

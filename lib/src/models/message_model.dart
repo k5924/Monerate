@@ -1,4 +1,3 @@
-
 class MessageModel {
   String senderID;
   String firstName;

@@ -38,6 +38,14 @@ class _ManualAccountFormState extends State<ManualAccountForm> {
   }
 
   @override
+  void dispose() {
+    // Clean up controllers when form is disposed
+    nameController.dispose();
+    valueController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,

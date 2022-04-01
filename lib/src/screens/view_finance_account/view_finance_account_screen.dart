@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:monerate/src/models/export.dart';
-import 'package:monerate/src/providers/auth_provider.dart';
+import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
@@ -107,63 +107,55 @@ class _ViewFinanceAccountScreenState extends State<ViewFinanceAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Investment Details"),
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ListTile(
-                title: Text(
-                  widget.balance.name,
+    return CenteredScrollViewWithAppBar(
+      appBarTitle: "Investment Details",
+      floatingActionButton: null,
+      children: [
+        ListTile(
+          title: Text(
+            widget.balance.name,
+          ),
+          trailing: widget.balance.type == 'Cryptocurrency'
+              ? Text(
+                  'Holdings: ${widget.balance.amount}',
+                )
+              : Text(
+                  "Price £${(double.parse(widget.balance.amount) * double.parse(widget.balance.price)).toStringAsFixed(2)}",
                 ),
-                trailing: widget.balance.type == 'Cryptocurrency'
-                    ? Text(
-                        'Holdings: ${widget.balance.amount}',
-                      )
-                    : Text(
-                        "Price £${(double.parse(widget.balance.amount) * double.parse(widget.balance.price)).toStringAsFixed(2)}",
-                      ),
-                subtitle: widget.balance.type == 'Stock'
-                    ? Text(
-                        'Ticker: ${widget.balance.symbol} Type: ${widget.balance.type} Holdings: ${widget.balance.amount}',
-                      )
-                    : Text(
-                        'Type: ${widget.balance.type}',
-                      ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              updateStockAmount(),
-              const SizedBox(
-                height: 20,
-              ),
-              OutlinedButton.icon(
-                onPressed: () async {
-                  await _removeAccount();
-                },
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 10,
-                  ),
+          subtitle: widget.balance.type == 'Stock'
+              ? Text(
+                  'Ticker: ${widget.balance.symbol} Type: ${widget.balance.type} Holdings: ${widget.balance.amount}',
+                )
+              : Text(
+                  'Type: ${widget.balance.type}',
                 ),
-                icon: const Icon(Icons.delete_forever),
-                label: const Text(
-                  "Remove Account",
-                  style: TextStyle(
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-            ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        updateStockAmount(),
+        const SizedBox(
+          height: 20,
+        ),
+        OutlinedButton.icon(
+          onPressed: () async {
+            await _removeAccount();
+          },
+          style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 30,
+              vertical: 10,
+            ),
+          ),
+          icon: const Icon(Icons.delete_forever),
+          label: const Text(
+            "Remove Account",
+            style: TextStyle(
+              fontSize: 24,
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

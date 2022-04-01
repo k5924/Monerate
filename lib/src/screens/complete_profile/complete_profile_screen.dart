@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monerate/src/screens/complete_profile/export.dart';
+import 'package:monerate/src/screens/export.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
   static const String kID = 'complete_profile_screen';
