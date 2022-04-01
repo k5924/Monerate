@@ -35,7 +35,6 @@ class _NewsTabState extends State<NewsTab> {
               if (snapshot.hasData &&
                   snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.data.runtimeType != String) {
-                  // ignore: cast_nullable_to_non_nullable
                   articles = <ArticleModel>[];
                   articles = snapshot.data as List<ArticleModel>;
                   return ListView.builder(
