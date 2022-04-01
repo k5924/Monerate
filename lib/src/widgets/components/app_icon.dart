@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// This is a custom component to display the icon of the application
 class AppIcon extends StatelessWidget {
-
+  /// Tis is the constructor of the AppIcon component
   const AppIcon({Key? key}) : super(key: key);
 
   @override

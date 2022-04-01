@@ -2,10 +2,18 @@
 
 import 'package:flutter/material.dart';
 
+/// This is a custom layout widget which has a scaffold, appbar, center, SingleChildScrollView, Padding, column and floating action button widget
 class CenteredScrollViewWithAppBar extends StatefulWidget {
+  /// This variable stores a list of widgets to display in the column widget
   List<Widget> children;
+
+  /// This variable stores the title to be displayed in the app bar
   String appBarTitle;
+
+  /// This variable stores either the floating action button widget or nothing
   FloatingActionButton? floatingActionButton;
+
+  /// The constructor assigns each of the parameters to their respective variables
   CenteredScrollViewWithAppBar({
     Key? key,
     required this.children,

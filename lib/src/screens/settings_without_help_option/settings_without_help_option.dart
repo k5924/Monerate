@@ -7,7 +7,9 @@ import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/layouts/export.dart';
 
+/// This is the settings tab for the support managers
 class SettingsWithoutHelpOption extends StatefulWidget {
+  /// This is the constructor for this tab
   const SettingsWithoutHelpOption({Key? key}) : super(key: key);
 
   @override

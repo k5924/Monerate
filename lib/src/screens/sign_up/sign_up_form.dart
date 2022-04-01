@@ -8,7 +8,9 @@ import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the sign up form which would be displayed on the sign up screen
 class SignUpForm extends StatefulWidget {
+  /// This is the constructor for the signup form
   const SignUpForm({Key? key}) : super(key: key);
 
   @override

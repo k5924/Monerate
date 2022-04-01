@@ -6,9 +6,15 @@ import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
+/// This is the screen all users would see when sending messages to other users
 class ChatScreen extends StatefulWidget {
+  /// This variable stores the current users UID
   final String userID;
+
+  /// This variable stores the document reference ID for the currently viewed conversation in firebase
   final String documentReferenceID;
+
+  /// This is the constructor for this screen which assigns the document reference id and user id to their respective variables
   const ChatScreen({
     Key? key,
     required this.documentReferenceID,

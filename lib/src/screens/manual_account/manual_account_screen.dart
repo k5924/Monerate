@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 
+/// This screen will be displayed when an end-user wants to manually add an account to their portfolio
 class ManualAccountScreen extends StatefulWidget {
+  /// This variable stores the named route for this screen
   static const kID = 'manual_account_screen';
+
+  /// This is the constructor for this screen
   const ManualAccountScreen({Key? key}) : super(key: key);
 
   @override

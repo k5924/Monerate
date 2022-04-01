@@ -5,7 +5,9 @@ import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
+/// This is the form which would be displayed when a user signs up as a financial advisor
 class CompleteFinancialAdvisorProfileForm extends StatefulWidget {
+  /// This is the constructor for this form
   const CompleteFinancialAdvisorProfileForm({Key? key}) : super(key: key);
 
   @override

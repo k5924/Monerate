@@ -1,9 +1,12 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/services.dart';
 
+/// This class lets us interact with firebase remote config
 class RemoteConfigProvider {
+  /// This field will store an instance of firebase remote config
   final FirebaseRemoteConfig remoteConfig;
 
+  /// This constructor requires us to inject an instance of firebase remote config before using this class
   RemoteConfigProvider({required this.remoteConfig});
 
   Future<FirebaseRemoteConfig?> _initialise() async {
@@ -29,11 +32,13 @@ class RemoteConfigProvider {
     return null;
   }
 
+  /// This method retrieves the yahoo finance developer api keys from firebase remote config
   Future<String> getYahooFinanceAPIKey() async {
     final remoteConfig = await _initialise();
     return remoteConfig!.getString('yahoo_finance_api_key');
   }
 
+  /// This method retrieves the plaid developer api keys from firebase remote config
   Future<List<String>> getPlaidKeys() async {
     final remoteConfig = await _initialise();
     final devKey = remoteConfig!.getString('plaid_dev_key');

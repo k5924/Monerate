@@ -8,7 +8,9 @@ import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the form which would be displayed on the forgot password screen
 class ForgotPasswordForm extends StatefulWidget {
+  /// This is the constructor for the forgot password form
   const ForgotPasswordForm({Key? key}) : super(key: key);
 
   @override

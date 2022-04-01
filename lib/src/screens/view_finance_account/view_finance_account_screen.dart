@@ -9,8 +9,12 @@ import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the screen which will display the information for a specific account balance a user has
 class ViewFinanceAccountScreen extends StatefulWidget {
+  /// This will store a single balance from an end-users account
   BalanceModel balance;
+
+  /// This will assign the passed BalanceModel to the balance variable
   ViewFinanceAccountScreen({
     Key? key,
     required this.balance,

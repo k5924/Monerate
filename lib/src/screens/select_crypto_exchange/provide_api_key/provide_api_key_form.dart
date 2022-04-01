@@ -4,8 +4,12 @@ import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
+/// This is the form that would be displayed for a user to enter their cryptocurrency exchanges secret and public API keys
 class ProvideAPIKeyForm extends StatefulWidget {
+  /// This variable will store the name of the cryptocurrency exchange
   final String exchangeName;
+
+  /// This is the constructor of the APIKeyForm which will assign the exchangeName to the exchangeName variable
   const ProvideAPIKeyForm({Key? key, required this.exchangeName})
       : super(key: key);
 

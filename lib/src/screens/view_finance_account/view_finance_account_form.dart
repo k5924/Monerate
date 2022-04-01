@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, must_be_immutable
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +8,12 @@ import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
-// ignore: must_be_immutable
+/// This widget will display the form a user would fill out to update their account balance
 class ViewFinanceAccountForm extends StatefulWidget {
+  /// This will store a single account balance from an end-user
   BalanceModel balance;
+
+  /// This constructor will assign the passed BalanceModel to the balance variable
   ViewFinanceAccountForm({
     Key? key,
     required this.balance,

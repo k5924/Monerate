@@ -8,7 +8,9 @@ import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the form which would be displayed on the change email screen
 class ChangeEmailForm extends StatefulWidget {
+  /// This is the constructor for this Form
   const ChangeEmailForm({Key? key}) : super(key: key);
 
   @override
@@ -33,8 +35,6 @@ class _ChangeEmailFormState extends State<ChangeEmailForm> {
     passwordController.dispose();
     super.dispose();
   }
-
-
 
   Future<String?> _updateEmail() async {
     return authProvider.changeEmail(
@@ -64,7 +64,6 @@ class _ChangeEmailFormState extends State<ChangeEmailForm> {
               closeDialogBox(context);
               EasyLoading.showError(result);
             } else {
-              // ignore: use_build_context_synchronously
               Navigator.pushReplacementNamed(
                 context,
                 LoginScreen.kID,

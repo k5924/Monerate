@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the financial advisor tab which would be displayed as a user type when a user first logs into the app
 class FinancialAdvisorTab extends StatefulWidget {
+  /// This is the constructor for this tab
   const FinancialAdvisorTab({Key? key}) : super(key: key);
 
   @override

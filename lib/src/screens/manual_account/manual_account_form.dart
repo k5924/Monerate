@@ -5,7 +5,9 @@ import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
+/// This is the form which would be displayed on the manual account screen
 class ManualAccountForm extends StatefulWidget {
+  /// This is the constructor for this form
   const ManualAccountForm({Key? key}) : super(key: key);
 
   @override

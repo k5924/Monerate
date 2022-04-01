@@ -8,8 +8,12 @@ import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
+/// This is the form which an end-user would fill out to specify how much they own of a specific stock
 class ProvideInvestmentDetailsForm extends StatefulWidget {
+  /// This variable will store details about the investment
   TickerModel investment;
+
+  /// This is the constructor for this form which will assign the investment details to the investment variable
   ProvideInvestmentDetailsForm({
     Key? key,
     required this.investment,

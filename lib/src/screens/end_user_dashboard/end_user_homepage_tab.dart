@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the tab where transactions will be displayed for an end-user
 class EndUserHomepageTab extends StatefulWidget {
+  /// This is the constructor for this tab
   const EndUserHomepageTab({Key? key}) : super(key: key);
 
   @override

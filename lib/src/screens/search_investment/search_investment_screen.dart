@@ -5,8 +5,12 @@ import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
+/// This screen will be displayed when an end-user chooses to search for a stock investment to add to their portfolio
 class SearchInvestmentScreen extends StatefulWidget {
+  /// This variable stores the named route for this screen
   static const String kID = 'search_investment_screen';
+
+  /// This is the constructor for this screen
   const SearchInvestmentScreen({Key? key}) : super(key: key);
 
   @override
@@ -68,6 +72,7 @@ class _SearchInvestmentScreenState extends State<SearchInvestmentScreen> {
               height: 20,
             ),
             ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: investments.length,
               itemBuilder: (context, index) {

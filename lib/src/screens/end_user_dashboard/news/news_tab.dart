@@ -5,7 +5,9 @@ import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/end_user_dashboard/export.dart';
 
+/// This is the news tab an end-user would have access to
 class NewsTab extends StatefulWidget {
+  /// This is the constructor for this tab
   const NewsTab({Key? key}) : super(key: key);
 
   @override

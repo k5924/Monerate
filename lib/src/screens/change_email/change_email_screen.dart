@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the screen any user would see when wanting to change their email
 class ChangeEmailScreen extends StatefulWidget {
+  /// This variable stores the named route for this screen
   static const kID = 'change_email_screen';
+
+  /// This is the constructor for this page
   const ChangeEmailScreen({Key? key}) : super(key: key);
 
   @override

@@ -4,19 +4,32 @@ import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
+/// This class lets us interact with firebase auth
 class AuthProvider {
+  /// This variable stores an instance of firebase auth
   final FirebaseAuth auth;
+
+  /// This variable stores an instance of database provider
   final DatabaseProvider databaseProvider =
       DatabaseProvider(db: FirebaseFirestore.instance);
 
+  /// This variable will store an instance of a user credential
   late UserCredential userCredential;
+
+  /// This variable will store an instance of a user object
   late User? user;
+
+  /// This variable will store an instance of the exceptions factory
   late ExceptionsFactory exceptionsFactory;
+
+  /// This variable will store an instance of the user model
   late UserModel userModel;
 
+  /// This constructor requires that we inject a firebase auth instance before using this class
   AuthProvider({required this.auth});
 
-  Future<String> verifyEmail({
+  /// This method lets us verify the email of an individual user
+  Future<String> _verifyEmail({
     required User? user,
   }) async {
     try {
@@ -31,6 +44,7 @@ class AuthProvider {
     return 'Email Verified';
   }
 
+  /// This method registers a user based on their email and password
   Future<String?> registerUser({
     required String email,
     required String password,
@@ -42,13 +56,14 @@ class AuthProvider {
       );
       user = auth.currentUser;
       await databaseProvider.createNewUser(uid: user!.uid);
-      return verifyEmail(user: user);
+      return _verifyEmail(user: user);
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
     }
   }
 
+  /// This method signs in a user based on their email and password
   Future<String?> signIn({
     required String email,
     required String password,
@@ -59,13 +74,14 @@ class AuthProvider {
         password: password,
       );
       user = auth.currentUser;
-      return verifyEmail(user: user);
+      return _verifyEmail(user: user);
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
     }
   }
 
+  /// This method sends a forgot password email to a user based on their email address
   Future<String?> forgotPassword({
     required String email,
   }) async {
@@ -80,6 +96,7 @@ class AuthProvider {
     }
   }
 
+  /// This method checks whether a users profile is complete in the cloud firestore users collection
   Future<Object> checkProfile() async {
     try {
       user = auth.currentUser;
@@ -96,6 +113,7 @@ class AuthProvider {
     }
   }
 
+  /// This method updates a users profile based on their name and user type
   Future<String?> updateUserProfile({
     required String firstName,
     required String lastName,
@@ -119,6 +137,7 @@ class AuthProvider {
     return null;
   }
 
+  /// This method updates a financial advisors profile based on their name, user type and license id
   Future<String?> updateFinancialAdvisorProfile({
     required String firstName,
     required String lastName,
@@ -144,6 +163,7 @@ class AuthProvider {
     return null;
   }
 
+  /// This method logs a user out of the application
   Future<String?> logout() async {
     try {
       auth.signOut();
@@ -154,6 +174,7 @@ class AuthProvider {
     return null;
   }
 
+  /// This method returns the profile of a user
   Future<Object> getProfile() async {
     try {
       user = auth.currentUser;
@@ -165,6 +186,7 @@ class AuthProvider {
     }
   }
 
+  /// This method lets a user change their email based on a new email and password
   Future<String?> changeEmail({
     required String newEmail,
     required String password,
@@ -188,6 +210,7 @@ class AuthProvider {
     return null;
   }
 
+  /// This method lets a user change their password based on their old password and new password
   Future<String?> changePassword({
     required String oldPassword,
     required String newPassword,
@@ -210,6 +233,7 @@ class AuthProvider {
     return null;
   }
 
+  /// This method retrieves the users user type from cloud firestore
   Future<String?> getUserType() async {
     try {
       user = auth.currentUser;
@@ -221,6 +245,7 @@ class AuthProvider {
     }
   }
 
+  /// This method lets a user add a finance account to the balances collection based on details of the financial account
   Future<String?> addFinanceAccount({
     required String name,
     required String symbol,
@@ -246,6 +271,7 @@ class AuthProvider {
     return null;
   }
 
+  /// This method lets a user update a financial account by supplying an instance of balancemodel, a new amount and a new price
   Future<String?> updateFinanceAccount({
     required BalanceModel balanceModel,
     required String newAmount,
@@ -268,7 +294,8 @@ class AuthProvider {
     return null;
   }
 
-  Future<String?>? removeFinanceAccount({
+  /// This method lets a user remove a financial account from the balances collection
+  Future<String?> removeFinanceAccount({
     required BalanceModel balanceModel,
   }) async {
     try {
@@ -285,7 +312,8 @@ class AuthProvider {
     return null;
   }
 
-  Future<String?>? removeMultipleFinanceAccounts({
+  /// This method lets a user remove multiple financial accounts from the balances collection
+  Future<String?> removeMultipleFinanceAccounts({
     required BalanceModel balanceModel,
   }) async {
     try {
@@ -304,6 +332,7 @@ class AuthProvider {
     return null;
   }
 
+  /// This method retrieves a users uid from firebase
   Future<String> getUID() async {
     try {
       user = auth.currentUser;
@@ -313,6 +342,7 @@ class AuthProvider {
     }
   }
 
+  /// This method lets a user delete their account
   Future<String?> deleteUserAccount() async {
     try {
       final userID = await getUID();
@@ -331,6 +361,7 @@ class AuthProvider {
     return null;
   }
 
+  /// This method lets a user make a new chat
   Future<String> makeNewChat({
     required String chatType,
   }) async {
@@ -351,6 +382,7 @@ class AuthProvider {
     }
   }
 
+  /// This method lets a user send a new message in a chat
   Future<String?> sendNewMessage({
     required String documentReferenceID,
     required String message,
@@ -377,6 +409,7 @@ class AuthProvider {
     return null;
   }
 
+  /// This method retrieves the document reference id for a single chat instance
   Future<String> getChat({
     required ChatModel chatModel,
   }) async {

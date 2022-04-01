@@ -10,7 +10,9 @@ import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the tab which would be displayed to a financial advisor after they login to the application
 class FinancialAdvisorHomepageTab extends StatefulWidget {
+  /// This is the constructor for this tab
   const FinancialAdvisorHomepageTab({Key? key}) : super(key: key);
 
   @override
@@ -93,6 +95,7 @@ class _FinancialAdvisorHomepageTabState
                 chats.add(chat);
               }
               return ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: chats.length,
                 itemBuilder: (context, index) {

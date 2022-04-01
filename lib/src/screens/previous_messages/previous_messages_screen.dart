@@ -10,8 +10,12 @@ import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the screen which would be displayed when an end-user or financial advisor chooses to view their old support messages
 class PreviousMessagesScreen extends StatefulWidget {
+  /// This variable stores the type of chat to retrieve from Firebase
   final String chatType;
+
+  /// This is the constructor for this screen which assigns the chat type to the ChatType variable
   const PreviousMessagesScreen({Key? key, required this.chatType})
       : super(key: key);
 
@@ -126,6 +130,7 @@ class _PreviousMessagesScreenState extends State<PreviousMessagesScreen> {
                 chats.add(chat);
               }
               return ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: chats.length,
                 itemBuilder: (context, index) {

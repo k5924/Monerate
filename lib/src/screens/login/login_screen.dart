@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the login screen
 class LoginScreen extends StatefulWidget {
+  /// This variable stores the named route for the login screen
   static const String kID = 'login_screen';
 
+  /// This is the constructor for the login screen
   const LoginScreen({Key? key}) : super(key: key);
 
   @override

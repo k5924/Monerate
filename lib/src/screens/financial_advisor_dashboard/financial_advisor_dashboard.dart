@@ -3,8 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 
+/// This is where all of the tabs a financial advisor would see after they login are populated
 class FinancialAdvisorDashboardScreen extends StatefulWidget {
+  /// This is the variable which stores the named route for this dashboard screen
   static const String kID = 'financial_advisor_dashboard_screen';
+
+  /// This is the constructor for this screen
   const FinancialAdvisorDashboardScreen({Key? key}) : super(key: key);
 
   @override

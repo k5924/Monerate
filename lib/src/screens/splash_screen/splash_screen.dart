@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the splash screen of the application
 class SplashScreen extends StatefulWidget {
+  /// This is the variable which stores the named route of the splash screen
   static const String kID = 'splash_screen';
 
+  /// This is the constructor of the splash screen widget
   const SplashScreen({Key? key}) : super(key: key);
 
   @override

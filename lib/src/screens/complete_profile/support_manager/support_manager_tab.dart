@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/export.dart';
-
+/// This is the support manager tab which would be displayed as an option for a user to choose when first logging in
 class SupportManagerTab extends StatefulWidget {
+  /// This is the constructor for this tab
   const SupportManagerTab({Key? key}) : super(key: key);
 
   @override

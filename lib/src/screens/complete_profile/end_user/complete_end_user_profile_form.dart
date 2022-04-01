@@ -7,7 +7,9 @@ import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
+/// This is the form which would be displayed for a user to fill out to become an end-user
 class CompleteEndUserProfileForm extends StatefulWidget {
+  /// This is the constructor for this form
   const CompleteEndUserProfileForm({Key? key}) : super(key: key);
 
   @override

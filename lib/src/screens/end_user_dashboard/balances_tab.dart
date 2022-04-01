@@ -11,8 +11,12 @@ import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 import 'package:plaid_flutter/plaid_flutter.dart';
 
+/// This is the account balances tab an end-user would see
 class AccountBalancesTab extends StatefulWidget {
+  /// This variable stores the users UID
   final String uid;
+
+  /// This is the constructor for this tab which assigns the parameterized uid to the uid variable
   const AccountBalancesTab({Key? key, required this.uid}) : super(key: key);
 
   @override
@@ -204,6 +208,7 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
                     balances.add(balance);
                   }
                   return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: balances.length,
                     itemBuilder: (context, index) {

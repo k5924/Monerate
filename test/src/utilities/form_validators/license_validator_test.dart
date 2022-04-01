@@ -13,7 +13,7 @@ void main() {
 
     test('License ID less than six characters returns error', () {
       final result = LicenseValidator().validateLicense('a');
-      expect(result, "Enter a valid License ID (Minimum 6 chararacters)");
+      expect(result, "Enter a valid License ID (Minimum 6 characters)");
     });
 
     test('License ID more than six characters doesnt give an error', () {

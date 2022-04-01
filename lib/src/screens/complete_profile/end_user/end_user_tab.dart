@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This tab will allow users to choose to be an end-user when signing up to use the app
 class EndUserTab extends StatefulWidget {
+  /// This is the constructor for this tab
   const EndUserTab({Key? key}) : super(key: key);
 
   @override

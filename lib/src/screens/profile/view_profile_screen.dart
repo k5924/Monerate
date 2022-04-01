@@ -8,9 +8,12 @@ import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This screen will display users profile
 class ViewProfileScreen extends StatefulWidget {
+  /// This variable stores the named route for this screen
   static const String kID = 'view_profile_screen';
 
+  /// This is the constructor for this screen
   const ViewProfileScreen({Key? key}) : super(key: key);
 
   @override

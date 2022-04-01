@@ -6,9 +6,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
 
+/// This class lets us interact with the binance cryptocurrency exchange
 class BinanceExchangeProvider {
+  /// This variable stores the base url for binances api
   final String url = "api.binance.com";
+
+  /// This variable stores an instance of auth provider
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
+
+  /// This variable stores an instance of box provider
   final BoxProvider boxProvider = BoxProvider();
 
   String _hmacSha256({
@@ -23,6 +29,7 @@ class BinanceExchangeProvider {
     return signature;
   }
 
+  /// This method writes the supplied secret and public api key to an encrypted hive box
   Future writeKeys({
     required String secret,
     required String apiKey,
@@ -46,12 +53,14 @@ class BinanceExchangeProvider {
     return result;
   }
 
+  /// This method reads api keys from the encrypted hive box
   Future<LocalKeyModel?>? getKeys() async {
     final box = await boxProvider.getKeys();
     final keys = box.get('binance');
     return keys;
   }
 
+  /// This method gets a users balances from binance using the users secret and public api keys
   Future getBalances({
     required String secret,
     required String apiKey,

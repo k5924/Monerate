@@ -33,6 +33,7 @@ Future<void> main() async {
   configLoading();
 }
 
+/// Provides config for EasyLoading widget
 void configLoading() {
   EasyLoading.instance
     ..indicatorType = EasyLoadingIndicatorType.ring

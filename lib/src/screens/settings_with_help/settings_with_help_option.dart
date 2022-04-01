@@ -7,8 +7,12 @@ import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the settings tab for financial advisors and end-users
 class SettingsWithHelpOption extends StatefulWidget {
+  /// This variable will store the userType of the user using the application
   final String userType;
+
+  /// This is the constructor for this tab which will assign the userType variable
   const SettingsWithHelpOption({Key? key, required this.userType})
       : super(key: key);
 

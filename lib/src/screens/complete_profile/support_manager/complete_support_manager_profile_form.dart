@@ -7,15 +7,17 @@ import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
+/// This is the form a user must fill out when choosing to become a support manager
 class CompleteSupportManagerProfileForm extends StatefulWidget {
+  /// This is the constructor for this form
   const CompleteSupportManagerProfileForm({Key? key}) : super(key: key);
 
   @override
   State<CompleteSupportManagerProfileForm> createState() =>
-      CompleteSupportManagerProfileFormState();
+      _CompleteSupportManagerProfileFormState();
 }
 
-class CompleteSupportManagerProfileFormState
+class _CompleteSupportManagerProfileFormState
     extends State<CompleteSupportManagerProfileForm> {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();

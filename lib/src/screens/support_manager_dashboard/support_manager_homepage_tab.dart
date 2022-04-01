@@ -10,7 +10,9 @@ import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This screen will display the tab a support manager will see after logging in
 class SupportManagerHomepageTab extends StatefulWidget {
+  /// This is the constructor for the SupportManagerHomepageTab
   const SupportManagerHomepageTab({Key? key}) : super(key: key);
 
   @override
@@ -92,6 +94,7 @@ class _SupportManagerHomepageTabState extends State<SupportManagerHomepageTab> {
                 chats.add(chat);
               }
               return ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: chats.length,
                 itemBuilder: (context, index) {

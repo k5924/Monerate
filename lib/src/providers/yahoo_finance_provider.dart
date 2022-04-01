@@ -4,26 +4,36 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
 
+/// This class allows us to communicate with the Yahoo Finance API
 class YahooFinanceProvider {
+  /// This variable stores an instance of Firebase Remote Config
   final RemoteConfigProvider remoteConfigProvider =
       RemoteConfigProvider(remoteConfig: FirebaseRemoteConfig.instance);
+
+  /// This variable stores the base url for the yahoo finance API
   final String url = "yh-finance.p.rapidapi.com";
 
+  /// This variable will store our developer API key
   late String apiKey;
 
+  /// This variable stores a list of all new articles in ArticleModel format
   List<ArticleModel> news = [];
+
+  /// This variable stores a list of all investments in TickerModel format
   List<TickerModel> tickers = [];
 
+  /// This constructor calls the getAPIKeys method when the constructor of this class is called
   YahooFinanceProvider() {
-    getAPIKey();
+    _getAPIKey();
   }
 
-  Future<void> getAPIKey() async {
+  Future<void> _getAPIKey() async {
     apiKey = await remoteConfigProvider.getYahooFinanceAPIKey();
   }
 
+  /// This method retrieves an updated list of news articles
   Future<Object> getNewsArticles() async {
-    await getAPIKey();
+    await _getAPIKey();
     final ExternalAPIProvider externalAPIProvider = ExternalAPIProvider(
       url: url,
       endPoint: '/news/v2/list',
@@ -58,10 +68,11 @@ class YahooFinanceProvider {
     }
   }
 
+  /// This method returns a list of investments based on a search term
   Future<Object> getTickerSymbol({
     required String searchParameter,
   }) async {
-    await getAPIKey();
+    await _getAPIKey();
     final ExternalAPIProvider externalAPIProvider = ExternalAPIProvider(
       url: url,
       endPoint: '/auto-complete',
@@ -95,10 +106,11 @@ class YahooFinanceProvider {
     }
   }
 
+  /// This method gets the current price of a specific investment based on its ticker symbol
   Future<Object> getPrice({
     required String tickerSymbol,
   }) async {
-    await getAPIKey();
+    await _getAPIKey();
     final ExternalAPIProvider externalAPIProvider = ExternalAPIProvider(
       url: url,
       endPoint: '/stock/v2/get-summary',

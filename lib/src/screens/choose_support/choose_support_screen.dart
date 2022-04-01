@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This screen will be displayed for an end-user to choose which type of support they require
 class ChooseSupportScreen extends StatefulWidget {
+  /// This variable stores the named route for this screen
   static const String kID = 'choose_support_screen';
+
+  /// This is the constructor for this screen
   const ChooseSupportScreen({Key? key}) : super(key: key);
 
   @override

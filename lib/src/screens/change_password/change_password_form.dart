@@ -8,7 +8,9 @@ import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 import 'package:monerate/src/widgets/export.dart';
 
+/// This is the form that a user needs to fill out on the change password screen
 class ChangePasswordForm extends StatefulWidget {
+  /// This is the constructor for this form
   const ChangePasswordForm({Key? key}) : super(key: key);
 
   @override

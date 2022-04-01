@@ -8,8 +8,12 @@ import 'package:monerate/src/providers/export.dart';
 import 'package:monerate/src/screens/export.dart';
 import 'package:monerate/src/utilities/export.dart';
 
+/// This is the screen which an end-user would see after logging in, all of their tabs spawn from here
 class EndUserDashboardScreen extends StatefulWidget {
+  /// This is the variable which stores the named route for the end-users dashboard
   static const String kID = 'end_user_dashboard_screen';
+
+  /// This is the constructor for this page
   const EndUserDashboardScreen({Key? key}) : super(key: key);
 
   @override
