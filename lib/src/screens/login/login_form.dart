@@ -24,7 +24,7 @@ class _LoginFormState extends State<LoginForm> {
 
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
-  late String verified;
+  late String verified = '';
   late Object completeProfile;
 
   @override

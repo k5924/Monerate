@@ -1,3 +1,5 @@
+// ignore_for_file: cast_nullable_to_non_nullable
+
 import 'package:flutter/material.dart';
 import 'package:monerate/src/models/export.dart';
 import 'package:monerate/src/providers/export.dart';
@@ -11,7 +13,7 @@ class NewsTab extends StatefulWidget {
 }
 
 class _NewsTabState extends State<NewsTab> {
-  late List<ArticleModel> articles = <ArticleModel>[];
+  late List<ArticleModel> articles;
   final YahooFinanceProvider yahooFinanceProvider = YahooFinanceProvider();
 
   @override
@@ -34,6 +36,7 @@ class _NewsTabState extends State<NewsTab> {
                   snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.data.runtimeType != String) {
                   // ignore: cast_nullable_to_non_nullable
+                  articles = <ArticleModel>[];
                   articles = snapshot.data as List<ArticleModel>;
                   return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),

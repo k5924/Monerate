@@ -68,7 +68,6 @@ class _SearchInvestmentScreenState extends State<SearchInvestmentScreen> {
               height: 20,
             ),
             ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: investments.length,
               itemBuilder: (context, index) {

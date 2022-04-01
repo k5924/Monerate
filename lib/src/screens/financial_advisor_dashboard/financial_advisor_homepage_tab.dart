@@ -22,8 +22,9 @@ class _FinancialAdvisorHomepageTabState
     extends State<FinancialAdvisorHomepageTab> {
   final DatabaseProvider databaseProvider =
       DatabaseProvider(db: FirebaseFirestore.instance);
-  late String userID;
+  late String userID = '';
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
+  late List<ChatModel> chats;
 
   @override
   void initState() {
@@ -80,7 +81,7 @@ class _FinancialAdvisorHomepageTabState
               }
             } else {
               final chatsDB = snapshot.data!.docs;
-              final List<ChatModel> chats = <ChatModel>[];
+              chats = <ChatModel>[];
               for (final item in chatsDB) {
                 final chat = ChatModel(
                   userID: item['userID'].toString(),
@@ -92,7 +93,6 @@ class _FinancialAdvisorHomepageTabState
                 chats.add(chat);
               }
               return ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: chats.length,
                 itemBuilder: (context, index) {

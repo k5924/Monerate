@@ -21,7 +21,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
   final _formKey = GlobalKey<FormState>();
 
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
-  late String result;
+  late String result = '';
 
   @override
   void dispose() {

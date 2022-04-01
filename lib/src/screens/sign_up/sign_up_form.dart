@@ -26,7 +26,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   final AuthProvider authProvider = AuthProvider(auth: FirebaseAuth.instance);
 
-  late String result;
+  late String result = '';
 
   bool _showPassword = false;
 

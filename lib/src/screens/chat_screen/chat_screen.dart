@@ -25,6 +25,7 @@ class _ChatScreenState extends State<ChatScreen> {
   String messageText = '';
   final DatabaseProvider databaseProvider =
       DatabaseProvider(db: FirebaseFirestore.instance);
+  late List<MessageModel> messages;
 
   @override
   void dispose() {
@@ -74,7 +75,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   }
                 } else {
                   final messagesDB = snapshot.data!.docs;
-                  final List<MessageModel> messages = <MessageModel>[];
+                  messages = <MessageModel>[];
                   for (final item in messagesDB) {
                     final individualMessage = MessageModel(
                       senderID: item['senderID'] as String,

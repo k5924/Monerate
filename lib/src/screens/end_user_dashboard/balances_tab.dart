@@ -27,6 +27,8 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
   late LinkTokenConfiguration linkTokenConfiguration;
   final BinanceExchangeProvider binanceExchangeProvider =
       BinanceExchangeProvider();
+  late List<BalanceModel> balances;
+  final YahooFinanceProvider yahooFinanceProvider = YahooFinanceProvider();
 
   @override
   void initState() {
@@ -34,12 +36,43 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
   }
 
   Future<void> _updateBalances() async {
+    int errors = 0;
+    EasyLoading.show(status: 'loading...');
     final keys = await binanceExchangeProvider.getKeys();
     print(keys);
+    for (final BalanceModel balance in balances) {
+      if (balance.type == "Stock") {
+        final result = await yahooFinanceProvider.getPrice(
+          tickerSymbol: balance.symbol,
+        );
+        if (result.toString() == "error") {
+          EasyLoading.showError(
+            "An error was encountered, investment information has not been fetched",
+          );
+          errors++;
+          break;
+        } else {
+          final result2 = await authProvider.updateFinanceAccount(
+            balanceModel: balance,
+            newAmount: balance.amount,
+            newPrice: result.toString(),
+          );
+          if (result2 != null) {
+            EasyLoading.showError(result2);
+            errors++;
+            break;
+          } else {}
+        }
+      }
+    }
+    if (errors == 0) {
+      EasyLoading.showSuccess("Account updated");
+    }
   }
 
   Future<void> _getBalances(String accessToken) async {
-    final result = await openBankingProvider.getAccessToken(publicToken: accessToken);
+    final result =
+        await openBankingProvider.getAccessToken(publicToken: accessToken);
     if (result.runtimeType == String) {
       if (result != "error") {
         print(result.toString());
@@ -60,7 +93,8 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
     LinkSuccessMetadata metadata,
   ) async {
     // iterate through accounts and store name and subtype
-    final result = await openBankingProvider.getAccessToken(publicToken: publicToken);
+    final result =
+        await openBankingProvider.getAccessToken(publicToken: publicToken);
     if (result.runtimeType == String) {
       if (result != "error") {
         await _getBalances(result.toString());
@@ -157,7 +191,7 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
                     (a, b) =>
                         a['type'].toString().compareTo(b['type'].toString()),
                   );
-                  final List<BalanceModel> balances = <BalanceModel>[];
+                  balances = <BalanceModel>[];
                   for (final item in balancesDB) {
                     final balance = BalanceModel(
                       amount: item['amount'].toString(),
@@ -170,7 +204,6 @@ class _AccountBalancesTabState extends State<AccountBalancesTab> {
                     balances.add(balance);
                   }
                   return ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: balances.length,
                     itemBuilder: (context, index) {
