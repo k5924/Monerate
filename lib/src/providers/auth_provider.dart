@@ -354,6 +354,7 @@ class AuthProvider {
         );
       }
       await databaseProvider.deleteUser(userID: userID);
+      await user!.delete();
     } on FirebaseAuthException catch (e) {
       exceptionsFactory = ExceptionsFactory(e.code);
       return exceptionsFactory.exceptionCaught()!;
