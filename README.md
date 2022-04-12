@@ -28,23 +28,17 @@
 
 ## Introduction
 
-This application works by using the Flutter UI framework in Dart to create the mobile application. We then use Firebase as our database. We will also use Adobe XD to design all of the pages we will make for the application.
+This application works by using the Flutter UI framework in Dart to create the mobile application. We then use Firebase as our database. We will also use Adobe XD to design all of the pages we will make for the application. The application currently interfaces with Yahoo Finances API, Plaids Open Banking API and Binance Crypto Currency Exchanges API.
 
-Get UML Diagrams:</br>
-dcdg -s "lib/src/models" -o uml/models.puml</br>
-dcdg -s "lib/src/providers" -o uml/providers.puml</br>
-dcdg -s "lib/src/screens" -o uml/screens.puml</br>
-dcdg -s "lib/src/utilities" -o uml/utilities.puml</br>
-dcdg -s "lib/src/widgets" -o uml/widgets.puml</br>
+## Documentation
 
+After submitting the Honours Computer Science Project, I will upload a PDF of my documentation here for others to see.
 
-## Planned Features
+## [Download the Android App](https://github.com/k5924/Monerate/releases/latest)
 
-- list all planned features here
+## Demonstration
 
-## Download
-
-[DOWNLOAD](https://github.com/k5924/Monerate/releases/latest)
+[![Demonstration Video](https://img.youtube.com/vi/WNajlzvX4U/0.jpg)](https://www.youtube.com/watch?v=_WNajlzvX4U)
 
 ## Languages and Tools
 
