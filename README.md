@@ -38,7 +38,7 @@ After submitting the Honours Computer Science Project, I will upload a PDF of my
 
 ## Demonstration
 
-[![Demonstration Video](https://img.youtube.com/vi/WNajlzvX4U/0.jpg)](https://www.youtube.com/watch?v=_WNajlzvX4U)
+[![Demonstration Video](https://img.youtube.com/vi/_WNajlzvX4U/hqdefault.jpg)](https://www.youtube.com/watch?v=_WNajlzvX4U)
 
 ## Languages and Tools
 
