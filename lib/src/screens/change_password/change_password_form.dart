@@ -70,7 +70,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
               EasyLoading.dismiss();
             }
           },
-          child: const Text("Update Email"),
+          child: const Text("Update Password"),
         ),
       ],
     );
