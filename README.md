@@ -47,6 +47,5 @@ After submitting the Honours Computer Science Project, I will upload a PDF of my
 
 ## License
 
-- place license here when exists
-
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/k5924/Monerate/master/LICENSE)
 
